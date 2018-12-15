@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "tikz-doc", "src\tikz-doc.fsproj", "{0D4810B0-1BF7-4A16-B62E-0E8B8CFEF850}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "tikz-doc-test", "test\tikz-doc-test.fsproj", "{ED8D2CA4-445A-4743-AEFB-E5683A060CED}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0D4810B0-1BF7-4A16-B62E-0E8B8CFEF850}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D4810B0-1BF7-4A16-B62E-0E8B8CFEF850}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D4810B0-1BF7-4A16-B62E-0E8B8CFEF850}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D4810B0-1BF7-4A16-B62E-0E8B8CFEF850}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED8D2CA4-445A-4743-AEFB-E5683A060CED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED8D2CA4-445A-4743-AEFB-E5683A060CED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED8D2CA4-445A-4743-AEFB-E5683A060CED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED8D2CA4-445A-4743-AEFB-E5683A060CED}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {45651CD0-E396-4784-AE14-F0E6BA91F819}
+	EndGlobalSection
+EndGlobal
