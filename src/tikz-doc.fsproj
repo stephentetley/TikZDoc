@@ -42,6 +42,7 @@
   <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="TikZDoc\Internal\PrettyPrint.fs" />
     <Compile Include="TikZDoc\Base.fs" />
     <Content Include="packages.config" />
   </ItemGroup>
