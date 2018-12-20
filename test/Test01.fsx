@@ -1,8 +1,8 @@
 ﻿
 #load "..\src\TikZDoc\Internal\PrettyPrint.fs"
-#load "..\src\TikZDoc\Base.fs"
+#load "..\src\TikZDoc\TikZ.fs"
 
 open TikZDoc
 
 let test01 () = 
-    helloTikZ () 
+    command "TODO"
