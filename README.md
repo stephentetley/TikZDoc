@@ -1,2 +1,2 @@
 # tikz-doc
-Low level library to build TikZ (TeX) documents.
+Low level library to build TikZ (LaTeX) documents.
