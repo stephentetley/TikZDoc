@@ -2,16 +2,14 @@
 // License: BSD 3 Clause
 
 #load "..\src\TikZDoc\Internal\PrettyPrint.fs"
-#load "..\src\TikZDoc\Internal\PrintLaTeX.fs"
-#load "..\src\TikZDoc\Internal\LaTeXSyntax.fs"
+#load "..\src\TikZDoc\Internal\LaTeXDoc.fs"
 #load "..\src\TikZDoc\TikZ.fs"
 
-open TikZDoc.Internal.PrettyPrint
 open TikZDoc
-open TikZDoc.Internal.LaTeXSyntax.LaTeXSyntax
 
-let output (doc:LaTeX) : unit = 
-    printfn "%s" << render 80 <| doc.RenderToDoc ()
+
+let output (tex:LaTeX) : unit = 
+    printfn "%s" <| tex.Render(lineWidth = 80)
 
 let test01 () = 
-    output <| cmdbegin "document" None
+    output <| cmdBegin "document" []

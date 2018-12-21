@@ -8,14 +8,16 @@
 // to work well in F#.
 
 
-namespace TikZDoc.Internal.PrettyPrint
+namespace TikZDoc.Internal
 
-open System.Text
-open System
 
-[<AutoOpen>]
-module Lindig = 
-    
+
+[<RequireQualifiedAccess>]
+module PrettyPrint = 
+
+    open System.Text
+    open System
+
     type Doc = 
         | DocNil
         | DocCons of Doc * Doc
@@ -203,7 +205,9 @@ module Lindig =
 
     let (^^) (x:Doc) (y:Doc) = beside x y
 
-    let (^+^) (x:Doc) (y:Doc) : Doc = x ^^ space ^^ y
+    let besideSpace (x:Doc) (y:Doc) : Doc = x ^^ space ^^ y
+
+    let (^+^) (x:Doc) (y:Doc) : Doc = besideSpace x y
 
     /// Concatenates d1 and d2 horizontally, with spaceBreak.
     let (^/^) (d1:Doc)  (d2:Doc) : Doc = 
@@ -223,8 +227,11 @@ module Lindig =
     /// Haskell / PPrint's: <$>
     let (^@^) (x:Doc) (y:Doc) : Doc = x ^^ line ^^ y
 
+
+    let below (x:Doc) (y:Doc) : Doc = x ^^ linebreak ^^ y
+
     /// Haskell / PPrint's: <$$>
-    let (^@@^) (x:Doc) (y:Doc) : Doc = x ^^ linebreak ^^ y
+    let (^@@^) (x:Doc) (y:Doc) : Doc = below x y
 
 
     // ************************************************************************
