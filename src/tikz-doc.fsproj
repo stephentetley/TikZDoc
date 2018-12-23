@@ -47,7 +47,6 @@
     <Compile Include="TikZDoc\Internal\LaTeXDoc.fs" />
     <Compile Include="TikZDoc\LaTeX.fs" />
     <Compile Include="TikZDoc\TikZLaTeX.fs" />
-    <Compile Include="TikZDoc\LaTeXInvoke.fs" />
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

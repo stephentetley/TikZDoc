@@ -9,6 +9,10 @@ module LaTeXDoc =
 
     open TikZDoc.Internal
     
+    
+
+
+
     // Single case union 
     [<Struct>]
     type LaTeXDocument = 
@@ -18,6 +22,9 @@ module LaTeXDoc =
         
         member x.Render (lineWidth:int) : string = 
             PrettyPrint.render lineWidth x.Body
+
+        member x.SaveAsTex(lineWidth:int, fileName:string) : unit = 
+            PrettyPrint.writeDoc lineWidth fileName x.Body
 
 
     let empty : LaTeXDocument = RawDoc(PrettyPrint.empty)

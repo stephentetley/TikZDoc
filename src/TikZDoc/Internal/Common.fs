@@ -13,6 +13,8 @@ module Common =
 
     let unlines (source:string) : string list = source.Split('\n') |> Array.toList
 
+    let doubleQuote (s:string) : string = "\"" + s + "\""
+
     // ************************************************************************
     // Invoking TeX programs
 
