@@ -33,6 +33,10 @@ module LaTeX =
         let comment1 (s:string) = raw ("% " + s)
         vcat << List.map comment1 <| unlines text 
 
+    let arguments : LaTeX list -> LaTeX = argumentsList 
+
+    let options : LaTeX list -> LaTeX = optionsList         
+
     /// \<name>
     let commandZero (name:string) : LaTeX = raw ("\\" + name)
 

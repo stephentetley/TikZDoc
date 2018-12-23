@@ -3,7 +3,7 @@
 
 namespace TikZDoc
 
-/// Generate output for render with LaTeX.
+/// Generate output for rendering with LaTeX.
 /// Alternative implmenetations for plain TeX or ConTEXt are possible 
 /// but unlikely to be realized.
 
