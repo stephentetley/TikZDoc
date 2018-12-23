@@ -33,9 +33,10 @@ module LaTeX =
         let comment1 (s:string) = raw ("% " + s)
         vcat << List.map comment1 <| unlines text 
 
-
+    /// \<name>
     let commandZero (name:string) : LaTeX = raw ("\\" + name)
 
+    /// \<name>[<options>]{<arguments>}
     let command (name:string) (options: LaTeX list) (arguments: LaTeX list) : LaTeX = 
         let opts = 
             match options with
@@ -47,21 +48,29 @@ module LaTeX =
             | xs -> argumentsList xs
         commandZero name ^^ opts ^^ args
 
-    
-    let documentclass (name:string) (options:LaTeX list) : LaTeX = 
+    /// \def\<name><body>
+    /// No attempt is made to match TeX syntax for the macro body.
+    let def (name:string) (body:LaTeX) : LaTeX = 
+        command "def" [] [] ^^ command name [] [] ^^ body
+
+    /// \documentclass[<options>]{<name>}
+    let documentclass (options:LaTeX list) (name:string) : LaTeX = 
         command "documentclass" options [raw name]
 
-    let usepackage (name:string) (options:LaTeX list) : LaTeX = 
+    /// \usepackage[<options>]{<name>}
+    let usepackage (options:LaTeX list) (name:string) : LaTeX = 
         command "usepackage" options [raw name]
 
+    /// \begin[<options>]{<name>}
     /// _Cmd suffix as begin is a keyword
-    let beginCmd (name:string) (options:LaTeX list) : LaTeX = 
+    let beginCmd (options:LaTeX list) (name:string) : LaTeX = 
         command "begin" options [raw name]
     
+    /// \end{<name>}
     /// _Cmd suffix as end is a keyword
     let endCmd (name:string) : LaTeX = 
         command "end" [] [raw name]
 
-    let block (name:string) (options:LaTeX list) (body:LaTeX) : LaTeX =
-        beginCmd name options ^@@^ body ^@@^ endCmd name
+    let block (options:LaTeX list) (name:string)  (body:LaTeX) : LaTeX =
+        beginCmd options name ^@@^ body ^@@^ endCmd name
         

@@ -1,11 +1,21 @@
 ﻿// Copyright (c) Stephen Tetley 2018
 // License: BSD 3 Clause
 
-namespace TikZDoc.LaTeX
+namespace TikZDoc
 
-open TikZDoc.TikZ
+
 
 [<AutoOpen>]
 module LaTeXInvoke = 
+    
+    open TikZDoc.TikZLaTeX
 
+    type Output = 
+        | PostScript 
+        | PDF 
+        | SVG
+
+        member x.DocumentProlog with get() : LaTeX = 
+            match x with 
+            | PostScript -> documentclass "article" [] 
     
