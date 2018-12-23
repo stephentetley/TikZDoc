@@ -3,14 +3,15 @@
 
 namespace TikZDoc.Internal
 
-open System.Text
-open System.Threading
 
 
 [<AutoOpen>]
 module Common = 
 
-    
+    open System.Text
+    open System.Threading
+
+    let unlines (source:string) : string list = source.Split('\n') |> Array.toList
 
     // ************************************************************************
     // Invoking TeX programs

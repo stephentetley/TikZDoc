@@ -45,6 +45,7 @@
     <Compile Include="TikZDoc\Internal\Common.fs" />
     <Compile Include="TikZDoc\Internal\PrettyPrint.fs" />
     <Compile Include="TikZDoc\Internal\LaTeXDoc.fs" />
+    <Compile Include="TikZDoc\LaTeX.fs" />
     <Compile Include="TikZDoc\TikZ.fs" />
     <Compile Include="TikZDoc\LaTeXInvoke.fs" />
     <Content Include="packages.config" />
