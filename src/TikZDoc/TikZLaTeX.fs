@@ -12,6 +12,29 @@ namespace TikZDoc
 module TikZLaTeX = 
 
     open TikZDoc
+    /// Units are clunky because they must be the same type 
+    /// (ruling out units-of-measure), but a particular diagram 
+    /// is expected to use just one unit so a shim API for 
+    /// the diagram could fix the unit in the function signatures.
+    type Dims = 
+        | PT of double
+        | BP of double
+        | MM of double
+        | CM of double
+        | IN of double
+        | EX of double
+        | EM of double
+        member x.LaTeX 
+            with get() = 
+                match x with 
+                | PT d -> raw <| sprintf "%fpt" d
+                | BP d -> raw <| sprintf "%fbp" d
+                | MM d -> raw <| sprintf "%fmm" d
+                | CM d -> raw <| sprintf "%fcm" d
+                | IN d -> raw <| sprintf "%fin" d
+                | EX d -> raw <| sprintf "%fex" d
+                | EM d -> raw <| sprintf "%fem" d
+
 
     let usetikzlibrary (arguments:LaTeX list) : LaTeX = 
         command "usetikzlibrary" [] arguments
@@ -25,15 +48,20 @@ module TikZLaTeX =
     let filldraw (options:LaTeX list) : LaTeX = 
         command "filldraw" options []
 
-    /// Design note - what to do about parametric version?
-    /// i.e. [round corners=0.5cm]
-    let roundCorners : LaTeX = raw "round corners"
-    
+
+    let roundedCorners : LaTeX = raw "rounded corners"
+
+    /// Parametric version of roundedCorners
+    /// i.e. [rounded corners=0.5cm]    
+    let roundedCornersDims (dims:Dims) : LaTeX = 
+        property "rounded corners" dims.LaTeX
+
+
     let sharpCorners : LaTeX = raw "sharp corners"
     
-    /// What to do about units e.g mm cm in
-    let lineWidth (inPt:double) : LaTeX = 
-        property (raw "line width") (raw <| sprintf "%fpt" inPt )
+
+    let lineWidth (width:Dims) : LaTeX = 
+        property "line width" width.LaTeX
 
     let ultraThin : LaTeX = raw "ultra thin"
     
@@ -64,7 +92,7 @@ module TikZLaTeX =
                 | CapRound -> raw "round"
 
     let lineCap (cap:LineCap) : LaTeX = 
-        property (raw "line cap") cap.LaTeX
+        property "line cap" cap.LaTeX
 
 
     // Lines Junction
@@ -79,7 +107,7 @@ module TikZLaTeX =
                 | JoinMiter -> raw "miter"
 
     let lineJoin (join:LineJoin) : LaTeX = 
-        property (raw "line join") join.LaTeX
+        property "line join" join.LaTeX
 
     
     // Line Styles
@@ -111,11 +139,17 @@ module TikZLaTeX =
     let looselyDashDotDot : LaTeX = raw "loosely dash dot dot"
 
     let dashPattern (pattern:LaTeX) : LaTeX = 
-        property (raw "dash pattern") pattern
+        property "dash pattern" pattern
 
-    let dashPhase (inPt:double) : LaTeX = 
-        property (raw "dash phase") (raw <| sprintf "%fpt" inPt )
+    let dashPhase (length:Dims) : LaTeX = 
+        property "dash phase" length.LaTeX
 
+    /// [double]
+    /// _Cmd suffix as begin is a double is a standard F# function.
+    let doubleParam : LaTeX = raw "double"
+
+    let doubleDistance (dist:Dims) : LaTeX = 
+        property "double distance" dist.LaTeX
 
     // Other 
 

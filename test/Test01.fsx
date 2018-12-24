@@ -30,7 +30,7 @@ let doc1 () : LaTeX =
         [ usepackage [] "tikz"      
         ; beginCmd [] "document" 
         ; beginCmd [] "tikzpicture" 
-        ; raw "\\draw[thick,rounded corners=8pt]"
+        ; draw [thick; roundedCornersDims (PT 8.0)]
         ; raw "(0,0) -- (0,2) -- (1,3.25) -- (2,2) -- (2,0) -- (0,2) -- (2,2) -- (0,0) -- (2,0);"
         ; endCmd "tikzpicture"
         ; endCmd "document"

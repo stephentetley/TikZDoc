@@ -42,8 +42,8 @@ module LaTeX =
     
     
     /// <propertyName>=<propertyValue>
-    let property (propertyName:LaTeX) (propertyValue:LaTeX) : LaTeX = 
-        propertyName ^^ raw "=" ^^ propertyValue
+    let property (propertyName:string) (propertyValue:LaTeX) : LaTeX = 
+        raw propertyName  ^^ raw "=" ^^ propertyValue
 
 
     /// \<name>
