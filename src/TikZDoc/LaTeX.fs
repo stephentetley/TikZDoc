@@ -123,12 +123,13 @@ module LaTeX =
     let private runDvisvgm (shellWorkingDirectory:string) (finalName:string) : unit =
         let dviFile = Path.ChangeExtension(finalName, "dvi")
         let svgFile = finalName
-        let command = sprintf "-output=%s --bbox=none %s" (doubleQuote svgFile) (doubleQuote dviFile)
+        let command = sprintf "--output=%s --bbox=none %s" (doubleQuote svgFile) (doubleQuote dviFile)
         shellRun shellWorkingDirectory "dvisvgm" command
+
+
 
     type LaTeXDocument with
 
-        
         member x.SaveToSVG(outputDirectory:string, fileName:string) : unit = 
             let doc:LaTeX = SVG.DocumentProlog ^@@^ x
             let tex1 = Path.ChangeExtension(fileName, "tex")
@@ -138,8 +139,6 @@ module LaTeX =
             runDvisvgm outputDirectory fileName
 
 
-
-
         member x.SaveToPS(outputDirectory:string, fileName:string) : unit = 
             let doc:LaTeX = PostScript.DocumentProlog ^@@^ x
             let tex1 = Path.ChangeExtension(fileName, "tex")
@@ -147,6 +146,7 @@ module LaTeX =
             doc.SaveAsTex(80,texFile)
             runLatex outputDirectory fileName
             runDvips outputDirectory fileName
+
 
         member x.SaveToPDF(outputDirectory:string, fileName:string) : unit = 
             let doc:LaTeX = PDF.DocumentProlog ^@@^ x
