@@ -145,12 +145,107 @@ module TikZLaTeX =
         property "dash phase" length.LaTeX
 
     /// [double]
-    /// _Cmd suffix as begin is a double is a standard F# function.
-    let doubleParam : LaTeX = raw "double"
+    /// _Opt suffix as begin is a double is a standard F# function.
+    let doubleOpt : LaTeX = raw "double"
 
     let doubleDistance (dist:Dims) : LaTeX = 
         property "double distance" dist.LaTeX
 
+
+    // Fillings
+    // \usetikzlibrary{patterns}
+
+    let dots : LaTeX = raw "dots"
+
+    let fivepointedStars : LaTeX = raw "fivepointed stars"
+
+    let sixpointedStars : LaTeX = raw "sixpointed stars"
+
+    let grid : LaTeX = raw "grid"
+
+    let horizontalLines : LaTeX = raw "horizontal lines"
+
+    let verticalLines : LaTeX = raw "vertical lines"
+
+    let northEastLines : LaTeX = raw "north east lines"
+
+    let northWestLines : LaTeX = raw "north west lines"
+
+    let crosshatch : LaTeX = raw "crosshatch"
+
+    let crosshatchDots : LaTeX = raw "crosshatch dots"
+
+    let bricks : LaTeX = raw "bricks"
+
+    let checkerboard : LaTeX = raw "checkerboard"
+
+    let patternColor (color:LaTeX) = 
+        property "pattern color" color
+
+    // Extremeties (arrow heads)
+
+    /// We cannot directly non-alphanumeric literals in F#
+    /// so we use the false option "arrowhead"
+    /// "->"; "<-"; "<->"; ">->"; "-to"; "-to reversed"; 
+    /// "-o"; "-|"; "-latex"; "-latex reversed";
+    /// "-stealth"; "-stealth reversed"
+    let arrowhead (ascii:string) = raw ascii
+
+    // arrow.meta
+    // Notation arr_ prefix for "-"
+    // \usetikzlibrary{arrows.meta}
+
+    let arrArcBarb = raw "-Arc Barb"
+
+    let arrBar = raw "-Bar"
+
+    let arrBracket = raw "-Bracket"
+
+    let arrHooks = raw "-Hooks"
+
+    let arrStealth = raw "-Stealth"
+
+    let arrParenthesis = raw "-Parenthesis"
+
+    let arrStraightBarb = raw "-Straight Barb"
+
+    let arrTeeBarb = raw "-TeeBarb"
+
+    let arrClassicalTikZRightarrow = raw "-Classical TikZ Rightarrow"
+
+    let arrSquare = raw "-Square"
+
+    let arrCircle = raw "-Circle"
+
+    let arrImplies = raw "-Implies"
+
+    let arrRectangle = raw "-Rectangle"
+
+    let arrComputerModernRightarrow = raw "-Computer Modern Rightarrow"
+
+    let arrTurnedSquare = raw "-TurnedSquare"
+
+    let arrDiamond = raw "-Diamond"
+
+    let arrEllipsis = raw "-Ellipsis"
+
+    let arrKite = raw "-Kite"
+
+    let arrLatex = raw "-Latex"
+
+    let arrTriangle = raw "-Triangle"
+
+    
+    // Notation: end_ prefix for "-"
+    let endButtCap = "-Butt Cap"
+    
+    let endFastRound = "-Fast Round"
+
+    let endFastTriangle = "-Fast Triangle"
+
+    let endRoundCap = "-Round Cap"
+
+    let endTriangleCap = "-Triangle Cap"
     // Other 
 
     let datavisualization (options:LaTeX list) : LaTeX = 
