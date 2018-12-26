@@ -189,63 +189,244 @@ module TikZLaTeX =
     /// "->"; "<-"; "<->"; ">->"; "-to"; "-to reversed"; 
     /// "-o"; "-|"; "-latex"; "-latex reversed";
     /// "-stealth"; "-stealth reversed"
-    let arrowhead (ascii:string) = raw ascii
+    let arrowhead (ascii:string) : LaTeX = raw ascii
 
     // arrow.meta
     // Notation arr_ prefix for "-"
     // \usetikzlibrary{arrows.meta}
 
-    let arrArcBarb = raw "-Arc Barb"
+    let arrArcBarb : LaTeX = raw "-Arc Barb"
 
-    let arrBar = raw "-Bar"
+    let arrBar : LaTeX = raw "-Bar"
 
-    let arrBracket = raw "-Bracket"
+    let arrBracket : LaTeX = raw "-Bracket"
 
-    let arrHooks = raw "-Hooks"
+    let arrHooks : LaTeX = raw "-Hooks"
 
-    let arrStealth = raw "-Stealth"
+    let arrStealth : LaTeX = raw "-Stealth"
 
-    let arrParenthesis = raw "-Parenthesis"
+    let arrParenthesis : LaTeX = raw "-Parenthesis"
 
-    let arrStraightBarb = raw "-Straight Barb"
+    let arrStraightBarb : LaTeX = raw "-Straight Barb"
 
-    let arrTeeBarb = raw "-TeeBarb"
+    let arrTeeBarb : LaTeX = raw "-TeeBarb"
 
-    let arrClassicalTikZRightarrow = raw "-Classical TikZ Rightarrow"
+    let arrClassicalTikZRightarrow : LaTeX = 
+        raw "-Classical TikZ Rightarrow"
 
-    let arrSquare = raw "-Square"
+    let arrSquare : LaTeX = raw "-Square"
 
-    let arrCircle = raw "-Circle"
+    let arrCircle : LaTeX = raw "-Circle"
 
-    let arrImplies = raw "-Implies"
+    let arrImplies : LaTeX = raw "-Implies"
 
-    let arrRectangle = raw "-Rectangle"
+    let arrRectangle : LaTeX = raw "-Rectangle"
 
-    let arrComputerModernRightarrow = raw "-Computer Modern Rightarrow"
+    let arrComputerModernRightarrow : LaTeX = 
+        raw "-Computer Modern Rightarrow"
 
-    let arrTurnedSquare = raw "-TurnedSquare"
+    let arrTurnedSquare : LaTeX = raw "-TurnedSquare"
 
-    let arrDiamond = raw "-Diamond"
+    let arrDiamond : LaTeX = raw "-Diamond"
 
-    let arrEllipsis = raw "-Ellipsis"
+    let arrEllipsis : LaTeX = raw "-Ellipsis"
 
-    let arrKite = raw "-Kite"
+    let arrKite : LaTeX = raw "-Kite"
 
-    let arrLatex = raw "-Latex"
+    let arrLatex : LaTeX = raw "-Latex"
 
-    let arrTriangle = raw "-Triangle"
+    let arrTriangle : LaTeX = raw "-Triangle"
 
     
     // Notation: end_ prefix for "-"
-    let endButtCap = "-Butt Cap"
+    let endButtCap : LaTeX = raw "-Butt Cap"
     
-    let endFastRound = "-Fast Round"
+    let endFastRound : LaTeX = raw "-Fast Round"
 
-    let endFastTriangle = "-Fast Triangle"
+    let endFastTriangle : LaTeX = raw "-Fast Triangle"
 
-    let endRoundCap = "-Round Cap"
+    let endRoundCap : LaTeX = raw "-Round Cap"
 
-    let endTriangleCap = "-Triangle Cap"
+    let endTriangleCap : LaTeX = raw "-Triangle Cap"
+
+
+
+    let name (nodeName:string) : LaTeX = 
+        property "name" (raw nodeName)
+    
+    let alias (aliasName:string) : LaTeX = 
+        property "alias" (raw aliasName)
+
+    let nodeContents (contents:LaTeX) : LaTeX = 
+        property "node contents" contents
+
+    // Basic colors
+
+    let black : LaTeX = raw "black"
+    
+    let blue : LaTeX = raw "blue"
+    
+    let brown : LaTeX = raw "brown"
+    
+    let cyan : LaTeX = raw "cyan"
+    
+    let darkgray : LaTeX = raw "darkgray"
+    
+    let gray : LaTeX = raw "gray"
+    
+    let green : LaTeX = raw "green"
+    
+    let lightgray : LaTeX = raw "lightgray"
+    
+    let lime : LaTeX = raw "lime"
+    
+    let magenta : LaTeX = raw "magenta"
+    
+    let olive : LaTeX = raw "olive"
+    
+    let orange : LaTeX = raw "orange"
+    
+    let pink : LaTeX = raw "pink"
+    
+    let purple : LaTeX = raw "purple"
+    
+    let red : LaTeX = raw "red"
+    
+    let teal : LaTeX = raw "teal"
+    
+    let violet : LaTeX = raw "violet"
+    
+    let white : LaTeX = raw "white"
+    
+    let yellow : LaTeX = raw "yellow"
+
+    // Opacity
+    
+    let opacity (level:double) : LaTeX = 
+        property "opacity" (sprintf "%f" level)
+        
+    let transparent : LaTeX = raw "transparent"
+    
+    let ultraNearlyTransparent : LaTeX = raw "ultra nearly transparent"
+    
+    let veryNearlyTransparent : LaTeX = raw "very nearly transparent"
+    
+    let nearlyTransparent : LaTeX = raw "nearly transparent"
+    
+    let semitransparent : LaTeX = raw "semitransparent"
+    
+    let nearlyOpaque : LaTeX = raw "nearly opaque"
+    
+    let veryNearlyOpaque : LaTeX = raw "very nearly opaque" 
+    
+    let ultraNearlyOpaque : LaTeX = raw "ultra nearly opaque"
+    
+    let opaque : LaTeX = raw "opaque"
+    
+    // Blend Mode
+    
+    type BlendMode
+        | BlendNormal
+        | BlendMultiply
+        | BlendScreen
+        | BlendOverlay
+        | BlendDarken
+        | BlendLighten
+        | BlendDifference
+        | BlendExclusion
+        | BlendHue
+        | BlendSaturation
+        | BlendColor
+        | BlendLuminosity
+        member x.LaTeX 
+            with get() = 
+                match x with 
+                | BlendNormal -> raw "normal"
+                | BlendMultiply -> raw "multiply"
+                | BlendScreen -> raw "screen"
+                | BlendOverlay -> raw "overlay"
+                | BlendDarken -> raw "darken"
+                | BlendLighten -> raw "lighten"
+                | BlendDifference -> raw "difference"
+                | BlendExclusion -> raw "exclusion"
+                | BlendHue -> raw "hue"
+                | BlendSaturation -> raw "saturation"
+                | BlendColor -> raw "color"
+                | BlendLuminosity -> raw "luminosity"
+                
+    let blendGroup (blendMode:BlendMode) : LaTeX = 
+        property "blend mode" blendMode.LaTeX
+                
+    // Text highlighting
+    
+    let innerSep (dims:Dims) : LaTeX = 
+        property "inner sep" dims.LaTeX
+        
+    let innerXsep (dims:Dims) : LaTeX = 
+        property "inner xsep" dims.LaTeX
+
+    let innerYsep (dims:Dims) : LaTeX = 
+        property "inner ysep" dims.LaTeX        
+    
+    let outerSep (dims:Dims) : LaTeX = 
+        property "outer sep" dims.LaTeX
+        
+    let outerXsep (dims:Dims) : LaTeX = 
+        property "outer xsep" dims.LaTeX
+
+    let outerYsep (dims:Dims) : LaTeX = 
+        property "outer ysep" dims.LaTeX 
+
+    let minimumHeight (dims:Dims) : LaTeX = 
+        property "minimum height" dims.LaTeX 
+
+    let minimumWidth (dims:Dims) : LaTeX = 
+        property "minimum width" dims.LaTeX 
+
+    let minimumSize (dims:Dims) : LaTeX = 
+        property "minimum size" dims.LaTeX 
+        
+    // Geometric Shape nodes
+    // \usetikzlibrary{shapes.geometric}
+    
+    let diamond : LaTeX = raw "diamond"
+    
+    let ellipse : LaTeX = raw "ellipse"
+    
+    let trapezium : LaTeX = raw "trapezium"
+    
+    let semicircle : LaTeX = raw "semicircle"
+    
+    let star : LaTeX = raw "star"
+    
+    let regularPolygon : LaTeX = raw "regular polygon"
+    
+    let isoscelesTriangle : LaTeX = raw "isosceles triangle"
+    
+    let kite : LaTeX = raw "kite"
+    
+    let dart : LaTeX = raw "dart"
+    
+    let circularSector : LaTeX = raw "circular sector"
+    
+    let cylinder : LaTeX = raw "cylinder"
+
+    // Symbol Shape nodes
+    // \usetikzlibrary{shapes.symbols}
+    
+    let forbiddenSign : LaTeX = raw "forbidden sign"
+    
+    let magnifyingGlass : LaTeX = raw "magnifying glass"
+    
+    let cloud : LaTeX = raw "cloud"
+    
+    let starburst : LaTeX = raw "starburst"
+    
+    let signal : LaTeX = raw "signal"
+    
+    let tape : LaTeX = raw "tape"
+
+    
     // Other 
 
     let datavisualization (options:LaTeX list) : LaTeX = 
