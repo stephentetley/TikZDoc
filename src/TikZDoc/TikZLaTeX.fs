@@ -12,6 +12,7 @@ namespace TikZDoc
 module TikZLaTeX = 
 
     open TikZDoc
+
     /// Units are clunky because they must be the same type 
     /// (ruling out units-of-measure), but a particular diagram 
     /// is expected to use just one unit so a shim API for 
@@ -303,7 +304,7 @@ module TikZLaTeX =
     // Opacity
     
     let opacity (level:double) : LaTeX = 
-        property "opacity" (sprintf "%f" level)
+        property "opacity" (raw <| sprintf "%f" level)
         
     let transparent : LaTeX = raw "transparent"
     
@@ -325,7 +326,7 @@ module TikZLaTeX =
     
     // Blend Mode
     
-    type BlendMode
+    type BlendMode =
         | BlendNormal
         | BlendMultiply
         | BlendScreen
@@ -426,7 +427,128 @@ module TikZLaTeX =
     
     let tape : LaTeX = raw "tape"
 
+    // Arrow Shapes nodes
+    // \usetikzlibrary{shapes.arrows}
     
+    let singleArrow : LaTeX = raw "single arrow"
+    
+    let doubleArrow : LaTeX = raw "double arrow"
+    
+    let arrowBox : LaTeX = raw "arrow box"    
+    
+    // Callout Shapes nodes
+    // \usetikzlibrary{shapes.callouts}
+    
+    let ellipseCallout : LaTeX = raw "ellipse callout"
+    
+    let rectangleCallout : LaTeX = raw "rectangle callout"
+    
+    let cloudCallout : LaTeX = raw "cloudCallout"
+    
+    // Miscellaneous Shapes nodes
+    // \usetikzlibrary{shapes.misc}
+    
+    let crossOut : LaTeX = raw "cross out"
+    
+    let strikeOut : LaTeX = raw "strike out"
+    
+    let roundedRectangle : LaTeX = raw "rounded rectangle"
+    
+    let chamferedRectangle : LaTeX = raw "chamfered rectangle"
+    
+    // Shapes with Multiple Text Parts
+    // \usetikzlibrary{shapes.multipart}
+    
+    let circleSplit : LaTeX = raw "circle split"
+    
+    let circleSolidus : LaTeX = raw "circle solidus"
+    
+    let ellipseSplit : LaTeX = raw "ellipse split"
+    
+    let rectangleSplit : LaTeX = raw "rectangle split"
+    
+    // Text attributes
+    
+    let textWidth (dims:Dims) : LaTeX = 
+        property "text width" dims.LaTeX
+        
+    type TextPosition =
+        | TextJustified
+        | TextCentered
+        | TextRagged
+        | TextBadlyRagged
+        | TextBadlyCentered
+        | AlignCenter
+        | AlignFlushCenter
+        | AlignJustify
+        | AlignRight
+        | AlignFlushRight
+        | AlignLeft
+        | AlignFlushLeft
+        member x.LaTeX 
+            with get() = 
+                match x with 
+                | TextJustified -> raw "text justified"
+                | TextCentered -> raw "text centered"
+                | TextRagged -> raw "text ragged"
+                | TextBadlyRagged -> raw "text badly ragged"
+                | TextBadlyCentered -> raw "text badly centered"
+                | AlignCenter -> property "align" (raw "center")
+                | AlignFlushCenter -> property "align" (raw "flush center")
+                | AlignJustify -> property "align" (raw "justify")
+                | AlignRight -> property "align" (raw "right")
+                | AlignFlushRight -> property "align" (raw "flush right")
+                | AlignLeft -> property "align" (raw "left")
+                | AlignFlushLeft -> property "align" (raw "flush left")
+
+    let textPosition (position:TextPosition) : LaTeX = 
+        position.LaTeX
+    
+    // Positions on a node
+
+    type Anchor = 
+        | AnchorNorthWest
+        | AnchorNorth
+        | AnchorNorthEast
+        | AnchorText
+        | AnchorWest
+        | AnchorMidWest
+        | AnchorBaseWest
+        | AnchorBase
+        | AnchorEast
+        | AnchorMidEast
+        | AnchorBaseEast
+        | AnchorMid
+        | AnchorSouthEast
+        | AnchorSouth
+        | AnchorSouthWest
+        | AnchorCenter
+        | AnchorDegree of int
+        member x.LaTeX 
+            with get() = 
+                match x with 
+                | AnchorNorthWest -> raw "north west"
+                | AnchorNorth -> raw "north"
+                | AnchorNorthEast -> raw "north east"
+                | AnchorText -> raw "text"
+                | AnchorWest -> raw "west"
+                | AnchorMidWest -> raw "mid west"
+                | AnchorBaseWest -> raw "base west"
+                | AnchorBase -> raw "base"
+                | AnchorEast -> raw "east"
+                | AnchorMidEast -> raw "mid east"
+                | AnchorBaseEast -> raw "base east"
+                | AnchorMid -> raw "mid"
+                | AnchorSouthEast -> raw "south east"
+                | AnchorSouth -> raw "south"
+                | AnchorSouthWest -> raw "south west"
+                | AnchorCenter -> raw "center"
+                | AnchorDegree(x) -> raw <| x.ToString()
+
+    let anchor (position:Anchor) : LaTeX = 
+        property "anchor" position.LaTeX
+
+
     // Other 
 
     let datavisualization (options:LaTeX list) : LaTeX = 
