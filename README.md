@@ -1,4 +1,4 @@
-# tikz-doc
+# TikZDoc
 Low level library to build TikZ (specifically LaTeX) documents.
 
 It is expected that support for particular TikZ drawing types 

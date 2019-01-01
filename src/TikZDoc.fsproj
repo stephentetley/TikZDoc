@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="TikZDoc\Internal\Common.fs" />
+    <Compile Include="TikZDoc\Internal\PrettyPrint.fs" />
+    <Compile Include="TikZDoc\Internal\LaTeXDoc.fs" />
+    <Compile Include="TikZDoc\LaTeX.fs" />
+    <Compile Include="TikZDoc\TikZLaTeX.fs" />
+  </ItemGroup>
+
+</Project>

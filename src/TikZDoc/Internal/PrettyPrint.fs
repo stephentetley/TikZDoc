@@ -212,16 +212,16 @@ module PrettyPrint =
     /// Concatenates d1 and d2 horizontally, with spaceBreak.
     let (^/^) (d1:Doc)  (d2:Doc) : Doc = 
         match d1,d2 with
-        | DocNil, _ -> d1
-        | _, DocNil -> d2
-        |_, _       -> d1 ^^ spacebreak ^^ d2
+        | DocNil, d -> d
+        | d, DocNil -> d
+        | _, _  -> d1 ^^ spacebreak ^^ d2
 
     /// Concatenates d1 and d2 vertically, with optionally breaking space.
-    let (^//^) (d1:Doc)  (d2:Doc) : Doc = 
+    let (^//^) (d1:Doc)  (d2:Doc) : Doc =
         match d1,d2 with
-        | DocNil, _ -> d1
-        | _, DocNil -> d2
-        |_, _    -> d1 ^^ linebreak ^^ d2
+        | DocNil, d -> d
+        | d, DocNil -> d
+        | _, _ -> d1 ^^ linebreak ^^ d2
 
 
     /// Haskell / PPrint's: <$>
