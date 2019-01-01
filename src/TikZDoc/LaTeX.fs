@@ -10,7 +10,8 @@ namespace TikZDoc
 module LaTeX = 
 
     open System.IO
-
+  
+    open SLPretty
     open TikZDoc.Internal.LaTeXDoc
     open TikZDoc.Internal
 
@@ -19,17 +20,17 @@ module LaTeX =
 
     let raw : string -> LaTeX = rawText
 
-    let (^^) : LaTeX -> LaTeX -> LaTeX  = liftCat PrettyPrint.beside
+    let (^^) : LaTeX -> LaTeX -> LaTeX  = liftCat SLPretty.beside
 
-    let (^+^) : LaTeX -> LaTeX -> LaTeX = liftCat PrettyPrint.besideSpace
+    let (^+^) : LaTeX -> LaTeX -> LaTeX = liftCat SLPretty.besideSpace
 
-    let (^@@^) : LaTeX -> LaTeX -> LaTeX = liftCat PrettyPrint.below
+    let (^@@^) : LaTeX -> LaTeX -> LaTeX = liftCat SLPretty.(^@@^)
 
-    let hcat : LaTeX list -> LaTeX = liftCats PrettyPrint.hcat
+    let hcat : LaTeX list -> LaTeX = liftCats SLPretty.hcat
 
-    let hsep : LaTeX list -> LaTeX = liftCats PrettyPrint.hsep
+    let hsep : LaTeX list -> LaTeX = liftCats SLPretty.hcatSpace
 
-    let vcat : LaTeX list -> LaTeX = liftCats PrettyPrint.vcat
+    let vcat : LaTeX list -> LaTeX = liftCats SLPretty.vcat
 
 
     let comment (text: string) : LaTeX = 

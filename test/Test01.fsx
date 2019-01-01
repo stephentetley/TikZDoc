@@ -1,8 +1,10 @@
 ﻿// Copyright (c) Stephen Tetley 2018
 // License: BSD 3 Clause
 
+#I @"C:\Users\stephen\.nuget\packages\slpretty\1.0.0\lib\netstandard2.0"
+#r "SLPretty.dll"
+
 #load "..\src\TikZDoc\Internal\Common.fs"
-#load "..\src\TikZDoc\Internal\PrettyPrint.fs"
 #load "..\src\TikZDoc\Internal\LaTeXDoc.fs"
 #load "..\src\TikZDoc\LaTeX.fs"
 #load "..\src\TikZDoc\TikZLaTeX.fs"
