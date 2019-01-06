@@ -32,6 +32,8 @@ module LaTeX =
 
     let vcat : LaTeX list -> LaTeX = liftCats SLPretty.vcat
 
+    let parens : LaTeX -> LaTeX = liftOp SLPretty.parens
+
 
     let comment (text: string) : LaTeX = 
         let comment1 (s:string) = raw ("% " + s)

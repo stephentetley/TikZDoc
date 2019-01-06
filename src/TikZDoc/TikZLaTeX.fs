@@ -261,6 +261,44 @@ module TikZLaTeX =
     let nodeContents (contents:LaTeX) : LaTeX = 
         property "node contents" contents
 
+
+    // Coordinates
+
+    type Coord = 
+        val Units : option<Dims>
+        val XPos : decimal
+        val YPos : decimal
+
+        new (x:decimal, y:decimal) = 
+            { Units = None 
+            ; XPos = x
+            ; YPos = y }
+        
+        new (x:decimal, y:decimal, dims:Dims) = 
+            { Units = Some dims
+            ; XPos = x
+            ; YPos = y }
+            
+        new (x:double, y:double) = 
+            { Units = None 
+            ; XPos = decimal x
+            ; YPos = decimal y }
+        
+        new (x:double, y:double, dims:Dims) = 
+            { Units = Some dims 
+            ; XPos = decimal x
+            ; YPos = decimal y }
+
+        member x.LaTeX 
+            with get() = 
+                let sx = raw <| x.XPos.ToString()
+                let sy = raw <| x.YPos.ToString()
+                match x.Units with 
+                | None -> parens (sx ^^ raw "," ^^ sy)
+                | Some dims -> parens (sx ^^ dims.LaTeX ^^ raw "," ^^ sy ^^ dims.LaTeX)
+
+        
+
     // Basic colors
 
     let black : LaTeX = raw "black"
