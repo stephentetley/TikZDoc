@@ -41,3 +41,6 @@ let doc1 () : LaTeX =
 let test03 () = 
     let doc = doc1 ()
     doc.SaveToSVG(workingDirectory, "example1.svg")
+
+let dummy () = 
+    output <| Coord(2.0,3.0).LaTeX

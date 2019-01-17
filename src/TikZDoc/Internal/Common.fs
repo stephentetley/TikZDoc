@@ -1,4 +1,4 @@
-﻿// Copyright (c) Stephen Tetley 2018
+﻿// Copyright (c) Stephen Tetley 2018,2019
 // License: BSD 3 Clause
 
 namespace TikZDoc.Internal
@@ -8,8 +8,6 @@ namespace TikZDoc.Internal
 [<AutoOpen>]
 module Common = 
 
-    open System.Text
-    open System.Threading
 
     let unlines (source:string) : string list = source.Split('\n') |> Array.toList
 

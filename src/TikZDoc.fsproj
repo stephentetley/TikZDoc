@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Compile Include="TikZDoc\Internal\Common.fs" />
+    <Compile Include="TikZDoc\Internal\CmdArgs.fs" />
     <Compile Include="TikZDoc\Internal\LaTeXDoc.fs" />
     <Compile Include="TikZDoc\LaTeX.fs" />
     <Compile Include="TikZDoc\TikZLaTeX.fs" />
