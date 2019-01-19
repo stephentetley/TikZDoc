@@ -11,7 +11,7 @@ module LaTeX =
 
     open System.IO
   
-    open SLPretty
+    open SLFormat
     open TikZDoc.Internal.LaTeXDoc
     open TikZDoc.Internal
 
@@ -20,19 +20,19 @@ module LaTeX =
 
     let raw : string -> LaTeX = rawText
 
-    let (^^) : LaTeX -> LaTeX -> LaTeX  = liftCat SLPretty.beside
+    let (^^) : LaTeX -> LaTeX -> LaTeX  = liftCat Pretty.beside
 
-    let (^+^) : LaTeX -> LaTeX -> LaTeX = liftCat SLPretty.besideSpace
+    let (^+^) : LaTeX -> LaTeX -> LaTeX = liftCat Pretty.besideSpace
 
-    let (^@@^) : LaTeX -> LaTeX -> LaTeX = liftCat SLPretty.(^@@^)
+    let (^@@^) : LaTeX -> LaTeX -> LaTeX = liftCat Pretty.(^@@^)
 
-    let hcat : LaTeX list -> LaTeX = liftCats SLPretty.hcat
+    let hcat : LaTeX list -> LaTeX = liftCats Pretty.hcat
 
-    let hsep : LaTeX list -> LaTeX = liftCats SLPretty.hcatSpace
+    let hsep : LaTeX list -> LaTeX = liftCats Pretty.hcatSpace
 
-    let vcat : LaTeX list -> LaTeX = liftCats SLPretty.vcat
+    let vcat : LaTeX list -> LaTeX = liftCats Pretty.vcat
 
-    let parens : LaTeX -> LaTeX = liftOp SLPretty.parens
+    let parens : LaTeX -> LaTeX = liftOp Pretty.parens
 
 
     let comment (text: string) : LaTeX = 

@@ -1,8 +1,8 @@
-﻿// Copyright (c) Stephen Tetley 2018
+﻿// Copyright (c) Stephen Tetley 2018,2019
 // License: BSD 3 Clause
 
-#I @"C:\Users\stephen\.nuget\packages\slpretty\1.0.0\lib\netstandard2.0"
-#r "SLPretty.dll"
+#I @"C:\Users\stephen\.nuget\packages\SLFormat\1.0.1\lib\netstandard2.0"
+#r "SLFormat.dll"
 
 #load "..\src\TikZDoc\Internal\Common.fs"
 #load "..\src\TikZDoc\Internal\LaTeXDoc.fs"
