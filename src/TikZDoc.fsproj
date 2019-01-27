@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="SLFormat" Version="1.0.0" />
+    <PackageReference Include="SLFormat" Version="1.0.1" />
   </ItemGroup>
 
 </Project>

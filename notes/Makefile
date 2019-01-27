@@ -1,5 +1,5 @@
 
-all: example1 example2 example3
+all: example1 example2 example3 geo
 
 example1: example1.tex
 	latex   --output-directory="./out"  "example1.tex"
@@ -13,5 +13,6 @@ example3: example3.tex
 	latex   --output-directory="./out"  "example3.tex"
 	dvips -o "./out/example3.ps"  "./out/example3.dvi"
 
-
-
+geo: geo.tex
+	latex   --output-directory="./out"  "geo.tex"
+	dvisvgm --output="./out/geo.svg" --bbox=none "./out/geo.dvi"

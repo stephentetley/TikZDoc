@@ -13,3 +13,6 @@ REM example3
 latex   --output-directory=./out  example3.tex
 dvips -o ./out/example3.ps  ./out/example3.dvi
 
+REM geo
+latex   --output-directory=./out  geo.tex
+dvisvgm --output=./out/geo.svg --bbox=none ./out/geo.dvi
