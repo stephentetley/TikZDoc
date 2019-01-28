@@ -1,5 +1,6 @@
 % geo.tex
 % For SVG
+% Can't change font size with 'minimal' document class
 \documentclass[dvisvgm]{minimal}
 \usepackage[a3paper]{geometry}
 
@@ -9,6 +10,9 @@
 
 \begin{document}
 \begin{tikzpicture}[x=5cm,y=5cm]
+
+
+
 % Passaic River
 \draw[thick, color=blue, rounded corners=4pt]
   (2.2,4.8) -- (2.2,4.6) -- (2.4, 4.25) -- (2.7,3.95)
@@ -36,7 +40,9 @@
 
 % Hughes Lake
 \fill[color=blue, rounded corners=4pt]
-  (0.9,4.3) -- (1.2,4.3) -- (1.5,4.25)
+  (0.9,4.3) -- (1.2,4.3)
+    node [above, color=black] {Hughes Lake}
+    -- (1.5,4.25)
     -- (1.75,4.1) -- (1.65,4.05) -- (1.55,4.1)
     -- (1.4,4.05) -- (1.2,4.1)
     -- (0.9,4.2)
@@ -47,13 +53,26 @@
   (1.75,4.1) -- (2.0,3.9) -- (2.2,3.7) -- (2.25,3.6)
     -- (2.15,3.4) -- (2.2,3.2) -- (2.25,2.95);
 
-% Third River to wetland
+% Third River to unknown lake
 \draw[thick, color=blue, rounded corners=4pt]
-  (0.1,1.35)
-            -- (1.65,2.0);
+  (0.1,1.35) -- (0.25,1.35) -- (0.35,1.25)
+    -- (0.7,1.35);
+
+% Unknown lake on Third River
+\fill[color=blue, rounded corners=4pt]
+  (0.7,1.35) -- (0.8,1.35) -- (0.95,1.5)
+    -- (0.9,1.55) -- (0.8,1.5)
+    -- cycle;
+
+% Third River to lake to wetland
+\draw[thick, color=blue, rounded corners=4pt]
+  (0.9,1.5) -- (0.95,1.6) -- (0.95,1.8) -- (1.05,2.0)
+    node [above, color=black]
+    {Third River}
+    -- (1.2,2.1) -- (1.4,2.1) -- (1.65,2.0);
 
 % Third River wetland
-\filldraw[thick, color=blue, fill=blue!50, pattern=dots, rounded corners=4pt]
+\filldraw[thick, color=blue, fill=blue!50, pattern=grid, rounded corners=4pt]
   (1.7,1.75) -- (1.75,1.85) -- (1.75,2.0)
     -- (1.8,2.05) -- (1.7,2.15)
     -- (1.65,2.0) -- (1.55,1.95)
@@ -63,14 +82,13 @@
 
 % Third River from wetland
 \draw[thick, color=blue, rounded corners=4pt]
-    (1.7,1.75)
-              -- (1.95,1.35);
+    (1.7,1.75) -- (1.7,1.5) -- (1.95,1.35);
 
 
 % Stream from Bergen County Park
 \draw[thick, color=blue, rounded corners=4pt]
-  (1.95,0.45)
-            -- (1.5,0.15);
+  (1.95,0.45) -- (1.95,0.4) -- (1.9,0.4)
+    -- (1.8,0.3) -- (1.7,0.2) -- (1.5,0.15);
 
 \end{tikzpicture}
 \end{document}
