@@ -1,11 +1,14 @@
 % geo.tex
 % For SVG
 \documentclass[dvisvgm]{minimal}
+\usepackage[a3paper]{geometry}
+
 
 \usepackage{tikz}
+\usetikzlibrary{patterns}
 
 \begin{document}
-\begin{tikzpicture}[x=4cm,y=4cm]
+\begin{tikzpicture}[x=5cm,y=5cm]
 % Passaic River
 \draw[thick, color=blue, rounded corners=4pt]
   (2.2,4.8) -- (2.2,4.6) -- (2.4, 4.25) -- (2.7,3.95)
@@ -41,24 +44,28 @@
 
 % Stream from Hughes Lake
 \draw[thick, color=blue, rounded corners=4pt]
-  (1.75,4.1) -- (2.0,3.9) -- (2.2,3.7)
-            -- (2.25,3.6) -- (2.15,3.4)
-            -- (2.2,3.2)
-            -- (2.25,2.95);
+  (1.75,4.1) -- (2.0,3.9) -- (2.2,3.7) -- (2.25,3.6)
+    -- (2.15,3.4) -- (2.2,3.2) -- (2.25,2.95);
 
-% Third River
+% Third River to wetland
 \draw[thick, color=blue, rounded corners=4pt]
   (0.1,1.35)
-            -- (1.95,1.35);
+            -- (1.65,2.0);
 
 % Third River wetland
-\fill[color=blue, rounded corners=4pt]
+\filldraw[thick, color=blue, fill=blue!50, pattern=dots, rounded corners=4pt]
   (1.7,1.75) -- (1.75,1.85) -- (1.75,2.0)
     -- (1.8,2.05) -- (1.7,2.15)
     -- (1.65,2.0) -- (1.55,1.95)
     -- (1.55,1.85) -- (1.65,1.85)
     -- (1.6,1.8)
     -- cycle;
+
+% Third River from wetland
+\draw[thick, color=blue, rounded corners=4pt]
+    (1.7,1.75)
+              -- (1.95,1.35);
+
 
 % Stream from Bergen County Park
 \draw[thick, color=blue, rounded corners=4pt]
