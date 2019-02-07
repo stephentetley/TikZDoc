@@ -1,4 +1,4 @@
-﻿// Copyright (c) Stephen Tetley 2018
+﻿// Copyright (c) Stephen Tetley 2018,2019
 // License: BSD 3 Clause
 
 namespace TikZDoc
@@ -12,9 +12,10 @@ module LaTeX =
     open System.IO
   
     open SLFormat
+    
+    open TikZDoc.Internal.Common
+    open TikZDoc.Internal.Invoke
     open TikZDoc.Internal.LaTeXDoc
-    open TikZDoc.Internal
-
 
     type LaTeX = LaTeXDocument
 
@@ -37,7 +38,7 @@ module LaTeX =
 
     let comment (text: string) : LaTeX = 
         let comment1 (s:string) = raw ("% " + s)
-        vcat << List.map comment1 <| unlines text 
+        vcat << List.map comment1 <| toLines text 
 
     let arguments : LaTeX list -> LaTeX = argumentsList 
 
@@ -106,35 +107,6 @@ module LaTeX =
                 | PostScript -> documentclass [] "article"
                 | PDF -> documentclass [] "article" ^@@^ def "pgfsysdriver" (arguments [raw "pgfsys-dvipdfm.def"])
                 | SVG -> documentclass [raw "dvisvgm"] "minimal"        
-
-    
-    /// > latex "<InputFile>.tex"         
-    let private runLatex (shellWorkingDirectory:string) (finalName:string) : unit =
-        let texFile = Path.ChangeExtension(finalName, "tex")
-        let command = doubleQuote texFile
-        shellRun shellWorkingDirectory "latex" command
-
-    /// > dvips -o "<FinalName>" "<RootName>.dvi"
-    let private runDvips (shellWorkingDirectory:string) (finalName:string) : unit =
-        let dviFile = Path.ChangeExtension(finalName, "dvi")
-        let psFile = finalName
-        let command = sprintf "-o %s %s" (doubleQuote psFile) (doubleQuote dviFile)
-        shellRun shellWorkingDirectory "dvips" command
-
-    /// > dvipdfm -o "<FinalName>" "<RootName>.dvi"
-    let private runDvipdfm (shellWorkingDirectory:string) (finalName:string) : unit =
-        let dviFile = Path.ChangeExtension(finalName, "dvi")
-        let pdfFile = finalName
-        let command = sprintf "-o %s %s" (doubleQuote pdfFile) (doubleQuote dviFile)
-        shellRun shellWorkingDirectory "dvipdfm" command
-
-    /// > dvisvgm --output="<FinalName>" --bbox=none "<RootName>.dvi"
-    let private runDvisvgm (shellWorkingDirectory:string) (finalName:string) : unit =
-        let dviFile = Path.ChangeExtension(finalName, "dvi")
-        let svgFile = finalName
-        let command = sprintf "--output=%s --bbox=none %s" (doubleQuote svgFile) (doubleQuote dviFile)
-        shellRun shellWorkingDirectory "dvisvgm" command
-
 
 
     type LaTeXDocument with

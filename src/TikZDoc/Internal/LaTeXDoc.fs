@@ -1,19 +1,13 @@
-﻿// Copyright (c) Stephen Tetley 2018
+﻿// Copyright (c) Stephen Tetley 2018,2019
 // License: BSD 3 Clause
 
-namespace TikZDoc.Internal.LaTeXDoc
+namespace TikZDoc.Internal
 
 
-[<AutoOpen>]
 module LaTeXDoc = 
 
     open SLFormat
-    open TikZDoc.Internal
     
-    
-
-
-
     // Single case union 
     [<Struct>]
     type LaTeXDocument = 
