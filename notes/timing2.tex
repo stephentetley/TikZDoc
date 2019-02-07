@@ -1,0 +1,25 @@
+% timing2.tex
+% For Postscript
+\documentclass{article}
+\usepackage{tikz}
+\usepackage{tikz-timing}
+
+\begin{document}
+
+% Don't call \begin{tikztimingtable} inside a tikzpicture
+% https://tex.stackexchange.com/questions/200405/simple-tikz-timing-example-fails-to-compile-with-tex-capacity-exceeded
+
+\begin{tikztimingtable}[
+    timing/xunit=30,timing/yunit=30, % scale diagrams
+    font = \Large
+  ]
+  <<Name>>  & hLLLLh        \\
+  Clock     & 10{c}         \\
+  Signal    & z4D{[scale=1.5] Text}z    \\
+\extracode
+  \ raw (0,0) circle (0.2pt); % Origin
+  \begin {pgfonlayer}{background}
+    \vertlines[help lines]{0.5 ,4.5}
+  \end{pgfonlayer}
+\end{tikztimingtable}
+\end{document}

@@ -1,5 +1,5 @@
 
-all: example1 example2 example3 geo
+all: example1 example2 example3 geo timing1 timing2
 
 example1: example1.tex
 	latex   --output-directory="./out"  "example1.tex"
@@ -16,3 +16,13 @@ example3: example3.tex
 geo: geo.tex
 	latex   --output-directory="./out"  "geo.tex"
 	dvisvgm --output="./out/geo.svg" --bbox=none "./out/geo.dvi"
+
+timing1: timing1.tex
+	latex   --output-directory="./out"  "timing1.tex"
+	dvisvgm --output="./out/timing1.svg" --bbox=none "./out/timing1.dvi"
+
+timing2: timing2.tex timing2a.tex
+	latex --output-directory="./out"  "timing2.tex"
+	dvips -o "./out/timing2.ps"  "./out/timing2.dvi"
+	latex   --output-directory="./out"  "timing2a.tex"
+	dvisvgm --output="./out/timing2a.svg" --bbox=none "./out/timing2a.dvi"
