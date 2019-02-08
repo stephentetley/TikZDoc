@@ -9,55 +9,9 @@ namespace TikZDoc.Base
 
 
 [<AutoOpen>]
-module TikZLaTeX = 
+module Properties = 
 
-    open TikZDoc
-
-    type TikZPhantom = class end
-
-    type TikZ = GenLaTeX<TikZPhantom>
-
-    type TikZPropertyPhantom = class end
-
-    type TikZProperty = GenLaTeX<TikZPropertyPhantom>
-
-
-
-    /// Units are clunky because they must be the same type 
-    /// (ruling out units-of-measure), but a particular diagram 
-    /// is expected to use just one unit so a shim API for 
-    /// the diagram could fix the unit in the function signatures.
-    type Dims = 
-        | PT of double
-        | BP of double
-        | MM of double
-        | CM of double
-        | IN of double
-        | EX of double
-        | EM of double
-        member x.LaTeX 
-            with get() : TikZProperty = 
-                match x with 
-                | PT d -> raw <| sprintf "%fpt" d
-                | BP d -> raw <| sprintf "%fbp" d
-                | MM d -> raw <| sprintf "%fmm" d
-                | CM d -> raw <| sprintf "%fcm" d
-                | IN d -> raw <| sprintf "%fin" d
-                | EX d -> raw <| sprintf "%fex" d
-                | EM d -> raw <| sprintf "%fem" d
-
-
-    let usetikzlibrary (arguments:GenLaTeX<'a> list) : LaTeX = 
-        command "usetikzlibrary" [] arguments
-
-    let draw (options:GenLaTeX<'a> list) : TikZ = 
-        command "draw" options []
-
-    let fill (options:GenLaTeX<'a> list) : TikZ = 
-        command "fill" options []
-
-    let filldraw (options:GenLaTeX<'a> list) : TikZ = 
-        command "filldraw" options []
+    open TikZDoc.Base
 
 
     let roundedCorners : TikZProperty = raw "rounded corners"
@@ -155,42 +109,44 @@ module TikZLaTeX =
     let dashPhase (length:Dims) : TikZProperty = 
         property "dash phase" length.LaTeX
 
+    /// Line style "double"
     /// [double]
     /// _Opt suffix as begin is a double is a standard F# function.
-    let doubleOpt : LaTeX = raw "double"
+    let doubleLineStyle : TikZProperty = raw "double"
 
-    let doubleDistance (dist:Dims) : LaTeX = 
+    /// Line style "double distance=.3cm"
+    let doubleDistance (dist:Dims) : TikZProperty = 
         property "double distance" dist.LaTeX
 
 
     // Fillings
     // \usetikzlibrary{patterns}
 
-    let dots : LaTeX = raw "dots"
+    let dots : TikZProperty = raw "dots"
 
-    let fivepointedStars : LaTeX = raw "fivepointed stars"
+    let fivepointedStars : TikZProperty = raw "fivepointed stars"
 
-    let sixpointedStars : LaTeX = raw "sixpointed stars"
+    let sixpointedStars : TikZProperty = raw "sixpointed stars"
 
-    let grid : LaTeX = raw "grid"
+    let grid : TikZProperty = raw "grid"
 
-    let horizontalLines : LaTeX = raw "horizontal lines"
+    let horizontalLines : TikZProperty = raw "horizontal lines"
 
-    let verticalLines : LaTeX = raw "vertical lines"
+    let verticalLines : TikZProperty = raw "vertical lines"
 
-    let northEastLines : LaTeX = raw "north east lines"
+    let northEastLines : TikZProperty = raw "north east lines"
 
-    let northWestLines : LaTeX = raw "north west lines"
+    let northWestLines : TikZProperty = raw "north west lines"
 
-    let crosshatch : LaTeX = raw "crosshatch"
+    let crosshatch : TikZProperty = raw "crosshatch"
 
-    let crosshatchDots : LaTeX = raw "crosshatch dots"
+    let crosshatchDots : TikZProperty = raw "crosshatch dots"
 
-    let bricks : LaTeX = raw "bricks"
+    let bricks : TikZProperty = raw "bricks"
 
-    let checkerboard : LaTeX = raw "checkerboard"
+    let checkerboard : TikZProperty = raw "checkerboard"
 
-    let patternColor (color:LaTeX) = 
+    let patternColor (color:TikZProperty) : TikZProperty = 
         property "pattern color" color
 
     // Extremeties (arrow heads)
@@ -200,112 +156,78 @@ module TikZLaTeX =
     /// "->"; "<-"; "<->"; ">->"; "-to"; "-to reversed"; 
     /// "-o"; "-|"; "-latex"; "-latex reversed";
     /// "-stealth"; "-stealth reversed"
-    let arrowhead (ascii:string) : LaTeX = raw ascii
+    let arrowhead (ascii:string) : TikZProperty = raw ascii
 
     // arrow.meta
     // Notation arr_ prefix for "-"
     // \usetikzlibrary{arrows.meta}
 
-    let arrArcBarb : LaTeX = raw "-Arc Barb"
+    let arrArcBarb : TikZProperty = raw "-Arc Barb"
 
-    let arrBar : LaTeX = raw "-Bar"
+    let arrBar : TikZProperty = raw "-Bar"
 
-    let arrBracket : LaTeX = raw "-Bracket"
+    let arrBracket : TikZProperty = raw "-Bracket"
 
-    let arrHooks : LaTeX = raw "-Hooks"
+    let arrHooks : TikZProperty = raw "-Hooks"
 
-    let arrStealth : LaTeX = raw "-Stealth"
+    let arrStealth : TikZProperty = raw "-Stealth"
 
-    let arrParenthesis : LaTeX = raw "-Parenthesis"
+    let arrParenthesis : TikZProperty = raw "-Parenthesis"
 
-    let arrStraightBarb : LaTeX = raw "-Straight Barb"
+    let arrStraightBarb : TikZProperty = raw "-Straight Barb"
 
-    let arrTeeBarb : LaTeX = raw "-TeeBarb"
+    let arrTeeBarb : TikZProperty = raw "-TeeBarb"
 
-    let arrClassicalTikZRightarrow : LaTeX = 
+    let arrClassicalTikZRightarrow : TikZProperty = 
         raw "-Classical TikZ Rightarrow"
 
-    let arrSquare : LaTeX = raw "-Square"
+    let arrSquare : TikZProperty = raw "-Square"
 
-    let arrCircle : LaTeX = raw "-Circle"
+    let arrCircle : TikZProperty = raw "-Circle"
 
-    let arrImplies : LaTeX = raw "-Implies"
+    let arrImplies : TikZProperty = raw "-Implies"
 
     let arrRectangle : LaTeX = raw "-Rectangle"
 
-    let arrComputerModernRightarrow : LaTeX = 
+    let arrComputerModernRightarrow : TikZProperty = 
         raw "-Computer Modern Rightarrow"
 
-    let arrTurnedSquare : LaTeX = raw "-TurnedSquare"
+    let arrTurnedSquare : TikZProperty = raw "-TurnedSquare"
 
-    let arrDiamond : LaTeX = raw "-Diamond"
+    let arrDiamond : TikZProperty = raw "-Diamond"
 
-    let arrEllipsis : LaTeX = raw "-Ellipsis"
+    let arrEllipsis : TikZProperty = raw "-Ellipsis"
 
-    let arrKite : LaTeX = raw "-Kite"
+    let arrKite : TikZProperty = raw "-Kite"
 
-    let arrLatex : LaTeX = raw "-Latex"
+    let arrLatex : TikZProperty = raw "-Latex"
 
-    let arrTriangle : LaTeX = raw "-Triangle"
+    let arrTriangle : TikZProperty = raw "-Triangle"
 
     
     // Notation: end_ prefix for "-"
-    let endButtCap : LaTeX = raw "-Butt Cap"
+    let endButtCap : TikZProperty = raw "-Butt Cap"
     
-    let endFastRound : LaTeX = raw "-Fast Round"
+    let endFastRound : TikZProperty = raw "-Fast Round"
 
-    let endFastTriangle : LaTeX = raw "-Fast Triangle"
+    let endFastTriangle : TikZProperty = raw "-Fast Triangle"
 
-    let endRoundCap : LaTeX = raw "-Round Cap"
+    let endRoundCap : TikZProperty = raw "-Round Cap"
 
-    let endTriangleCap : LaTeX = raw "-Triangle Cap"
+    let endTriangleCap : TikZProperty = raw "-Triangle Cap"
 
 
 
-    let name (nodeName:string) : LaTeX = 
+    let name (nodeName:string) : TikZProperty = 
         property "name" (raw nodeName)
     
-    let alias (aliasName:string) : LaTeX = 
+    let alias (aliasName:string) : TikZProperty = 
         property "alias" (raw aliasName)
 
-    let nodeContents (contents:LaTeX) : LaTeX = 
+    let nodeContents (contents:LaTeX) : TikZProperty = 
         property "node contents" contents
 
 
-    // Coordinates
-
-    type Coord = 
-        val Units : option<Dims>
-        val XPos : decimal
-        val YPos : decimal
-
-        new (x:decimal, y:decimal) = 
-            { Units = None 
-            ; XPos = x
-            ; YPos = y }
-        
-        new (x:decimal, y:decimal, dims:Dims) = 
-            { Units = Some dims
-            ; XPos = x
-            ; YPos = y }
-            
-        new (x:double, y:double) = 
-            { Units = None 
-            ; XPos = decimal x
-            ; YPos = decimal y }
-        
-        new (x:double, y:double, dims:Dims) = 
-            { Units = Some dims 
-            ; XPos = decimal x
-            ; YPos = decimal y }
-
-        member x.LaTeX 
-            with get() = 
-                let sx = raw <| x.XPos.ToString()
-                let sy = raw <| x.YPos.ToString()
-                match x.Units with 
-                | None -> parens (sx ^^ raw "," ^^ sy)
-                | Some dims -> parens (sx ^^ dims.LaTeX ^^ raw "," ^^ sy ^^ dims.LaTeX)
 
         
 
@@ -317,37 +239,37 @@ module TikZLaTeX =
     
     let brown : TikZProperty = raw "brown"
     
-    let cyan : LaTeX = raw "cyan"
+    let cyan : TikZProperty = raw "cyan"
     
-    let darkgray : LaTeX = raw "darkgray"
+    let darkgray : TikZProperty = raw "darkgray"
     
-    let gray : LaTeX = raw "gray"
+    let gray : TikZProperty = raw "gray"
     
-    let green : LaTeX = raw "green"
+    let green : TikZProperty = raw "green"
     
-    let lightgray : LaTeX = raw "lightgray"
+    let lightgray : TikZProperty = raw "lightgray"
     
-    let lime : LaTeX = raw "lime"
+    let lime : TikZProperty = raw "lime"
     
-    let magenta : LaTeX = raw "magenta"
+    let magenta : TikZProperty = raw "magenta"
     
-    let olive : LaTeX = raw "olive"
+    let olive : TikZProperty = raw "olive"
     
-    let orange : LaTeX = raw "orange"
+    let orange : TikZProperty = raw "orange"
     
-    let pink : LaTeX = raw "pink"
+    let pink : TikZProperty = raw "pink"
     
-    let purple : LaTeX = raw "purple"
+    let purple : TikZProperty = raw "purple"
     
-    let red : LaTeX = raw "red"
+    let red : TikZProperty = raw "red"
     
-    let teal : LaTeX = raw "teal"
+    let teal : TikZProperty = raw "teal"
     
-    let violet : LaTeX = raw "violet"
+    let violet : TikZProperty = raw "violet"
     
-    let white : LaTeX = raw "white"
+    let white : TikZProperty = raw "white"
     
-    let yellow : LaTeX = raw "yellow"
+    let yellow : TikZProperty = raw "yellow"
 
     // Opacity
     
@@ -403,117 +325,117 @@ module TikZLaTeX =
                 | BlendColor -> raw "color"
                 | BlendLuminosity -> raw "luminosity"
                 
-    let blendGroup (blendMode:BlendMode) : LaTeX = 
+    let blendGroup (blendMode:BlendMode) : TikZProperty = 
         property "blend mode" blendMode.LaTeX
                 
     // Text highlighting
     
-    let innerSep (dims:Dims) : LaTeX = 
+    let innerSep (dims:Dims) : TikZProperty = 
         property "inner sep" dims.LaTeX
         
-    let innerXsep (dims:Dims) : LaTeX = 
+    let innerXsep (dims:Dims) : TikZProperty = 
         property "inner xsep" dims.LaTeX
 
-    let innerYsep (dims:Dims) : LaTeX = 
+    let innerYsep (dims:Dims) : TikZProperty = 
         property "inner ysep" dims.LaTeX        
     
-    let outerSep (dims:Dims) : LaTeX = 
+    let outerSep (dims:Dims) : TikZProperty = 
         property "outer sep" dims.LaTeX
         
-    let outerXsep (dims:Dims) : LaTeX = 
+    let outerXsep (dims:Dims) : TikZProperty = 
         property "outer xsep" dims.LaTeX
 
-    let outerYsep (dims:Dims) : LaTeX = 
+    let outerYsep (dims:Dims) : TikZProperty = 
         property "outer ysep" dims.LaTeX 
 
-    let minimumHeight (dims:Dims) : LaTeX = 
+    let minimumHeight (dims:Dims) : TikZProperty = 
         property "minimum height" dims.LaTeX 
 
-    let minimumWidth (dims:Dims) : LaTeX = 
+    let minimumWidth (dims:Dims) : TikZProperty = 
         property "minimum width" dims.LaTeX 
 
-    let minimumSize (dims:Dims) : LaTeX = 
+    let minimumSize (dims:Dims) : TikZProperty = 
         property "minimum size" dims.LaTeX 
         
     // Geometric Shape nodes
     // \usetikzlibrary{shapes.geometric}
     
-    let diamond : LaTeX = raw "diamond"
+    let diamond : TikZProperty = raw "diamond"
     
-    let ellipse : LaTeX = raw "ellipse"
+    let ellipse : TikZProperty = raw "ellipse"
     
-    let trapezium : LaTeX = raw "trapezium"
+    let trapezium : TikZProperty = raw "trapezium"
     
-    let semicircle : LaTeX = raw "semicircle"
+    let semicircle : TikZProperty = raw "semicircle"
     
-    let star : LaTeX = raw "star"
+    let star : TikZProperty = raw "star"
     
-    let regularPolygon : LaTeX = raw "regular polygon"
+    let regularPolygon : TikZProperty = raw "regular polygon"
     
-    let isoscelesTriangle : LaTeX = raw "isosceles triangle"
+    let isoscelesTriangle : TikZProperty = raw "isosceles triangle"
     
-    let kite : LaTeX = raw "kite"
+    let kite : TikZProperty = raw "kite"
     
-    let dart : LaTeX = raw "dart"
+    let dart : TikZProperty = raw "dart"
     
-    let circularSector : LaTeX = raw "circular sector"
+    let circularSector : TikZProperty = raw "circular sector"
     
-    let cylinder : LaTeX = raw "cylinder"
+    let cylinder : TikZProperty = raw "cylinder"
 
     // Symbol Shape nodes
     // \usetikzlibrary{shapes.symbols}
     
-    let forbiddenSign : LaTeX = raw "forbidden sign"
+    let forbiddenSign : TikZProperty = raw "forbidden sign"
     
-    let magnifyingGlass : LaTeX = raw "magnifying glass"
+    let magnifyingGlass : TikZProperty = raw "magnifying glass"
     
-    let cloud : LaTeX = raw "cloud"
+    let cloud : TikZProperty = raw "cloud"
     
-    let starburst : LaTeX = raw "starburst"
+    let starburst : TikZProperty = raw "starburst"
     
-    let signal : LaTeX = raw "signal"
+    let signal : TikZProperty = raw "signal"
     
-    let tape : LaTeX = raw "tape"
+    let tape : TikZProperty = raw "tape"
 
     // Arrow Shapes nodes
     // \usetikzlibrary{shapes.arrows}
     
-    let singleArrow : LaTeX = raw "single arrow"
+    let singleArrow : TikZProperty = raw "single arrow"
     
-    let doubleArrow : LaTeX = raw "double arrow"
+    let doubleArrow : TikZProperty = raw "double arrow"
     
-    let arrowBox : LaTeX = raw "arrow box"    
+    let arrowBox : TikZProperty = raw "arrow box"    
     
     // Callout Shapes nodes
     // \usetikzlibrary{shapes.callouts}
     
-    let ellipseCallout : LaTeX = raw "ellipse callout"
+    let ellipseCallout : TikZProperty = raw "ellipse callout"
     
-    let rectangleCallout : LaTeX = raw "rectangle callout"
+    let rectangleCallout : TikZProperty = raw "rectangle callout"
     
-    let cloudCallout : LaTeX = raw "cloudCallout"
+    let cloudCallout : TikZProperty = raw "cloudCallout"
     
     // Miscellaneous Shapes nodes
     // \usetikzlibrary{shapes.misc}
     
-    let crossOut : LaTeX = raw "cross out"
+    let crossOut : TikZProperty = raw "cross out"
     
-    let strikeOut : LaTeX = raw "strike out"
+    let strikeOut : TikZProperty = raw "strike out"
     
-    let roundedRectangle : LaTeX = raw "rounded rectangle"
+    let roundedRectangle : TikZProperty = raw "rounded rectangle"
     
-    let chamferedRectangle : LaTeX = raw "chamfered rectangle"
+    let chamferedRectangle : TikZProperty = raw "chamfered rectangle"
     
     // Shapes with Multiple Text Parts
     // \usetikzlibrary{shapes.multipart}
     
-    let circleSplit : LaTeX = raw "circle split"
+    let circleSplit : TikZProperty = raw "circle split"
     
-    let circleSolidus : LaTeX = raw "circle solidus"
+    let circleSolidus : TikZProperty = raw "circle solidus"
     
-    let ellipseSplit : LaTeX = raw "ellipse split"
+    let ellipseSplit : TikZProperty = raw "ellipse split"
     
-    let rectangleSplit : LaTeX = raw "rectangle split"
+    let rectangleSplit : TikZProperty = raw "rectangle split"
     
     // Text attributes
     
@@ -549,7 +471,7 @@ module TikZLaTeX =
                 | AlignLeft -> property "align" (raw "left")
                 | AlignFlushLeft -> property "align" (raw "flush left")
 
-    let textPosition (position:TextPosition) : LaTeX = 
+    let textPosition (position:TextPosition) : TikZProperty = 
         position.LaTeX
     
     // Positions on a node
@@ -593,11 +515,8 @@ module TikZLaTeX =
                 | AnchorCenter -> raw "center"
                 | AnchorDegree(x) -> raw <| x.ToString()
 
-    let anchor (position:Anchor) : LaTeX = 
+    let anchor (position:Anchor) : TikZProperty = 
         property "anchor" position.LaTeX
 
 
-    // Other 
 
-    let datavisualization (options:LaTeX list) : LaTeX = 
-        command "datavisualization" options []

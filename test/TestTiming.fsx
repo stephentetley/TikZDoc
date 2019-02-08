@@ -10,7 +10,8 @@
 #load "..\src\TikZDoc\Internal\Invoke.fs"
 #load "..\src\TikZDoc\Internal\LaTeXDocument.fs"
 #load "..\src\TikZDoc\Base\LaTeX.fs"
-#load "..\src\TikZDoc\Base\TikZLaTeX.fs"
+#load "..\src\TikZDoc\Base\TikZBase.fs"
+#load "..\src\TikZDoc\Base\Properties.fs"
 #load "..\src\TikZDoc\Extensions\TikZTiming\Timing.fs"
 
 open System.IO
