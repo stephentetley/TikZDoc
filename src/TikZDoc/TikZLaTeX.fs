@@ -13,6 +13,16 @@ module TikZLaTeX =
 
     open TikZDoc
 
+    type TikZPhantom = class end
+
+    type TikZ = GenLaTeX<TikZPhantom>
+
+    type TikZPropertyPhantom = class end
+
+    type TikZProperty = GenLaTeX<TikZPropertyPhantom>
+
+
+
     /// Units are clunky because they must be the same type 
     /// (ruling out units-of-measure), but a particular diagram 
     /// is expected to use just one unit so a shim API for 
@@ -26,7 +36,7 @@ module TikZLaTeX =
         | EX of double
         | EM of double
         member x.LaTeX 
-            with get() = 
+            with get() : TikZProperty = 
                 match x with 
                 | PT d -> raw <| sprintf "%fpt" d
                 | BP d -> raw <| sprintf "%fbp" d
@@ -37,62 +47,62 @@ module TikZLaTeX =
                 | EM d -> raw <| sprintf "%fem" d
 
 
-    let usetikzlibrary (arguments:LaTeX list) : LaTeX = 
+    let usetikzlibrary (arguments:GenLaTeX<'a> list) : LaTeX = 
         command "usetikzlibrary" [] arguments
 
-    let draw (options:LaTeX list) : LaTeX = 
+    let draw (options:GenLaTeX<'a> list) : TikZ = 
         command "draw" options []
 
-    let fill (options:LaTeX list) : LaTeX = 
+    let fill (options:GenLaTeX<'a> list) : TikZ = 
         command "fill" options []
 
-    let filldraw (options:LaTeX list) : LaTeX = 
+    let filldraw (options:GenLaTeX<'a> list) : TikZ = 
         command "filldraw" options []
 
 
-    let roundedCorners : LaTeX = raw "rounded corners"
+    let roundedCorners : TikZProperty = raw "rounded corners"
 
     /// Parametric version of roundedCorners
     /// i.e. [rounded corners=0.5cm]    
-    let roundedCornersDims (dims:Dims) : LaTeX = 
+    let roundedCornersDims (dims:Dims) : TikZProperty = 
         property "rounded corners" dims.LaTeX
 
 
-    let sharpCorners : LaTeX = raw "sharp corners"
+    let sharpCorners : TikZProperty = raw "sharp corners"
     
 
-    let lineWidth (width:Dims) : LaTeX = 
+    let lineWidth (width:Dims) : TikZProperty = 
         property "line width" width.LaTeX
 
-    let ultraThin : LaTeX = raw "ultra thin"
+    let ultraThin : TikZProperty = raw "ultra thin"
     
-    let veryThin : LaTeX = raw "very thin"
+    let veryThin : TikZProperty = raw "very thin"
 
-    let thin : LaTeX = raw "thin"
+    let thin : TikZProperty = raw "thin"
 
-    let semithick : LaTeX = raw "semithick"
+    let semithick : TikZProperty = raw "semithick"
 
-    let thick : LaTeX = raw "thick"
+    let thick : TikZProperty = raw "thick"
 
-    let veryThick : LaTeX = raw "very thick"
+    let veryThick : TikZProperty = raw "very thick"
 
-    let ultraThick : LaTeX = raw "ultra thick"
+    let ultraThick : TikZProperty = raw "ultra thick"
     
     
-    let huge : LaTeX = command "Huge" [] []
+    let huge : TikZProperty = command "Huge" [] []
 
 
 
     type LineCap = 
         | CapRect | CapButt | CapRound
         member x.LaTeX 
-            with get() = 
+            with get() : TikZProperty = 
                 match x with 
                 | CapRect -> raw "rect"
                 | CapButt -> raw "butt"
                 | CapRound -> raw "round"
 
-    let lineCap (cap:LineCap) : LaTeX = 
+    let lineCap (cap:LineCap) : TikZProperty = 
         property "line cap" cap.LaTeX
 
 
@@ -101,48 +111,48 @@ module TikZLaTeX =
     type LineJoin = 
         | JoinRound | JoinBevel | JoinMiter
         member x.LaTeX 
-            with get() = 
+            with get() : TikZProperty= 
                 match x with 
                 | JoinRound -> raw "round"
                 | JoinBevel -> raw "bevel"
                 | JoinMiter -> raw "miter"
 
-    let lineJoin (join:LineJoin) : LaTeX = 
+    let lineJoin (join:LineJoin) : TikZProperty = 
         property "line join" join.LaTeX
 
     
     // Line Styles
 
-    let solid : LaTeX = raw "solid"
+    let solid : TikZProperty = raw "solid"
 
-    let dotted : LaTeX = raw "dotted"
+    let dotted : TikZProperty = raw "dotted"
 
-    let denselyDotted : LaTeX = raw "densely dotted"
+    let denselyDotted : TikZProperty = raw "densely dotted"
 
-    let looselyDotted : LaTeX = raw "loosely dotted"
+    let looselyDotted : TikZProperty = raw "loosely dotted"
 
-    let dashed : LaTeX = raw "dashed"
+    let dashed : TikZProperty = raw "dashed"
 
-    let denselyDashed : LaTeX = raw "densely dashed"
+    let denselyDashed : TikZProperty = raw "densely dashed"
 
-    let looselyDashed : LaTeX = raw "loosely dashed"
+    let looselyDashed : TikZProperty = raw "loosely dashed"
 
-    let dashDot : LaTeX = raw "dash dot"
+    let dashDot : TikZProperty = raw "dash dot"
 
-    let denselyDashDot : LaTeX = raw "densely dash dot"
+    let denselyDashDot : TikZProperty = raw "densely dash dot"
 
-    let looselyDashDot : LaTeX = raw "loosely dash dot"
+    let looselyDashDot : TikZProperty = raw "loosely dash dot"
 
-    let dashDotDot : LaTeX = raw "dash dot dot"
+    let dashDotDot : TikZProperty = raw "dash dot dot"
 
-    let denselyDashDotDot : LaTeX = raw "densely dash dot dot"
+    let denselyDashDotDot : TikZProperty = raw "densely dash dot dot"
 
-    let looselyDashDotDot : LaTeX = raw "loosely dash dot dot"
+    let looselyDashDotDot : TikZProperty = raw "loosely dash dot dot"
 
-    let dashPattern (pattern:LaTeX) : LaTeX = 
+    let dashPattern (pattern:LaTeX) : TikZProperty = 
         property "dash pattern" pattern
 
-    let dashPhase (length:Dims) : LaTeX = 
+    let dashPhase (length:Dims) : TikZProperty = 
         property "dash phase" length.LaTeX
 
     /// [double]
@@ -301,11 +311,11 @@ module TikZLaTeX =
 
     // Basic colors
 
-    let black : LaTeX = raw "black"
+    let black : TikZProperty = raw "black"
     
-    let blue : LaTeX = raw "blue"
+    let blue : TikZProperty = raw "blue"
     
-    let brown : LaTeX = raw "brown"
+    let brown : TikZProperty = raw "brown"
     
     let cyan : LaTeX = raw "cyan"
     
@@ -341,26 +351,26 @@ module TikZLaTeX =
 
     // Opacity
     
-    let opacity (level:double) : LaTeX = 
+    let opacity (level:double) : TikZProperty = 
         property "opacity" (raw <| sprintf "%f" level)
         
-    let transparent : LaTeX = raw "transparent"
+    let transparent : TikZProperty = raw "transparent"
     
-    let ultraNearlyTransparent : LaTeX = raw "ultra nearly transparent"
+    let ultraNearlyTransparent : TikZProperty = raw "ultra nearly transparent"
     
-    let veryNearlyTransparent : LaTeX = raw "very nearly transparent"
+    let veryNearlyTransparent : TikZProperty = raw "very nearly transparent"
     
-    let nearlyTransparent : LaTeX = raw "nearly transparent"
+    let nearlyTransparent : TikZProperty = raw "nearly transparent"
     
-    let semitransparent : LaTeX = raw "semitransparent"
+    let semitransparent : TikZProperty = raw "semitransparent"
     
-    let nearlyOpaque : LaTeX = raw "nearly opaque"
+    let nearlyOpaque : TikZProperty = raw "nearly opaque"
     
-    let veryNearlyOpaque : LaTeX = raw "very nearly opaque" 
+    let veryNearlyOpaque : TikZProperty = raw "very nearly opaque" 
     
-    let ultraNearlyOpaque : LaTeX = raw "ultra nearly opaque"
+    let ultraNearlyOpaque : TikZProperty = raw "ultra nearly opaque"
     
-    let opaque : LaTeX = raw "opaque"
+    let opaque : TikZProperty = raw "opaque"
     
     // Blend Mode
     
@@ -507,7 +517,7 @@ module TikZLaTeX =
     
     // Text attributes
     
-    let textWidth (dims:Dims) : LaTeX = 
+    let textWidth (dims:Dims) : TikZProperty = 
         property "text width" dims.LaTeX
         
     type TextPosition =

@@ -8,7 +8,7 @@
 
 #load "..\src\TikZDoc\Internal\Common.fs"
 #load "..\src\TikZDoc\Internal\Invoke.fs"
-#load "..\src\TikZDoc\Internal\LaTeXDoc.fs"
+#load "..\src\TikZDoc\Internal\LaTeXDocument.fs"
 #load "..\src\TikZDoc\LaTeX.fs"
 #load "..\src\TikZDoc\TikZLaTeX.fs"
 
@@ -18,7 +18,7 @@ open TikZDoc
 
 let workingDirectory = Path.Combine(__SOURCE_DIRECTORY__, "..", "output")
 
-let output (tex:LaTeX) : unit = 
+let output (tex:GenLaTeX<'x>) : unit = 
     tex.Render(lineWidth = 80) |> printfn "%s"
 
 let test01 () = 
@@ -35,7 +35,7 @@ let doc1 () : LaTeX =
         [ usepackage [] "tikz"      
         ; beginCmd [] "document" 
         ; beginCmd [] "tikzpicture" 
-        ; draw [thick; roundedCornersDims (PT 8.0)]
+        ; castLaTeX <| draw [thick; roundedCornersDims (PT 8.0)]
         ; raw "(0,0) -- (0,2) -- (1,3.25) -- (2,2) -- (2,0) -- (0,2) -- (2,2) -- (0,0) -- (2,0);"
         ; endCmd "tikzpicture"
         ; endCmd "document"

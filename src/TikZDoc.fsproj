@@ -7,7 +7,7 @@
   <ItemGroup>
     <Compile Include="TikZDoc\Internal\Common.fs" />
     <Compile Include="TikZDoc\Internal\Invoke.fs" />
-    <Compile Include="TikZDoc\Internal\LaTeXDoc.fs" />
+    <Compile Include="TikZDoc\Internal\LaTeXDocument.fs" />
     <Compile Include="TikZDoc\LaTeX.fs" />
     <Compile Include="TikZDoc\TikZLaTeX.fs" />
     <Compile Include="TikZDoc\Extensions\TikZTiming\Timing.fs" />

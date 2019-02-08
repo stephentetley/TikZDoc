@@ -8,7 +8,7 @@
 
 #load "..\src\TikZDoc\Internal\Common.fs"
 #load "..\src\TikZDoc\Internal\Invoke.fs"
-#load "..\src\TikZDoc\Internal\LaTeXDoc.fs"
+#load "..\src\TikZDoc\Internal\LaTeXDocument.fs"
 #load "..\src\TikZDoc\LaTeX.fs"
 #load "..\src\TikZDoc\TikZLaTeX.fs"
 #load "..\src\TikZDoc\Extensions\TikZTiming\Timing.fs"
@@ -21,7 +21,7 @@ open TikZDoc.Extensions.TikZTiming
 let workingDirectory = Path.Combine(__SOURCE_DIRECTORY__, "..", "output")
 
 
-let output (tex:LaTeX) : unit = 
+let output (tex:GenLaTeX<'a>) : unit = 
     tex.Render(lineWidth = 80) |> printfn "%s"
 
 let test01 () = 
