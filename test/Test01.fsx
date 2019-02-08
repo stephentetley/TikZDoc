@@ -9,11 +9,11 @@
 #load "..\src\TikZDoc\Internal\Common.fs"
 #load "..\src\TikZDoc\Internal\Invoke.fs"
 #load "..\src\TikZDoc\Internal\LaTeXDocument.fs"
-#load "..\src\TikZDoc\LaTeX.fs"
-#load "..\src\TikZDoc\TikZLaTeX.fs"
+#load "..\src\TikZDoc\Base\LaTeX.fs"
+#load "..\src\TikZDoc\Base\TikZLaTeX.fs"
 
 open System.IO
-open TikZDoc
+open TikZDoc.Base
 
 
 let workingDirectory = Path.Combine(__SOURCE_DIRECTORY__, "..", "output")

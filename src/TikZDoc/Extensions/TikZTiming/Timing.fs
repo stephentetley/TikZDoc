@@ -6,8 +6,9 @@ namespace TikZDoc.Extensions.TikZTiming
 
 [<AutoOpen>]
 module Timing = 
-    open SLFormat
-    open TikZDoc
+    
+
+    open TikZDoc.Base
 
     type TimingChar = 
         | High

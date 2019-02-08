@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Stephen Tetley 2018
 // License: BSD 3 Clause
 
-namespace TikZDoc
+namespace TikZDoc.Base
 
 /// Generate output for rendering with LaTeX.
 /// Alternative implmenetations for plain TeX or ConTEXt are possible 
