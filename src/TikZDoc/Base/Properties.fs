@@ -1,4 +1,4 @@
-﻿// Copyright (c) Stephen Tetley 2018
+﻿// Copyright (c) Stephen Tetley 2018,2019
 // License: BSD 3 Clause
 
 namespace TikZDoc.Base
@@ -19,14 +19,14 @@ module Properties =
     /// Parametric version of roundedCorners
     /// i.e. [rounded corners=0.5cm]    
     let roundedCornersDims (dims:Dims) : TikZProperty = 
-        property "rounded corners" dims.LaTeX
+        keyvalue "rounded corners" dims.LaTeX
 
 
     let sharpCorners : TikZProperty = raw "sharp corners"
     
 
     let lineWidth (width:Dims) : TikZProperty = 
-        property "line width" width.LaTeX
+        keyvalue "line width" width.LaTeX
 
     let ultraThin : TikZProperty = raw "ultra thin"
     
@@ -57,7 +57,7 @@ module Properties =
                 | CapRound -> raw "round"
 
     let lineCap (cap:LineCap) : TikZProperty = 
-        property "line cap" cap.LaTeX
+        keyvalue "line cap" cap.LaTeX
 
 
     // Lines Junction
@@ -72,7 +72,7 @@ module Properties =
                 | JoinMiter -> raw "miter"
 
     let lineJoin (join:LineJoin) : TikZProperty = 
-        property "line join" join.LaTeX
+        keyvalue "line join" join.LaTeX
 
     
     // Line Styles
@@ -104,10 +104,10 @@ module Properties =
     let looselyDashDotDot : TikZProperty = raw "loosely dash dot dot"
 
     let dashPattern (pattern:LaTeX) : TikZProperty = 
-        property "dash pattern" pattern
+        keyvalue "dash pattern" pattern
 
     let dashPhase (length:Dims) : TikZProperty = 
-        property "dash phase" length.LaTeX
+        keyvalue "dash phase" length.LaTeX
 
     /// Line style "double"
     /// [double]
@@ -116,7 +116,7 @@ module Properties =
 
     /// Line style "double distance=.3cm"
     let doubleDistance (dist:Dims) : TikZProperty = 
-        property "double distance" dist.LaTeX
+        keyvalue "double distance" dist.LaTeX
 
 
     // Fillings
@@ -147,7 +147,7 @@ module Properties =
     let checkerboard : TikZProperty = raw "checkerboard"
 
     let patternColor (color:TikZProperty) : TikZProperty = 
-        property "pattern color" color
+        keyvalue "pattern color" color
 
     // Extremeties (arrow heads)
 
@@ -219,13 +219,13 @@ module Properties =
 
 
     let name (nodeName:string) : TikZProperty = 
-        property "name" (raw nodeName)
+        keyvalue "name" (raw nodeName)
     
     let alias (aliasName:string) : TikZProperty = 
-        property "alias" (raw aliasName)
+        keyvalue "alias" (raw aliasName)
 
     let nodeContents (contents:LaTeX) : TikZProperty = 
-        property "node contents" contents
+        keyvalue "node contents" contents
 
 
 
@@ -274,7 +274,7 @@ module Properties =
     // Opacity
     
     let opacity (level:double) : TikZProperty = 
-        property "opacity" (raw <| sprintf "%f" level)
+        keyvalue "opacity" (raw <| sprintf "%f" level)
         
     let transparent : TikZProperty = raw "transparent"
     
@@ -326,36 +326,36 @@ module Properties =
                 | BlendLuminosity -> raw "luminosity"
                 
     let blendGroup (blendMode:BlendMode) : TikZProperty = 
-        property "blend mode" blendMode.LaTeX
+        keyvalue "blend mode" blendMode.LaTeX
                 
     // Text highlighting
     
     let innerSep (dims:Dims) : TikZProperty = 
-        property "inner sep" dims.LaTeX
+        keyvalue "inner sep" dims.LaTeX
         
     let innerXsep (dims:Dims) : TikZProperty = 
-        property "inner xsep" dims.LaTeX
+        keyvalue "inner xsep" dims.LaTeX
 
     let innerYsep (dims:Dims) : TikZProperty = 
-        property "inner ysep" dims.LaTeX        
+        keyvalue "inner ysep" dims.LaTeX        
     
     let outerSep (dims:Dims) : TikZProperty = 
-        property "outer sep" dims.LaTeX
+        keyvalue "outer sep" dims.LaTeX
         
     let outerXsep (dims:Dims) : TikZProperty = 
-        property "outer xsep" dims.LaTeX
+        keyvalue "outer xsep" dims.LaTeX
 
     let outerYsep (dims:Dims) : TikZProperty = 
-        property "outer ysep" dims.LaTeX 
+        keyvalue "outer ysep" dims.LaTeX 
 
     let minimumHeight (dims:Dims) : TikZProperty = 
-        property "minimum height" dims.LaTeX 
+        keyvalue "minimum height" dims.LaTeX 
 
     let minimumWidth (dims:Dims) : TikZProperty = 
-        property "minimum width" dims.LaTeX 
+        keyvalue "minimum width" dims.LaTeX 
 
     let minimumSize (dims:Dims) : TikZProperty = 
-        property "minimum size" dims.LaTeX 
+        keyvalue "minimum size" dims.LaTeX 
         
     // Geometric Shape nodes
     // \usetikzlibrary{shapes.geometric}
@@ -440,7 +440,7 @@ module Properties =
     // Text attributes
     
     let textWidth (dims:Dims) : TikZProperty = 
-        property "text width" dims.LaTeX
+        keyvalue "text width" dims.LaTeX
         
     type TextPosition =
         | TextJustified
@@ -463,13 +463,13 @@ module Properties =
                 | TextRagged -> raw "text ragged"
                 | TextBadlyRagged -> raw "text badly ragged"
                 | TextBadlyCentered -> raw "text badly centered"
-                | AlignCenter -> property "align" (raw "center")
-                | AlignFlushCenter -> property "align" (raw "flush center")
-                | AlignJustify -> property "align" (raw "justify")
-                | AlignRight -> property "align" (raw "right")
-                | AlignFlushRight -> property "align" (raw "flush right")
-                | AlignLeft -> property "align" (raw "left")
-                | AlignFlushLeft -> property "align" (raw "flush left")
+                | AlignCenter -> keyvalue "align" (raw "center")
+                | AlignFlushCenter -> keyvalue "align" (raw "flush center")
+                | AlignJustify -> keyvalue "align" (raw "justify")
+                | AlignRight -> keyvalue "align" (raw "right")
+                | AlignFlushRight -> keyvalue "align" (raw "flush right")
+                | AlignLeft -> keyvalue "align" (raw "left")
+                | AlignFlushLeft -> keyvalue "align" (raw "flush left")
 
     let textPosition (position:TextPosition) : TikZProperty = 
         position.LaTeX
@@ -516,7 +516,7 @@ module Properties =
                 | AnchorDegree(x) -> raw <| x.ToString()
 
     let anchor (position:Anchor) : TikZProperty = 
-        property "anchor" position.LaTeX
+        keyvalue "anchor" position.LaTeX
 
 
 

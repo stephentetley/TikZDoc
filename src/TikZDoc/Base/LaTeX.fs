@@ -65,7 +65,7 @@ module LaTeX =
     
     
     /// <propertyName>=<propertyValue>
-    let property (propertyName:string) (propertyValue:GenLaTeX<'a>) : GenLaTeX<'x> = 
+    let keyvalue (propertyName:string) (propertyValue:GenLaTeX<'a>) : GenLaTeX<'x> = 
         raw propertyName  ^^ raw "=" ^^ propertyValue
 
 
