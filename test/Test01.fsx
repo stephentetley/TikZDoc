@@ -19,7 +19,7 @@ open TikZDoc
 let workingDirectory = Path.Combine(__SOURCE_DIRECTORY__, "..", "output")
 
 let output (tex:LaTeX) : unit = 
-    printfn "%s" <| tex.Render(lineWidth = 80)
+    tex.Render(lineWidth = 80) |> printfn "%s"
 
 let test01 () = 
     output <| beginCmd [] "document"

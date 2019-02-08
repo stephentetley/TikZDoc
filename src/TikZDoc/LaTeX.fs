@@ -19,6 +19,8 @@ module LaTeX =
 
     type LaTeX = LaTeXDocument
 
+    let empty : LaTeX = TikZDoc.Internal.LaTeXDoc.empty
+
     let raw : string -> LaTeX = rawText
 
     let (^^) : LaTeX -> LaTeX -> LaTeX  = liftCat Pretty.beside

@@ -10,6 +10,7 @@
     <Compile Include="TikZDoc\Internal\LaTeXDoc.fs" />
     <Compile Include="TikZDoc\LaTeX.fs" />
     <Compile Include="TikZDoc\TikZLaTeX.fs" />
+    <Compile Include="TikZDoc\Extensions\TikZTiming\Timing.fs" />
   </ItemGroup>
 
   <ItemGroup>
