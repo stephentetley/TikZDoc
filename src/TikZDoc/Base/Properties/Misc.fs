@@ -1,15 +1,13 @@
 ﻿// Copyright (c) Stephen Tetley 2018,2019
 // License: BSD 3 Clause
 
-namespace TikZDoc.Base
+namespace TikZDoc.Base.Properties
 
-/// Generate output for rendering with LaTeX.
-/// Alternative implmenetations for plain TeX or ConTEXt are possible 
-/// but unlikely to be realized.
+// TODO - more code can moved to separate modules.
 
 
 [<AutoOpen>]
-module Properties = 
+module Misc = 
 
     open TikZDoc.Base
 
@@ -119,90 +117,8 @@ module Properties =
         keyvalue "double distance" dist.LaTeX
 
 
-    // Fillings
-    // \usetikzlibrary{patterns}
+ 
 
-    let dots : TikZProperty = raw "dots"
-
-    let fivepointedStars : TikZProperty = raw "fivepointed stars"
-
-    let sixpointedStars : TikZProperty = raw "sixpointed stars"
-
-    let grid : TikZProperty = raw "grid"
-
-    let horizontalLines : TikZProperty = raw "horizontal lines"
-
-    let verticalLines : TikZProperty = raw "vertical lines"
-
-    let northEastLines : TikZProperty = raw "north east lines"
-
-    let northWestLines : TikZProperty = raw "north west lines"
-
-    let crosshatch : TikZProperty = raw "crosshatch"
-
-    let crosshatchDots : TikZProperty = raw "crosshatch dots"
-
-    let bricks : TikZProperty = raw "bricks"
-
-    let checkerboard : TikZProperty = raw "checkerboard"
-
-    let patternColor (color:TikZProperty) : TikZProperty = 
-        keyvalue "pattern color" color
-
-    // Extremeties (arrow heads)
-
-    /// We cannot directly non-alphanumeric literals in F#
-    /// so we use the false option "arrowhead"
-    /// "->"; "<-"; "<->"; ">->"; "-to"; "-to reversed"; 
-    /// "-o"; "-|"; "-latex"; "-latex reversed";
-    /// "-stealth"; "-stealth reversed"
-    let arrowhead (ascii:string) : TikZProperty = raw ascii
-
-    // arrow.meta
-    // Notation arr_ prefix for "-"
-    // \usetikzlibrary{arrows.meta}
-
-    let arrArcBarb : TikZProperty = raw "-Arc Barb"
-
-    let arrBar : TikZProperty = raw "-Bar"
-
-    let arrBracket : TikZProperty = raw "-Bracket"
-
-    let arrHooks : TikZProperty = raw "-Hooks"
-
-    let arrStealth : TikZProperty = raw "-Stealth"
-
-    let arrParenthesis : TikZProperty = raw "-Parenthesis"
-
-    let arrStraightBarb : TikZProperty = raw "-Straight Barb"
-
-    let arrTeeBarb : TikZProperty = raw "-TeeBarb"
-
-    let arrClassicalTikZRightarrow : TikZProperty = 
-        raw "-Classical TikZ Rightarrow"
-
-    let arrSquare : TikZProperty = raw "-Square"
-
-    let arrCircle : TikZProperty = raw "-Circle"
-
-    let arrImplies : TikZProperty = raw "-Implies"
-
-    let arrRectangle : LaTeX = raw "-Rectangle"
-
-    let arrComputerModernRightarrow : TikZProperty = 
-        raw "-Computer Modern Rightarrow"
-
-    let arrTurnedSquare : TikZProperty = raw "-TurnedSquare"
-
-    let arrDiamond : TikZProperty = raw "-Diamond"
-
-    let arrEllipsis : TikZProperty = raw "-Ellipsis"
-
-    let arrKite : TikZProperty = raw "-Kite"
-
-    let arrLatex : TikZProperty = raw "-Latex"
-
-    let arrTriangle : TikZProperty = raw "-Triangle"
 
     
     // Notation: end_ prefix for "-"
@@ -357,86 +273,7 @@ module Properties =
     let minimumSize (dims:Dims) : TikZProperty = 
         keyvalue "minimum size" dims.LaTeX 
         
-    // Geometric Shape nodes
-    // \usetikzlibrary{shapes.geometric}
-    
-    let diamond : TikZProperty = raw "diamond"
-    
-    let ellipse : TikZProperty = raw "ellipse"
-    
-    let trapezium : TikZProperty = raw "trapezium"
-    
-    let semicircle : TikZProperty = raw "semicircle"
-    
-    let star : TikZProperty = raw "star"
-    
-    let regularPolygon : TikZProperty = raw "regular polygon"
-    
-    let isoscelesTriangle : TikZProperty = raw "isosceles triangle"
-    
-    let kite : TikZProperty = raw "kite"
-    
-    let dart : TikZProperty = raw "dart"
-    
-    let circularSector : TikZProperty = raw "circular sector"
-    
-    let cylinder : TikZProperty = raw "cylinder"
-
-    // Symbol Shape nodes
-    // \usetikzlibrary{shapes.symbols}
-    
-    let forbiddenSign : TikZProperty = raw "forbidden sign"
-    
-    let magnifyingGlass : TikZProperty = raw "magnifying glass"
-    
-    let cloud : TikZProperty = raw "cloud"
-    
-    let starburst : TikZProperty = raw "starburst"
-    
-    let signal : TikZProperty = raw "signal"
-    
-    let tape : TikZProperty = raw "tape"
-
-    // Arrow Shapes nodes
-    // \usetikzlibrary{shapes.arrows}
-    
-    let singleArrow : TikZProperty = raw "single arrow"
-    
-    let doubleArrow : TikZProperty = raw "double arrow"
-    
-    let arrowBox : TikZProperty = raw "arrow box"    
-    
-    // Callout Shapes nodes
-    // \usetikzlibrary{shapes.callouts}
-    
-    let ellipseCallout : TikZProperty = raw "ellipse callout"
-    
-    let rectangleCallout : TikZProperty = raw "rectangle callout"
-    
-    let cloudCallout : TikZProperty = raw "cloudCallout"
-    
-    // Miscellaneous Shapes nodes
-    // \usetikzlibrary{shapes.misc}
-    
-    let crossOut : TikZProperty = raw "cross out"
-    
-    let strikeOut : TikZProperty = raw "strike out"
-    
-    let roundedRectangle : TikZProperty = raw "rounded rectangle"
-    
-    let chamferedRectangle : TikZProperty = raw "chamfered rectangle"
-    
-    // Shapes with Multiple Text Parts
-    // \usetikzlibrary{shapes.multipart}
-    
-    let circleSplit : TikZProperty = raw "circle split"
-    
-    let circleSolidus : TikZProperty = raw "circle solidus"
-    
-    let ellipseSplit : TikZProperty = raw "ellipse split"
-    
-    let rectangleSplit : TikZProperty = raw "rectangle split"
-    
+     
     // Text attributes
     
     let textWidth (dims:Dims) : TikZProperty = 

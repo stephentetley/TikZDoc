@@ -11,11 +11,11 @@
 #load "..\src\TikZDoc\Internal\LaTeXDocument.fs"
 #load "..\src\TikZDoc\Base\LaTeX.fs"
 #load "..\src\TikZDoc\Base\TikZBase.fs"
-#load "..\src\TikZDoc\Base\Properties.fs"
+#load "..\src\TikZDoc\Base\Properties\Misc.fs"
 
 open System.IO
 open TikZDoc.Base
-
+open TikZDoc.Base.Properties
 
 let workingDirectory = Path.Combine(__SOURCE_DIRECTORY__, "..", "output")
 

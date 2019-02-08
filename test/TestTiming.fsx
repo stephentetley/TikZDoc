@@ -11,7 +11,7 @@
 #load "..\src\TikZDoc\Internal\LaTeXDocument.fs"
 #load "..\src\TikZDoc\Base\LaTeX.fs"
 #load "..\src\TikZDoc\Base\TikZBase.fs"
-#load "..\src\TikZDoc\Base\Properties.fs"
+#load "..\src\TikZDoc\Base\Properties\Misc.fs"
 #load "..\src\TikZDoc\Extensions\TikZTiming\Timing.fs"
 
 open System.IO
