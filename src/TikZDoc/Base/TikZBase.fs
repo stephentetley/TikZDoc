@@ -25,7 +25,10 @@ module TikZBase =
     let usetikzlibrary (arguments:GenLaTeX<'a> list) : LaTeX = 
         command "usetikzlibrary" [] arguments
 
-    let draw (options:GenLaTeX<'a> list) : TikZ = 
+    let tikzpicture (options:TikZProperty list) (body:TikZ) : LaTeX = 
+        environment options "tikzpicture" body
+
+    let draw (options:TikZProperty list) : TikZ = 
         command "draw" options []
 
     let fill (options:GenLaTeX<'a> list) : TikZ = 

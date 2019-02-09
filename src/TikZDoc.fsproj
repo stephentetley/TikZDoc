@@ -11,6 +11,9 @@
     <Compile Include="TikZDoc\Base\LaTeX.fs" />
     <Compile Include="TikZDoc\Base\TikZBase.fs" />
     <Compile Include="TikZDoc\Base\Properties\Misc.fs" />
+    <Compile Include="TikZDoc\Base\Properties\Colors.fs" />
+    <Compile Include="TikZDoc\Base\Properties\Path.fs" />
+    <Compile Include="TikZDoc\Base\Properties\Text.fs" />
     <Compile Include="TikZDoc\Base\Properties\Patterns.fs" />
     <Compile Include="TikZDoc\Base\Properties\Arrows.fs" />
     <Compile Include="TikZDoc\Base\Properties\Shapes.fs" />

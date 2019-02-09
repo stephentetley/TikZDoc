@@ -93,9 +93,9 @@ module LaTeX =
     let documentclass (options:GenLaTeX<'a> list) (name:string) : LaTeX = 
         command "documentclass" options [raw name]
 
-    /// \usepackage[<options>]{<name>}
-    let usepackage (options:GenLaTeX<'a> list) (name:string) : LaTeX = 
-        command "usepackage" options [raw name]
+    /// \usepackage{<name>}
+    let usepackage (name:string) : LaTeX = 
+        command "usepackage" [] [raw name]
 
     /// \begin[<options>]{<name>}
     /// _Cmd suffix as begin is a keyword in F#.
@@ -107,7 +107,14 @@ module LaTeX =
     let endCmd (name:string) : GenLaTeX<'a> = 
         command "end" [] [raw name]
 
-    let block (options:GenLaTeX<'a> list) (name:string)  (body:GenLaTeX<'b>) : GenLaTeX<'x> =
+
+
+    let environment (options:GenLaTeX<'a> list) (name:string)  (body:GenLaTeX<'b>) : GenLaTeX<'x> =
         beginCmd options name ^@@^ body ^@@^ endCmd name
+
+    let document  (options:GenLaTeX<'a> list) (body:GenLaTeX<'b>) : LaTeX = 
+        environment options "document" body
+
+
 
         

@@ -64,3 +64,15 @@ module Arrows =
     let latex : TikZProperty = raw "-Latex"
 
     let triangle : TikZProperty = raw "-Triangle"
+
+    
+
+    let buttCap : TikZProperty = raw "-Butt Cap"
+    
+    let fastRound : TikZProperty = raw "-Fast Round"
+
+    let fastTriangle : TikZProperty = raw "-Fast Triangle"
+
+    let roundCap : TikZProperty = raw "-Round Cap"
+
+    let triangleCap : TikZProperty = raw "-Triangle Cap"

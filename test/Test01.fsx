@@ -11,11 +11,12 @@
 #load "..\src\TikZDoc\Internal\LaTeXDocument.fs"
 #load "..\src\TikZDoc\Base\LaTeX.fs"
 #load "..\src\TikZDoc\Base\TikZBase.fs"
-#load "..\src\TikZDoc\Base\Properties\Misc.fs"
+// #load "..\src\TikZDoc\Base\Properties\Misc.fs"
+#load "..\src\TikZDoc\Base\Properties\Path.fs"
 
 open System.IO
 open TikZDoc.Base
-open TikZDoc.Base.Properties
+open TikZDoc.Base.Properties.Path
 
 let workingDirectory = Path.Combine(__SOURCE_DIRECTORY__, "..", "output")
 
@@ -29,17 +30,16 @@ let test02 () =
     output <| 
              comment "Author: SPT"
         ^@@^ documentclass [] "minimal"
-        ^@@^ usepackage [] "tikz"
+        ^@@^ usepackage "tikz"
 
 let doc1 () : LaTeX = 
     vcat 
-        [ usepackage [] "tikz"      
-        ; beginCmd [] "document" 
-        ; beginCmd [] "tikzpicture" 
-        ; castLaTeX <| draw [thick; roundedCornersDims (PT 8.0)]
-        ; raw "(0,0) -- (0,2) -- (1,3.25) -- (2,2) -- (2,0) -- (0,2) -- (2,2) -- (0,0) -- (2,0);"
-        ; endCmd "tikzpicture"
-        ; endCmd "document"
+        [ usepackage "tikz"      
+        ; document []
+            (tikzpicture []
+                (vcat [ draw [thick; roundedCornersDims (PT 8.0)]
+                      ; raw "(0,0) -- (0,2) -- (1,3.25) -- (2,2) -- (2,0) -- (0,2) -- (2,2) -- (0,0) -- (2,0);"
+                      ]))
         ]
 
 let test03 () = 
