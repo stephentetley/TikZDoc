@@ -1,7 +1,3 @@
-In VS...
-Project >> Manage Nuget Packages...
-Click on "cog" at top wright of the pane.
-Add package source pointing to "<PATH_PREFIX>\SLDot\package-local"
+Package dependencies (e.g SLFormat) are here:
 
-
-Install-Package SLFormat -Version 1.0.2-alpha-20190207 -Source E:\coding\fsharp\SLDot\package-local
+https://github.com/stephentetley/package-local
