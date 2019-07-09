@@ -1,0 +1,38 @@
+% For SVG
+\documentclass[dvisvgm]{minimal}
+
+
+
+
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{babel}
+\usepackage{tikz}
+\usepackage[raccourcis]{fast-diagram}
+
+
+\begin{document}
+
+
+\begin{fast}{factx-fsharp}
+\fastFT{src}
+    {
+    \fastFT{bin}
+        {
+        \fastFT{Debug}{}
+        }
+    \fastFT{FactX}
+        {
+        \fastFT{FactOutput.fs}{}
+        \fastFT{FactWriter.fs}{}
+        \fastFT{Pretty.fs}{}
+        \fastFT{Syntax.fs}{}
+        }
+    }
+\fastFT{test}
+    {
+    \fastFT{FactXTest.fsproj}{}
+    \fastFT{Test01.fsx}{}
+    }
+\end{fast}
+\end{document}
