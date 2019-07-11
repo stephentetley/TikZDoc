@@ -4,38 +4,7 @@
 \def\pgfsysdriver{pgfsys-dvipdfm.def}
 
 \usepackage{forest}
-
-
-%% Copied from the doc this should be includeable as a library somehow
-%% Check source...
-\forestset{
-    declare dimen register=folder indent,
-    folder indent=.45em,
-    folder/.style={
-        parent anchor=-children last,
-        anchor=parent first,
-        calign=child,
-        calign primary child=1,
-        for children={
-            child anchor=parent,
-            anchor=parent first,
-            edge={rotate/.option=!parent.grow},
-            edge path'/.expanded={
-                ([xshift=\forestregister{folder indent}]!u.parent anchor) |- (.child anchor)
-            },
-        },
-        after packing node={
-                if n children=0{}{
-                tempdiml=l_sep()-l("!1"),
-                tempdims={-abs(max_s("","")-min_s("",""))-s_sep()},
-                for children={
-                    l+=tempdiml,
-                    s+=tempdims()*(reversed()-0.5)*2,
-                },
-            },
-        },
-    }
-}
+\useforestlibrary{edges}
 
 
 \begin{document}
