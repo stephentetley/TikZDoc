@@ -37,7 +37,7 @@ module Patterns =
     let checkerboard : TikZProperty = rawtext "checkerboard"
 
     let patternColor (color:TikZProperty) : TikZProperty = 
-        keyvalue "pattern color" color
+        rawtext "pattern color" ^=^ color
 
 
 

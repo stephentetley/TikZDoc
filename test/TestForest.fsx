@@ -29,21 +29,31 @@ let fillProp (value : GenLaTeX<'a>) : TikZProperty =
      
 let directioni (i : int) = latexInt i
 
+
+let makeNode (color : TikZProperty) 
+             (label : GenLaTeX<'a>) 
+             (kids : ForestTikZ list) : ForestTikZ =
+    forestNode (addNodeArgs label [ fillProp color ]) kids
+
 let redNode (label : GenLaTeX<'a>) (kids : ForestTikZ list) : ForestTikZ =
-    let label1 = addNodeArgs label [ fillProp Colors.red]
-    forestNode label1 kids
+    makeNode (Colors.modify Colors.red 25) label kids 
+
+let greenNode (label : GenLaTeX<'a>) (kids : ForestTikZ list) : ForestTikZ =
+    makeNode (Colors.modify Colors.green 25) label kids
 
 
 let forestDoc () = 
     forestDocument ["edges"] 
         <| vcat [ forTree [growTick <| latexInt 0; folderProp; drawProp]
-                ; redNode (text "tree") []
+                ; redNode (text "red") 
+                        [ greenNode (text "green") [] ]
                 ]
 
 let test01 () = 
     let doc = forestDoc ()
     printfn "%s" workingDirectory
     doc.Render 180 |> printfn "%s"
-    doc.SaveToSVG(workingDirectory, "forest01.svg")
+    doc.SaveToSVG(workingDirectory, "forest1-svg.svg")
+    doc.SaveToPS(workingDirectory, "forest1-ps.ps")
 
 

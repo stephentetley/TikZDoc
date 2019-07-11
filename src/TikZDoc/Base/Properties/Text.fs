@@ -13,37 +13,37 @@ module Text =
     // Text highlighting
     
     let innerSep (dims:Dims) : TikZProperty = 
-        keyvalue "inner sep" dims.LaTeX
+        rawtext "inner sep" ^=^ dims.ToLaTeX ()
         
     let innerXsep (dims:Dims) : TikZProperty = 
-        keyvalue "inner xsep" dims.LaTeX
+        rawtext "inner xsep" ^=^ dims.ToLaTeX ()
 
     let innerYsep (dims:Dims) : TikZProperty = 
-        keyvalue "inner ysep" dims.LaTeX        
+        rawtext "inner ysep" ^=^ dims.ToLaTeX ()        
     
     let outerSep (dims:Dims) : TikZProperty = 
-        keyvalue "outer sep" dims.LaTeX
+        rawtext "outer sep" ^=^ dims.ToLaTeX ()
         
     let outerXsep (dims:Dims) : TikZProperty = 
-        keyvalue "outer xsep" dims.LaTeX
+        rawtext "outer xsep" ^=^ dims.ToLaTeX ()
 
     let outerYsep (dims:Dims) : TikZProperty = 
-        keyvalue "outer ysep" dims.LaTeX 
+        rawtext "outer ysep" ^=^ dims.ToLaTeX () 
 
     let minimumHeight (dims:Dims) : TikZProperty = 
-        keyvalue "minimum height" dims.LaTeX 
+        rawtext "minimum height" ^=^ dims.ToLaTeX () 
 
     let minimumWidth (dims:Dims) : TikZProperty = 
-        keyvalue "minimum width" dims.LaTeX 
+        rawtext "minimum width" ^=^ dims.ToLaTeX () 
 
     let minimumSize (dims:Dims) : TikZProperty = 
-        keyvalue "minimum size" dims.LaTeX 
+        rawtext "minimum size" ^=^ dims.ToLaTeX () 
         
      
     // Text attributes
     
     let textWidth (dims:Dims) : TikZProperty = 
-        keyvalue "text width" dims.LaTeX
+        rawtext "text width" ^=^ dims.ToLaTeX ()
         
     type TextPosition =
         | TextJustified
@@ -66,13 +66,13 @@ module Text =
                 | TextRagged -> rawtext "text ragged"
                 | TextBadlyRagged -> rawtext "text badly ragged"
                 | TextBadlyCentered -> rawtext "text badly centered"
-                | AlignCenter -> keyvalue "align" (rawtext "center")
-                | AlignFlushCenter -> keyvalue "align" (rawtext "flush center")
-                | AlignJustify -> keyvalue "align" (rawtext "justify")
-                | AlignRight -> keyvalue "align" (rawtext "right")
-                | AlignFlushRight -> keyvalue "align" (rawtext "flush right")
-                | AlignLeft -> keyvalue "align" (rawtext "left")
-                | AlignFlushLeft -> keyvalue "align" (rawtext "flush left")
+                | AlignCenter -> rawtext "align" ^=^ (rawtext "center")
+                | AlignFlushCenter -> rawtext "align" ^=^ (rawtext "flush center")
+                | AlignJustify -> rawtext "align" ^=^ (rawtext "justify")
+                | AlignRight -> rawtext "align" ^=^ (rawtext "right")
+                | AlignFlushRight -> rawtext "align" ^=^ (rawtext "flush right")
+                | AlignLeft -> rawtext "align" ^=^ (rawtext "left")
+                | AlignFlushLeft -> rawtext "align" ^=^ (rawtext "flush left")
 
     let textPosition (position:TextPosition) : TikZProperty = 
         position.LaTeX

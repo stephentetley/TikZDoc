@@ -51,6 +51,10 @@ module Colors =
     
     let yellow : TikZProperty = rawtext "yellow"
 
+    let modify (color : TikZProperty) (percentage : int) : TikZProperty = 
+        color ^^ character '!' ^^ latexInt percentage
+
+
     // Opacity
     
     let opacity (level:double) : TikZProperty = 

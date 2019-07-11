@@ -5,7 +5,7 @@ namespace TikZDoc.Base.Properties
 
 // Don't AutoOpen
 
-module Arrows = 
+module Shapes = 
 
     open TikZDoc.Base
 
