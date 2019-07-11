@@ -20,13 +20,13 @@ module Misc =
 
 
     let name (nodeName:string) : TikZProperty = 
-        keyvalue "name" (rawtext nodeName)
+        rawtext "name" ^=^ rawtext nodeName
     
     let alias (aliasName:string) : TikZProperty = 
-        keyvalue "alias" (rawtext aliasName)
+        rawtext "alias" ^=^ rawtext aliasName
 
     let nodeContents (contents:LaTeX) : TikZProperty = 
-        keyvalue "node contents" contents
+        rawtext "node contents" ^=^ contents
 
 
 
@@ -77,7 +77,7 @@ module Misc =
                 | AnchorDegree(x) -> rawtext <| x.ToString()
 
     let anchor (position:Anchor) : TikZProperty = 
-        keyvalue "anchor" position.LaTeX
+        rawtext "anchor" ^=^ position.LaTeX
 
 
 

@@ -20,34 +20,34 @@ module Invoke =
     // Missing from SLFormat
     let (&^) (cmd:CmdOpt) (s:string) : CmdOpt = cmd ^^ character ' ' ^^ literal s
     
-    /// > latex "<InputFile>.tex"         
-    let runLatex (shellWorkingDirectory:string) (finalName:string) : unit =
-        let texFile = Path.ChangeExtension(finalName, "tex")
+    /// > latex "<InputFile.tex>" 
+    /// The dvi file is inputfile with extension changed to ".dvi"
+    let runLatex (shellWorkingDirectory:string) (texFile:string) : unit =
         let args = [ literal <| doubleQuote texFile ]
         SimpleInvoke.runProcessSimple (Some shellWorkingDirectory) "latex" args
 
-    /// > dvips -o "<FinalName>" "<RootName>.dvi"
-    let runDvips (shellWorkingDirectory:string) (finalName:string) : unit =
-        let dviFile = Path.ChangeExtension(finalName, "dvi")
-        let psFile = finalName
+    /// > dvips -o "<psFile>" "<dviFile>"
+    let runDvips (shellWorkingDirectory:string) 
+                 (dviFile:string) 
+                 (psFile : string) : unit =
         let args = 
             [ argument "-o" &^ doubleQuote psFile
             ; literal (doubleQuote dviFile) ]
         SimpleInvoke.runProcessSimple (Some shellWorkingDirectory) "dvips" args
 
-    /// > dvipdfm -o "<FinalName>" "<RootName>.dvi"
-    let runDvipdfm (shellWorkingDirectory:string) (finalName:string) : unit =
-        let dviFile = Path.ChangeExtension(finalName, "dvi")
-        let pdfFile = finalName
+    /// > dvipdfm -o "<pdfFile>" "<dviFile>"
+    let runDvipdfm (shellWorkingDirectory:string) 
+                   (dviFile:string) 
+                   (pdfFile : string) : unit =
         let args = 
             [ argument "-o" &^ doubleQuote pdfFile
             ; literal (doubleQuote dviFile) ]
         SimpleInvoke.runProcessSimple (Some shellWorkingDirectory) "dvipdfm" args
 
-    /// > dvisvgm --output="<FinalName>" --bbox=none "<RootName>.dvi"
-    let runDvisvgm (shellWorkingDirectory:string) (finalName:string) : unit =
-        let dviFile = Path.ChangeExtension(finalName, "dvi")
-        let svgFile = finalName
+    /// > dvisvgm --output="<svgFile>" --bbox=none "<dviFile>"
+    let runDvisvgm (shellWorkingDirectory:string) 
+                   (dviFile:string) 
+                   (svgFile : string) : unit =
         let args = 
             [ argument "--output"   &= (doubleQuote svgFile) 
             ; argument "--bbox"     &= "none"

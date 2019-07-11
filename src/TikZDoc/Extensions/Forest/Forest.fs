@@ -18,12 +18,28 @@ module Forest =
 
     /// Choices are "edges" and "linguistics"
     let useforestlibrary (libraries : string list) : LaTeX = 
-        command "useforestlibrary" None (Some (List.map rawtext libraries))
+        match libraries with
+        | [] -> emptyLaTeX ()
+        | _ -> 
+            let libs = List.map rawtext libraries
+            command "useforestlibrary" None (Some libs)
 
+
+    let forest (body : ForestTikZ) : LaTeX = 
+        beginCmd [] "forest" ^//^ indent body ^//^ endCmd "forest"
 
     let node (label : GenLaTeX<'a>) (kids : ForestTikZ list) : ForestTikZ = 
         match kids with
         | [] -> braces label
         | _ -> braces (label ^//^ indent (vcat kids))
+
+
+
+    let forestDocument (forestLibraries : string list) (body : ForestTikZ) : LaTeX = 
+        vcat 
+            [ usepackage "forest" 
+            // ; useforestlibrary forestLibraries
+            ; document [] (forest body)
+            ]
 
         

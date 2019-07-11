@@ -26,7 +26,7 @@ module TikZBase =
         command "usetikzlibrary" None (Some arguments)
 
     let tikzpicture (options: TikZProperty list) (body:TikZ) : LaTeX = 
-        environment (itemsToOption options) "tikzpicture" body
+        environment options "tikzpicture" body
 
     
     let draw (options : TikZProperty list) : TikZ = 
@@ -45,23 +45,22 @@ module TikZBase =
     /// is expected to use just one unit so a shim API for 
     /// the diagram could fix the unit in the function signatures.
     type Dims = 
-        | PT of double
-        | BP of double
-        | MM of double
-        | CM of double
-        | IN of double
-        | EX of double
-        | EM of double
-        member x.LaTeX 
-            with get() : TikZProperty = 
-                match x with 
-                | PT d -> rawtext <| sprintf "%fpt" d
-                | BP d -> rawtext <| sprintf "%fbp" d
-                | MM d -> rawtext <| sprintf "%fmm" d
-                | CM d -> rawtext <| sprintf "%fcm" d
-                | IN d -> rawtext <| sprintf "%fin" d
-                | EX d -> rawtext <| sprintf "%fex" d
-                | EM d -> rawtext <| sprintf "%fem" d
+        | PT of decimal
+        | BP of decimal
+        | MM of decimal
+        | CM of decimal
+        | IN of decimal
+        | EX of decimal
+        | EM of decimal
+        member x.ToLaTeX () =
+            match x with 
+            | PT d -> rawtext <| sprintf "%fpt" d
+            | BP d -> rawtext <| sprintf "%fbp" d
+            | MM d -> rawtext <| sprintf "%fmm" d
+            | CM d -> rawtext <| sprintf "%fcm" d
+            | IN d -> rawtext <| sprintf "%fin" d
+            | EX d -> rawtext <| sprintf "%fex" d
+            | EM d -> rawtext <| sprintf "%fem" d
 
     // Coordinates
 
@@ -90,13 +89,13 @@ module TikZBase =
             ; XPos = decimal x
             ; YPos = decimal y }
 
-        member x.LaTeX 
-            with get()  = 
-                let sx = rawtext <| x.XPos.ToString()
-                let sy = rawtext <| x.YPos.ToString()
-                match x.Units with 
-                | None -> parens (sx ^^ rawtext "," ^^ sy)
-                | Some dims -> parens (sx ^^ dims.LaTeX ^^ rawtext "," ^^ sy ^^ dims.LaTeX)
+        member x.ToLaTeX () = 
+            let sx = rawtext <| x.XPos.ToString()
+            let sy = rawtext <| x.YPos.ToString()
+            match x.Units with 
+            | None -> parens (sx ^^ rawtext "," ^^ sy)
+            | Some dims -> 
+                    parens (sx ^^ dims.ToLaTeX () ^^ rawtext "," ^^ sy ^^ dims.ToLaTeX ())
 
         
 

@@ -16,20 +16,22 @@ module GenLaTeX =
     open TikZDoc.Internal
 
     /// Accents not escaped... (yet?)
-    let escapeTeX (source : string) : string = 
-        let replace1 (src : string)  oldString newString = 
-            src.Replace(oldValue = oldString, newValue = newString)
-        source 
-            |> replace1 "\\"    "$\\backslash$"
-            |> replace1 "{"     "$\\{$"
-            |> replace1 "}"     "$\\}$"
-            |> replace1 "%"     "\\%"
-            |> replace1 "&"     "\\&"
-            |> replace1 "~"     "\\~{}"
-            |> replace1 "$"     "\\$"
-            |> replace1 "^"     "\\^{}"
-            |> replace1 "_"     "\\_{}"
-            |> replace1 "#"     "\\#"
+    //let escapeTeX (source : string) : string = 
+    //    let replace1 (src : string)  oldString newString = 
+    //        src.Replace(oldValue = oldString, newValue = newString)
+    //    source 
+    //        |> replace1 "\\"    "$\\backslash$"
+    //        |> replace1 "{"     "$\\{$"
+    //        |> replace1 "}"     "$\\}$"
+    //        |> replace1 "%"     "\\%"
+    //        |> replace1 "&"     "\\&"
+    //        |> replace1 "~"     "\\~{}"
+    //        |> replace1 "$"     "\\$"
+    //        |> replace1 "^"     "\\^{}"
+    //        |> replace1 "_"     "\\_{}"
+    //        |> replace1 "#"     "\\#"
+
+    let escapeTeX s = s
 
     /// Change a list into either None if the list is empty or
     /// Some (list) if it is non-empty.
@@ -44,8 +46,7 @@ module GenLaTeX =
     let castLaTeX (doc:GenLaTeX<'a>) : GenLaTeX<'x> = Syntax.cast doc
         
 
-    let empty () : GenLaTeX<_> = 
-        Syntax.liftDoc Pretty.empty
+    let emptyLaTeX () : GenLaTeX<'a> = Syntax.emptyDoc ()
 
 
     /// No string escaping
@@ -54,6 +55,9 @@ module GenLaTeX =
 
     let text (source : string) : GenLaTeX<'a> = 
         Syntax.liftDoc <| Pretty.text (escapeTeX source)
+
+    let character (source : char) : GenLaTeX<'a> = 
+        Syntax.liftDoc <| Pretty.text (escapeTeX <| source.ToString())
 
     let indent (body : GenLaTeX<'a>) : GenLaTeX<'a> = 
         Syntax.liftOp (Pretty.indent 4) body
@@ -101,8 +105,9 @@ module GenLaTeX =
     
     
     /// <propertyName>=<propertyValue>
-    let keyvalue (propertyName:string) (propertyValue:GenLaTeX<'a>) : GenLaTeX<'x> = 
-        text propertyName  ^^ text "=" ^^ propertyValue
+    let ( ^=^ ) (propertyName : GenLaTeX<'a>) 
+                (propertyValue : GenLaTeX<'a>) : GenLaTeX<'x> = 
+        propertyName  ^^ character '=' ^^ propertyValue
 
 
     /// \<name>
@@ -114,11 +119,11 @@ module GenLaTeX =
                 (arguments : option<GenLaTeX<'b> list>) : GenLaTeX<'x> = 
         let opts = 
             match options with
-            | None -> empty ()
+            | None -> emptyLaTeX ()
             | Some xs -> formatOptions xs
         let args = 
             match arguments with
-            | None -> empty ()
+            | None -> emptyLaTeX ()
             | Some xs -> formatArguments xs
         commandZero name ^^ opts ^^ args
 
@@ -131,8 +136,8 @@ module GenLaTeX =
 
     /// \begin[<options>]{<name>}
     /// _Cmd suffix as begin is a keyword in F#.
-    let beginCmd (options : option<GenLaTeX<'a> list>) (name:string) : GenLaTeX<'x> = 
-        command "begin" options (Some [rawtext name])
+    let beginCmd (options : GenLaTeX<'a> list) (name:string) : GenLaTeX<'x> = 
+        command "begin" (itemsToOption options) (Some [rawtext name])
     
     /// \end{<name>}
     /// _Cmd suffix as end is a keyword in F#.
@@ -141,7 +146,7 @@ module GenLaTeX =
 
 
 
-    let environment (options: option<GenLaTeX<'a> list>) 
+    let environment (options: GenLaTeX<'a> list) 
                     (name:string)  
                     (body:GenLaTeX<'b>) : GenLaTeX<'x> =
         beginCmd options name ^//^ body ^//^ endCmd name

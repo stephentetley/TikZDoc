@@ -23,7 +23,12 @@ open TikZDoc.Extensions.Forest
 let workingDirectory = Path.Combine(__SOURCE_DIRECTORY__, "..", "output")
 
 
-let output (tex:GenLaTeX<'a>) : unit = 
-    tex.Render(lineWidth = 80) |> printfn "%s"
+let forestDoc () = forestDocument [] (rawtext "[obj]")
+
+let test01 () = 
+    let doc = forestDoc ()
+    printfn "%s" workingDirectory
+    doc.Render 180 |> printfn "%s"
+    doc.SaveToSVG(workingDirectory, "forest01.svg")
 
 

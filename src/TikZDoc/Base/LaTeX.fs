@@ -27,12 +27,12 @@ module LaTeX =
         command "usepackage" None (Some [rawtext name])
 
     /// \documentclass[<options>]{<name>}
-    let documentclass (options:GenLaTeX<'a> list) (name:string) : LaTeX = 
+    let documentclass (options : GenLaTeX<'a> list) (name:string) : LaTeX = 
         command "documentclass" (itemsToOption options) (Some [rawtext name])
 
 
     let document (options : GenLaTeX<'a> list) (body:GenLaTeX<'b>) : LaTeX = 
-        environment (itemsToOption options) "document" body
+        environment options "document" body
 
 
 

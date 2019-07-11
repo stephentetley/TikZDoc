@@ -14,14 +14,14 @@ module Path =
     /// Parametric version of roundedCorners
     /// i.e. [rounded corners=0.5cm]    
     let roundedCornersDims (dims:Dims) : TikZProperty = 
-        keyvalue "rounded corners" dims.LaTeX
+        rawtext "rounded corners"  ^=^ dims.ToLaTeX ()
 
 
     let sharpCorners : TikZProperty = rawtext "sharp corners"
     
 
     let lineWidth (width:Dims) : TikZProperty = 
-        keyvalue "line width" width.LaTeX
+        rawtext "line width" ^=^ width.ToLaTeX ()
 
     let ultraThin : TikZProperty = rawtext "ultra thin"
     
@@ -49,7 +49,7 @@ module Path =
                 | CapRound -> rawtext "round"
 
     let lineCap (cap:LineCap) : TikZProperty = 
-        keyvalue "line cap" cap.LaTeX
+        rawtext "line cap" ^=^ cap.LaTeX
 
 
     // Lines Junction
@@ -64,7 +64,7 @@ module Path =
                 | JoinMiter -> rawtext "miter"
 
     let lineJoin (join:LineJoin) : TikZProperty = 
-        keyvalue "line join" join.LaTeX
+        rawtext "line join" ^=^ join.LaTeX
 
     
     // Line Styles
@@ -96,10 +96,10 @@ module Path =
     let looselyDashDotDot : TikZProperty = rawtext "loosely dash dot dot"
 
     let dashPattern (pattern:LaTeX) : TikZProperty = 
-        keyvalue "dash pattern" pattern
+        rawtext "dash pattern" ^=^ pattern
 
     let dashPhase (length:Dims) : TikZProperty = 
-        keyvalue "dash phase" length.LaTeX
+        rawtext "dash phase" ^=^ length.ToLaTeX ()
 
     /// Line style "double"
     /// [double]
@@ -108,7 +108,7 @@ module Path =
 
     /// Line style "double distance=.3cm"
     let doubleDistance (dist:Dims) : TikZProperty = 
-        keyvalue "double distance" dist.LaTeX
+        rawtext "double distance" ^=^ dist.ToLaTeX ()
 
 
 

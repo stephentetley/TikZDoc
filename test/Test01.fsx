@@ -12,7 +12,7 @@
 #load "..\src\TikZDoc\Base\GenLaTeX.fs"
 #load "..\src\TikZDoc\Base\LaTeX.fs"
 #load "..\src\TikZDoc\Base\TikZBase.fs"
-// #load "..\src\TikZDoc\Base\Properties\Misc.fs"
+#load "..\src\TikZDoc\Base\Properties\Misc.fs"
 #load "..\src\TikZDoc\Base\Properties\Path.fs"
 
 open System.IO
@@ -25,7 +25,7 @@ let output (tex:GenLaTeX<'x>) : unit =
     tex.Render(lineWidth = 80) |> printfn "%s"
 
 let test01 () = 
-    output <| beginCmd None "document"
+    output <| beginCmd [] "document"
 
 let test02 () = 
     output <| 
@@ -39,7 +39,7 @@ let doc1 () : LaTeX =
         [ usepackage "tikz"      
         ; document []
             (tikzpicture []
-                (vcat [ draw [thick; roundedCornersDims (PT 8.0)]
+                (vcat [ draw [thick; roundedCornersDims (PT 8.0M)]
                       ; rawtext "(0,0) -- (0,2) -- (1,3.25) -- (2,2) -- (2,0) -- (0,2) -- (2,2) -- (0,0) -- (2,0);"
                       ]))
         ]
@@ -49,4 +49,4 @@ let test03 () =
     doc.SaveToSVG(workingDirectory, "example1.svg")
 
 let dummy () = 
-    output <| Coord(2.0,3.0).LaTeX
+    output <| Coord(2.0,3.0).ToLaTeX ()
