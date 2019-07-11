@@ -7,7 +7,7 @@
   <ItemGroup>
     <Compile Include="TikZDoc\Internal\Common.fs" />
     <Compile Include="TikZDoc\Internal\Invoke.fs" />
-    <Compile Include="TikZDoc\Internal\LaTeXDocument.fs" />
+    <Compile Include="TikZDoc\Internal\Syntax.fs" />
     <Compile Include="TikZDoc\Base\LaTeX.fs" />
     <Compile Include="TikZDoc\Base\TikZBase.fs" />
     <Compile Include="TikZDoc\Base\Properties\Misc.fs" />
@@ -17,7 +17,8 @@
     <Compile Include="TikZDoc\Base\Properties\Patterns.fs" />
     <Compile Include="TikZDoc\Base\Properties\Arrows.fs" />
     <Compile Include="TikZDoc\Base\Properties\Shapes.fs" />
-    <Compile Include="TikZDoc\Extensions\TikZTiming\Timing.fs" />
+    <Compile Include="TikZDoc\Extensions\TikZTiming\TikZTiming.fs" />
+    <Compile Include="TikZDoc\Extensions\Forest\Forest.fs" />
   </ItemGroup>
 
   <ItemGroup>

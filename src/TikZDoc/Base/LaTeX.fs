@@ -37,7 +37,7 @@ module LaTeX =
     let ( ^+^ ) (doc1:GenLaTeX<'a>) (doc2:GenLaTeX<'b>) : GenLaTeX<'x>   =
         LaTeXDocument.liftCat Pretty.besideSpace doc1 doc2
 
-    let ( ^@@^ ) (doc1:GenLaTeX<'a>) (doc2:GenLaTeX<'b>) : GenLaTeX<'x> = 
+    let ( ^//^ ) (doc1:GenLaTeX<'a>) (doc2:GenLaTeX<'b>) : GenLaTeX<'x> = 
         LaTeXDocument.liftCat Pretty.(^@@^) doc1 doc2
 
     let hcat (docs:GenLaTeX<'a> list) : GenLaTeX<'x> = 
@@ -110,7 +110,7 @@ module LaTeX =
 
 
     let environment (options:GenLaTeX<'a> list) (name:string)  (body:GenLaTeX<'b>) : GenLaTeX<'x> =
-        beginCmd options name ^@@^ body ^@@^ endCmd name
+        beginCmd options name ^//^ body ^//^ endCmd name
 
     let document  (options:GenLaTeX<'a> list) (body:GenLaTeX<'b>) : LaTeX = 
         environment options "document" body

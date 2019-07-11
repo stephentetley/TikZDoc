@@ -1,11 +1,10 @@
 ﻿// Copyright (c) Stephen Tetley 2019
 // License: BSD 3 Clause
 
-namespace TikZDoc.Extensions.TikZTiming
+namespace TikZDoc.Extensions
 
 
-[<AutoOpen>]
-module Timing = 
+module TikZTiming = 
     
 
     open TikZDoc.Base

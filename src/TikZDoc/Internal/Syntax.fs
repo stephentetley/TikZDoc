@@ -30,7 +30,8 @@ module LaTeXDocument =
     type LaTeXDoc<'a> = 
         | LaTeXDoc of Pretty.Doc
 
-        member internal x.Body with get() = match x with | LaTeXDoc(doc) -> doc
+        member internal x.Body 
+            with get() = match x with | LaTeXDoc(doc) -> doc
         
         member x.Render (lineWidth:int) : string = 
             Pretty.render lineWidth x.Body
