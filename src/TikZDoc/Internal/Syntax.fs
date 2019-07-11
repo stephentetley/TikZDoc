@@ -4,7 +4,7 @@
 namespace TikZDoc.Internal
 
 
-module LaTeXDocument = 
+module Syntax = 
     
     open System.IO
 
@@ -27,11 +27,11 @@ module LaTeXDocument =
 
     // Single case union with a phantom parameter
     [<Struct>]
-    type LaTeXDoc<'a> = 
-        | LaTeXDoc of Pretty.Doc
+    type WrappedDoc<'a> = 
+        | WrappedDoc of Pretty.Doc
 
         member internal x.Body 
-            with get() = match x with | LaTeXDoc(doc) -> doc
+            with get() = match x with | WrappedDoc(doc) -> doc
         
         member x.Render (lineWidth:int) : string = 
             Pretty.render lineWidth x.Body
@@ -70,46 +70,36 @@ module LaTeXDocument =
             Invoke.runDvisvgm outputDirectory fileName
 
 
-    let cast (doc:LaTeXDoc<'a>) : LaTeXDoc<'x> = 
-        let d1 = doc.Body in LaTeXDoc(d1)
-
-    let empty : LaTeXDoc<'a> = LaTeXDoc(Pretty.empty)
-
-    let rawText (source:string) : LaTeXDoc<'a> = LaTeXDoc(Pretty.text source)
+    let cast (doc : WrappedDoc<'a>) : WrappedDoc<'x> = 
+        let d1 = doc.Body in WrappedDoc(d1)
 
 
-    /// Lift a Pretty.Doc to a LaTeXDoc.
-    let liftDoc (item:Pretty.Doc) : LaTeXDoc<'a> = LaTeXDoc(item)
+
+
+    /// Lift a Pretty.Doc to a WrappedDoc.
+    let liftDoc (item : Pretty.Doc) : WrappedDoc<'a> = WrappedDoc(item)
 
     /// Note - the answer type can be diffrent to input types.
-    let liftOp (op:Pretty.Doc -> Pretty.Doc) (tex:LaTeXDoc<'b>) : LaTeXDoc<'x> = 
+    let liftOp (op:Pretty.Doc -> Pretty.Doc) (tex : WrappedDoc<'b>) : WrappedDoc<'x> = 
         liftDoc (op <| tex.Body)
     
     /// Note - the answer type can be diffrent to input types.
     let liftCat (op:Pretty.Doc -> Pretty.Doc -> Pretty.Doc) 
-                (d1:LaTeXDoc<'a>) 
-                (d2:LaTeXDoc<'b>) : LaTeXDoc<'x> = 
+                (d1 : WrappedDoc<'a>) 
+                (d2 : WrappedDoc<'b>) : WrappedDoc<'x> = 
         liftDoc (op d1.Body d2.Body)
 
     /// Note - the answer type can be diffrent to input types.
-    let liftCats (op:Pretty.Doc list -> Pretty.Doc) 
-                 (docs:LaTeXDoc<'a> list) : LaTeXDoc<'x>  = 
-        let ds = List.map (fun (tex:LaTeXDoc<'a>) -> tex.Body) docs in liftDoc (op ds)
+    let liftCats (op : Pretty.Doc list -> Pretty.Doc) 
+                 (docs : WrappedDoc<'a> list) : WrappedDoc<'x>  = 
+        let ds = List.map (fun (d1 : WrappedDoc<'a>) -> d1.Body) docs
+        liftDoc (op ds)
             
-    /// Note - the answer type can be diffrent to input types.
-    let commaSpaceSep (items:LaTeXDoc<'a> list) : LaTeXDoc<'x> = 
-        let ds = List.map (fun (x:LaTeXDoc<'a>) -> x.Body) items 
+    /// Note - the answer type can be different to input types.
+    let commaSpaceSep (items : WrappedDoc<'a> list) : WrappedDoc<'x> = 
+        let ds = List.map (fun (d1 : WrappedDoc<'a>) -> d1.Body) items 
         liftDoc (Pretty.punctuate (Pretty.text ", ")  ds)
 
     
 
-    /// optional params (rendered [])
-    /// Note - the answer type can be diffrent to input types.
-    let optionsList (items:LaTeXDoc<'a> list) : LaTeXDoc<'x>  =
-        liftOp Pretty.brackets <| commaSpaceSep items
-
-    /// arguments (rendered {})
-    /// Note - the answer type can be diffrent to input types.
-    let argumentsList (items:LaTeXDoc<'a> list) : LaTeXDoc<'x>  =
-        liftOp Pretty.braces <| commaSpaceSep items
 

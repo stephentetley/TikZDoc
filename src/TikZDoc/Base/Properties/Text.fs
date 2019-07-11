@@ -61,18 +61,18 @@ module Text =
         member x.LaTeX 
             with get() = 
                 match x with 
-                | TextJustified -> raw "text justified"
-                | TextCentered -> raw "text centered"
-                | TextRagged -> raw "text ragged"
-                | TextBadlyRagged -> raw "text badly ragged"
-                | TextBadlyCentered -> raw "text badly centered"
-                | AlignCenter -> keyvalue "align" (raw "center")
-                | AlignFlushCenter -> keyvalue "align" (raw "flush center")
-                | AlignJustify -> keyvalue "align" (raw "justify")
-                | AlignRight -> keyvalue "align" (raw "right")
-                | AlignFlushRight -> keyvalue "align" (raw "flush right")
-                | AlignLeft -> keyvalue "align" (raw "left")
-                | AlignFlushLeft -> keyvalue "align" (raw "flush left")
+                | TextJustified -> rawtext "text justified"
+                | TextCentered -> rawtext "text centered"
+                | TextRagged -> rawtext "text ragged"
+                | TextBadlyRagged -> rawtext "text badly ragged"
+                | TextBadlyCentered -> rawtext "text badly centered"
+                | AlignCenter -> keyvalue "align" (rawtext "center")
+                | AlignFlushCenter -> keyvalue "align" (rawtext "flush center")
+                | AlignJustify -> keyvalue "align" (rawtext "justify")
+                | AlignRight -> keyvalue "align" (rawtext "right")
+                | AlignFlushRight -> keyvalue "align" (rawtext "flush right")
+                | AlignLeft -> keyvalue "align" (rawtext "left")
+                | AlignFlushLeft -> keyvalue "align" (rawtext "flush left")
 
     let textPosition (position:TextPosition) : TikZProperty = 
         position.LaTeX

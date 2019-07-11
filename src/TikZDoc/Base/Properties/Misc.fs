@@ -20,10 +20,10 @@ module Misc =
 
 
     let name (nodeName:string) : TikZProperty = 
-        keyvalue "name" (raw nodeName)
+        keyvalue "name" (rawtext nodeName)
     
     let alias (aliasName:string) : TikZProperty = 
-        keyvalue "alias" (raw aliasName)
+        keyvalue "alias" (rawtext aliasName)
 
     let nodeContents (contents:LaTeX) : TikZProperty = 
         keyvalue "node contents" contents
@@ -58,23 +58,23 @@ module Misc =
         member x.LaTeX 
             with get() = 
                 match x with 
-                | AnchorNorthWest -> raw "north west"
-                | AnchorNorth -> raw "north"
-                | AnchorNorthEast -> raw "north east"
-                | AnchorText -> raw "text"
-                | AnchorWest -> raw "west"
-                | AnchorMidWest -> raw "mid west"
-                | AnchorBaseWest -> raw "base west"
-                | AnchorBase -> raw "base"
-                | AnchorEast -> raw "east"
-                | AnchorMidEast -> raw "mid east"
-                | AnchorBaseEast -> raw "base east"
-                | AnchorMid -> raw "mid"
-                | AnchorSouthEast -> raw "south east"
-                | AnchorSouth -> raw "south"
-                | AnchorSouthWest -> raw "south west"
-                | AnchorCenter -> raw "center"
-                | AnchorDegree(x) -> raw <| x.ToString()
+                | AnchorNorthWest -> rawtext "north west"
+                | AnchorNorth -> rawtext "north"
+                | AnchorNorthEast -> rawtext "north east"
+                | AnchorText -> rawtext "text"
+                | AnchorWest -> rawtext "west"
+                | AnchorMidWest -> rawtext "mid west"
+                | AnchorBaseWest -> rawtext "base west"
+                | AnchorBase -> rawtext "base"
+                | AnchorEast -> rawtext "east"
+                | AnchorMidEast -> rawtext "mid east"
+                | AnchorBaseEast -> rawtext "base east"
+                | AnchorMid -> rawtext "mid"
+                | AnchorSouthEast -> rawtext "south east"
+                | AnchorSouth -> rawtext "south"
+                | AnchorSouthWest -> rawtext "south west"
+                | AnchorCenter -> rawtext "center"
+                | AnchorDegree(x) -> rawtext <| x.ToString()
 
     let anchor (position:Anchor) : TikZProperty = 
         keyvalue "anchor" position.LaTeX

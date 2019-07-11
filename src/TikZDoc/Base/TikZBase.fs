@@ -54,13 +54,13 @@ module TikZBase =
         member x.LaTeX 
             with get() : TikZProperty = 
                 match x with 
-                | PT d -> raw <| sprintf "%fpt" d
-                | BP d -> raw <| sprintf "%fbp" d
-                | MM d -> raw <| sprintf "%fmm" d
-                | CM d -> raw <| sprintf "%fcm" d
-                | IN d -> raw <| sprintf "%fin" d
-                | EX d -> raw <| sprintf "%fex" d
-                | EM d -> raw <| sprintf "%fem" d
+                | PT d -> rawtext <| sprintf "%fpt" d
+                | BP d -> rawtext <| sprintf "%fbp" d
+                | MM d -> rawtext <| sprintf "%fmm" d
+                | CM d -> rawtext <| sprintf "%fcm" d
+                | IN d -> rawtext <| sprintf "%fin" d
+                | EX d -> rawtext <| sprintf "%fex" d
+                | EM d -> rawtext <| sprintf "%fem" d
 
     // Coordinates
 
@@ -90,12 +90,12 @@ module TikZBase =
             ; YPos = decimal y }
 
         member x.LaTeX 
-            with get() = 
-                let sx = raw <| x.XPos.ToString()
-                let sy = raw <| x.YPos.ToString()
+            with get()  = 
+                let sx = rawtext <| x.XPos.ToString()
+                let sy = rawtext <| x.YPos.ToString()
                 match x.Units with 
-                | None -> parens (sx ^^ raw "," ^^ sy)
-                | Some dims -> parens (sx ^^ dims.LaTeX ^^ raw "," ^^ sy ^^ dims.LaTeX)
+                | None -> parens (sx ^^ rawtext "," ^^ sy)
+                | Some dims -> parens (sx ^^ dims.LaTeX ^^ rawtext "," ^^ sy ^^ dims.LaTeX)
 
         
 

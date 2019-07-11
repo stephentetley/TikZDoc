@@ -9,7 +9,7 @@ module Path =
 
     open TikZDoc.Base
 
-    let roundedCorners : TikZProperty = raw "rounded corners"
+    let roundedCorners : TikZProperty = rawtext "rounded corners"
 
     /// Parametric version of roundedCorners
     /// i.e. [rounded corners=0.5cm]    
@@ -17,25 +17,25 @@ module Path =
         keyvalue "rounded corners" dims.LaTeX
 
 
-    let sharpCorners : TikZProperty = raw "sharp corners"
+    let sharpCorners : TikZProperty = rawtext "sharp corners"
     
 
     let lineWidth (width:Dims) : TikZProperty = 
         keyvalue "line width" width.LaTeX
 
-    let ultraThin : TikZProperty = raw "ultra thin"
+    let ultraThin : TikZProperty = rawtext "ultra thin"
     
-    let veryThin : TikZProperty = raw "very thin"
+    let veryThin : TikZProperty = rawtext "very thin"
 
-    let thin : TikZProperty = raw "thin"
+    let thin : TikZProperty = rawtext "thin"
 
-    let semithick : TikZProperty = raw "semithick"
+    let semithick : TikZProperty = rawtext "semithick"
 
-    let thick : TikZProperty = raw "thick"
+    let thick : TikZProperty = rawtext "thick"
 
-    let veryThick : TikZProperty = raw "very thick"
+    let veryThick : TikZProperty = rawtext "very thick"
 
-    let ultraThick : TikZProperty = raw "ultra thick"
+    let ultraThick : TikZProperty = rawtext "ultra thick"
 
 
 
@@ -44,9 +44,9 @@ module Path =
         member x.LaTeX 
             with get() : TikZProperty = 
                 match x with 
-                | CapRect -> raw "rect"
-                | CapButt -> raw "butt"
-                | CapRound -> raw "round"
+                | CapRect -> rawtext "rect"
+                | CapButt -> rawtext "butt"
+                | CapRound -> rawtext "round"
 
     let lineCap (cap:LineCap) : TikZProperty = 
         keyvalue "line cap" cap.LaTeX
@@ -59,9 +59,9 @@ module Path =
         member x.LaTeX 
             with get() : TikZProperty= 
                 match x with 
-                | JoinRound -> raw "round"
-                | JoinBevel -> raw "bevel"
-                | JoinMiter -> raw "miter"
+                | JoinRound -> rawtext "round"
+                | JoinBevel -> rawtext "bevel"
+                | JoinMiter -> rawtext "miter"
 
     let lineJoin (join:LineJoin) : TikZProperty = 
         keyvalue "line join" join.LaTeX
@@ -69,31 +69,31 @@ module Path =
     
     // Line Styles
 
-    let solid : TikZProperty = raw "solid"
+    let solid : TikZProperty = rawtext "solid"
 
-    let dotted : TikZProperty = raw "dotted"
+    let dotted : TikZProperty = rawtext "dotted"
 
-    let denselyDotted : TikZProperty = raw "densely dotted"
+    let denselyDotted : TikZProperty = rawtext "densely dotted"
 
-    let looselyDotted : TikZProperty = raw "loosely dotted"
+    let looselyDotted : TikZProperty = rawtext "loosely dotted"
 
-    let dashed : TikZProperty = raw "dashed"
+    let dashed : TikZProperty = rawtext "dashed"
 
-    let denselyDashed : TikZProperty = raw "densely dashed"
+    let denselyDashed : TikZProperty = rawtext "densely dashed"
 
-    let looselyDashed : TikZProperty = raw "loosely dashed"
+    let looselyDashed : TikZProperty = rawtext "loosely dashed"
 
-    let dashDot : TikZProperty = raw "dash dot"
+    let dashDot : TikZProperty = rawtext "dash dot"
 
-    let denselyDashDot : TikZProperty = raw "densely dash dot"
+    let denselyDashDot : TikZProperty = rawtext "densely dash dot"
 
-    let looselyDashDot : TikZProperty = raw "loosely dash dot"
+    let looselyDashDot : TikZProperty = rawtext "loosely dash dot"
 
-    let dashDotDot : TikZProperty = raw "dash dot dot"
+    let dashDotDot : TikZProperty = rawtext "dash dot dot"
 
-    let denselyDashDotDot : TikZProperty = raw "densely dash dot dot"
+    let denselyDashDotDot : TikZProperty = rawtext "densely dash dot dot"
 
-    let looselyDashDotDot : TikZProperty = raw "loosely dash dot dot"
+    let looselyDashDotDot : TikZProperty = rawtext "loosely dash dot dot"
 
     let dashPattern (pattern:LaTeX) : TikZProperty = 
         keyvalue "dash pattern" pattern
@@ -104,7 +104,7 @@ module Path =
     /// Line style "double"
     /// [double]
     /// _Opt suffix as begin is a double is a standard F# function.
-    let doubleLineStyle : TikZProperty = raw "double"
+    let doubleLineStyle : TikZProperty = rawtext "double"
 
     /// Line style "double distance=.3cm"
     let doubleDistance (dist:Dims) : TikZProperty = 

@@ -9,5 +9,15 @@ module Forest =
 
     open TikZDoc.Base
 
+    
+    type ForestTikZPhantom = class end
 
-    // let node (label : )
+    /// A specific type for LaTeX, e.g. in the prolog before "\\tikzpicture"
+    type ForestTikZ = GenLaTeX<ForestTikZPhantom>
+
+    let node (label : GenLaTeX<'a>) (kids : ForestTikZ list) : ForestTikZ = 
+        match kids with
+        | [] -> braces label
+        | _ -> braces (label ^//^ vcat kids)
+
+        

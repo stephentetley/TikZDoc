@@ -12,81 +12,81 @@ module Arrows =
    // Geometric Shape nodes
     // \usetikzlibrary{shapes.geometric}
     
-    let diamond : TikZProperty = raw "diamond"
+    let diamond : TikZProperty = rawtext "diamond"
     
-    let ellipse : TikZProperty = raw "ellipse"
+    let ellipse : TikZProperty = rawtext "ellipse"
     
-    let trapezium : TikZProperty = raw "trapezium"
+    let trapezium : TikZProperty = rawtext "trapezium"
     
-    let semicircle : TikZProperty = raw "semicircle"
+    let semicircle : TikZProperty = rawtext "semicircle"
     
-    let star : TikZProperty = raw "star"
+    let star : TikZProperty = rawtext "star"
     
-    let regularPolygon : TikZProperty = raw "regular polygon"
+    let regularPolygon : TikZProperty = rawtext "regular polygon"
     
-    let isoscelesTriangle : TikZProperty = raw "isosceles triangle"
+    let isoscelesTriangle : TikZProperty = rawtext "isosceles triangle"
     
-    let kite : TikZProperty = raw "kite"
+    let kite : TikZProperty = rawtext "kite"
     
-    let dart : TikZProperty = raw "dart"
+    let dart : TikZProperty = rawtext "dart"
     
-    let circularSector : TikZProperty = raw "circular sector"
+    let circularSector : TikZProperty = rawtext "circular sector"
     
-    let cylinder : TikZProperty = raw "cylinder"
+    let cylinder : TikZProperty = rawtext "cylinder"
 
     // Symbol Shape nodes
     // \usetikzlibrary{shapes.symbols}
     
-    let forbiddenSign : TikZProperty = raw "forbidden sign"
+    let forbiddenSign : TikZProperty = rawtext "forbidden sign"
     
-    let magnifyingGlass : TikZProperty = raw "magnifying glass"
+    let magnifyingGlass : TikZProperty = rawtext "magnifying glass"
     
-    let cloud : TikZProperty = raw "cloud"
+    let cloud : TikZProperty = rawtext "cloud"
     
-    let starburst : TikZProperty = raw "starburst"
+    let starburst : TikZProperty = rawtext "starburst"
     
-    let signal : TikZProperty = raw "signal"
+    let signal : TikZProperty = rawtext "signal"
     
-    let tape : TikZProperty = raw "tape"
+    let tape : TikZProperty = rawtext "tape"
 
     // Arrow Shapes nodes
     // \usetikzlibrary{shapes.arrows}
     
-    let singleArrow : TikZProperty = raw "single arrow"
+    let singleArrow : TikZProperty = rawtext "single arrow"
     
-    let doubleArrow : TikZProperty = raw "double arrow"
+    let doubleArrow : TikZProperty = rawtext "double arrow"
     
-    let arrowBox : TikZProperty = raw "arrow box"    
+    let arrowBox : TikZProperty = rawtext "arrow box"    
     
     // Callout Shapes nodes
     // \usetikzlibrary{shapes.callouts}
     
-    let ellipseCallout : TikZProperty = raw "ellipse callout"
+    let ellipseCallout : TikZProperty = rawtext "ellipse callout"
     
-    let rectangleCallout : TikZProperty = raw "rectangle callout"
+    let rectangleCallout : TikZProperty = rawtext "rectangle callout"
     
-    let cloudCallout : TikZProperty = raw "cloudCallout"
+    let cloudCallout : TikZProperty = rawtext "cloudCallout"
     
     // Miscellaneous Shapes nodes
     // \usetikzlibrary{shapes.misc}
     
-    let crossOut : TikZProperty = raw "cross out"
+    let crossOut : TikZProperty = rawtext "cross out"
     
-    let strikeOut : TikZProperty = raw "strike out"
+    let strikeOut : TikZProperty = rawtext "strike out"
     
-    let roundedRectangle : TikZProperty = raw "rounded rectangle"
+    let roundedRectangle : TikZProperty = rawtext "rounded rectangle"
     
-    let chamferedRectangle : TikZProperty = raw "chamfered rectangle"
+    let chamferedRectangle : TikZProperty = rawtext "chamfered rectangle"
     
     // Shapes with Multiple Text Parts
     // \usetikzlibrary{shapes.multipart}
     
-    let circleSplit : TikZProperty = raw "circle split"
+    let circleSplit : TikZProperty = rawtext "circle split"
     
-    let circleSolidus : TikZProperty = raw "circle solidus"
+    let circleSolidus : TikZProperty = rawtext "circle solidus"
     
-    let ellipseSplit : TikZProperty = raw "ellipse split"
+    let ellipseSplit : TikZProperty = rawtext "ellipse split"
     
-    let rectangleSplit : TikZProperty = raw "rectangle split"
+    let rectangleSplit : TikZProperty = rawtext "rectangle split"
 
 

@@ -12,29 +12,29 @@ module Patterns =
    // Fillings
     // \usetikzlibrary{patterns}
 
-    let dots : TikZProperty = raw "dots"
+    let dots : TikZProperty = rawtext "dots"
 
-    let fivepointedStars : TikZProperty = raw "fivepointed stars"
+    let fivepointedStars : TikZProperty = rawtext "fivepointed stars"
 
-    let sixpointedStars : TikZProperty = raw "sixpointed stars"
+    let sixpointedStars : TikZProperty = rawtext "sixpointed stars"
 
-    let grid : TikZProperty = raw "grid"
+    let grid : TikZProperty = rawtext "grid"
 
-    let horizontalLines : TikZProperty = raw "horizontal lines"
+    let horizontalLines : TikZProperty = rawtext "horizontal lines"
 
-    let verticalLines : TikZProperty = raw "vertical lines"
+    let verticalLines : TikZProperty = rawtext "vertical lines"
 
-    let northEastLines : TikZProperty = raw "north east lines"
+    let northEastLines : TikZProperty = rawtext "north east lines"
 
-    let northWestLines : TikZProperty = raw "north west lines"
+    let northWestLines : TikZProperty = rawtext "north west lines"
 
-    let crosshatch : TikZProperty = raw "crosshatch"
+    let crosshatch : TikZProperty = rawtext "crosshatch"
 
-    let crosshatchDots : TikZProperty = raw "crosshatch dots"
+    let crosshatchDots : TikZProperty = rawtext "crosshatch dots"
 
-    let bricks : TikZProperty = raw "bricks"
+    let bricks : TikZProperty = rawtext "bricks"
 
-    let checkerboard : TikZProperty = raw "checkerboard"
+    let checkerboard : TikZProperty = rawtext "checkerboard"
 
     let patternColor (color:TikZProperty) : TikZProperty = 
         keyvalue "pattern color" color

@@ -9,6 +9,7 @@
 #load "..\src\TikZDoc\Internal\Common.fs"
 #load "..\src\TikZDoc\Internal\Invoke.fs"
 #load "..\src\TikZDoc\Internal\Syntax.fs"
+#load "..\src\TikZDoc\Base\GenLaTeX.fs"
 #load "..\src\TikZDoc\Base\LaTeX.fs"
 #load "..\src\TikZDoc\Base\TikZBase.fs"
 #load "..\src\TikZDoc\Base\Properties\Misc.fs"

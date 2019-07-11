@@ -13,66 +13,66 @@ module Colors =
 
      // Basic colors
 
-    let black : TikZProperty = raw "black"
+    let black : TikZProperty = rawtext "black"
     
-    let blue : TikZProperty = raw "blue"
+    let blue : TikZProperty = rawtext "blue"
     
-    let brown : TikZProperty = raw "brown"
+    let brown : TikZProperty = rawtext "brown"
     
-    let cyan : TikZProperty = raw "cyan"
+    let cyan : TikZProperty = rawtext "cyan"
     
-    let darkgray : TikZProperty = raw "darkgray"
+    let darkgray : TikZProperty = rawtext "darkgray"
     
-    let gray : TikZProperty = raw "gray"
+    let gray : TikZProperty = rawtext "gray"
     
-    let green : TikZProperty = raw "green"
+    let green : TikZProperty = rawtext "green"
     
-    let lightgray : TikZProperty = raw "lightgray"
+    let lightgray : TikZProperty = rawtext "lightgray"
     
-    let lime : TikZProperty = raw "lime"
+    let lime : TikZProperty = rawtext "lime"
     
-    let magenta : TikZProperty = raw "magenta"
+    let magenta : TikZProperty = rawtext "magenta"
     
-    let olive : TikZProperty = raw "olive"
+    let olive : TikZProperty = rawtext "olive"
     
-    let orange : TikZProperty = raw "orange"
+    let orange : TikZProperty = rawtext "orange"
     
-    let pink : TikZProperty = raw "pink"
+    let pink : TikZProperty = rawtext "pink"
     
-    let purple : TikZProperty = raw "purple"
+    let purple : TikZProperty = rawtext "purple"
     
-    let red : TikZProperty = raw "red"
+    let red : TikZProperty = rawtext "red"
     
-    let teal : TikZProperty = raw "teal"
+    let teal : TikZProperty = rawtext "teal"
     
-    let violet : TikZProperty = raw "violet"
+    let violet : TikZProperty = rawtext "violet"
     
-    let white : TikZProperty = raw "white"
+    let white : TikZProperty = rawtext "white"
     
-    let yellow : TikZProperty = raw "yellow"
+    let yellow : TikZProperty = rawtext "yellow"
 
     // Opacity
     
     let opacity (level:double) : TikZProperty = 
-        keyvalue "opacity" (raw <| sprintf "%f" level)
+        keyvalue "opacity" (rawtext <| sprintf "%f" level)
         
-    let transparent : TikZProperty = raw "transparent"
+    let transparent : TikZProperty = rawtext "transparent"
     
-    let ultraNearlyTransparent : TikZProperty = raw "ultra nearly transparent"
+    let ultraNearlyTransparent : TikZProperty = rawtext "ultra nearly transparent"
     
-    let veryNearlyTransparent : TikZProperty = raw "very nearly transparent"
+    let veryNearlyTransparent : TikZProperty = rawtext "very nearly transparent"
     
-    let nearlyTransparent : TikZProperty = raw "nearly transparent"
+    let nearlyTransparent : TikZProperty = rawtext "nearly transparent"
     
-    let semitransparent : TikZProperty = raw "semitransparent"
+    let semitransparent : TikZProperty = rawtext "semitransparent"
     
-    let nearlyOpaque : TikZProperty = raw "nearly opaque"
+    let nearlyOpaque : TikZProperty = rawtext "nearly opaque"
     
-    let veryNearlyOpaque : TikZProperty = raw "very nearly opaque" 
+    let veryNearlyOpaque : TikZProperty = rawtext "very nearly opaque" 
     
-    let ultraNearlyOpaque : TikZProperty = raw "ultra nearly opaque"
+    let ultraNearlyOpaque : TikZProperty = rawtext "ultra nearly opaque"
     
-    let opaque : TikZProperty = raw "opaque"
+    let opaque : TikZProperty = rawtext "opaque"
     
     // Blend Mode
     
@@ -92,18 +92,18 @@ module Colors =
         member x.LaTeX 
             with get() = 
                 match x with 
-                | BlendNormal -> raw "normal"
-                | BlendMultiply -> raw "multiply"
-                | BlendScreen -> raw "screen"
-                | BlendOverlay -> raw "overlay"
-                | BlendDarken -> raw "darken"
-                | BlendLighten -> raw "lighten"
-                | BlendDifference -> raw "difference"
-                | BlendExclusion -> raw "exclusion"
-                | BlendHue -> raw "hue"
-                | BlendSaturation -> raw "saturation"
-                | BlendColor -> raw "color"
-                | BlendLuminosity -> raw "luminosity"
+                | BlendNormal -> rawtext "normal"
+                | BlendMultiply -> rawtext "multiply"
+                | BlendScreen -> rawtext "screen"
+                | BlendOverlay -> rawtext "overlay"
+                | BlendDarken -> rawtext "darken"
+                | BlendLighten -> rawtext "lighten"
+                | BlendDifference -> rawtext "difference"
+                | BlendExclusion -> rawtext "exclusion"
+                | BlendHue -> rawtext "hue"
+                | BlendSaturation -> rawtext "saturation"
+                | BlendColor -> rawtext "color"
+                | BlendLuminosity -> rawtext "luminosity"
                 
     let blendGroup (blendMode:BlendMode) : TikZProperty = 
         keyvalue "blend mode" blendMode.LaTeX

@@ -17,62 +17,62 @@ module Arrows =
     /// "->"; "<-"; "<->"; ">->"; "-to"; "-to reversed"; 
     /// "-o"; "-|"; "-latex"; "-latex reversed";
     /// "-stealth"; "-stealth reversed"
-    let arrowhead (ascii:string) : TikZProperty = raw ascii
+    let arrowhead (ascii:string) : TikZProperty = rawtext ascii
 
     // arrow.meta
     // Notation arr_ prefix for "-"
     // \usetikzlibrary{arrows.meta}
 
-    let arcBarb : TikZProperty = raw "-Arc Barb"
+    let arcBarb : TikZProperty = rawtext "-Arc Barb"
 
-    let bar : TikZProperty = raw "-Bar"
+    let bar : TikZProperty = rawtext "-Bar"
 
-    let bracket : TikZProperty = raw "-Bracket"
+    let bracket : TikZProperty = rawtext "-Bracket"
 
-    let hooks : TikZProperty = raw "-Hooks"
+    let hooks : TikZProperty = rawtext "-Hooks"
 
-    let stealth : TikZProperty = raw "-Stealth"
+    let stealth : TikZProperty = rawtext "-Stealth"
 
-    let parenthesis : TikZProperty = raw "-Parenthesis"
+    let parenthesis : TikZProperty = rawtext "-Parenthesis"
 
-    let straightBarb : TikZProperty = raw "-Straight Barb"
+    let straightBarb : TikZProperty = rawtext "-Straight Barb"
 
-    let teeBarb : TikZProperty = raw "-TeeBarb"
+    let teeBarb : TikZProperty = rawtext "-TeeBarb"
 
     let classicalTikZRightarrow : TikZProperty = 
-        raw "-Classical TikZ Rightarrow"
+        rawtext "-Classical TikZ Rightarrow"
 
-    let square : TikZProperty = raw "-Square"
+    let square : TikZProperty = rawtext "-Square"
 
-    let circle : TikZProperty = raw "-Circle"
+    let circle : TikZProperty = rawtext "-Circle"
 
-    let implies : TikZProperty = raw "-Implies"
+    let implies : TikZProperty = rawtext "-Implies"
 
-    let rectangle : LaTeX = raw "-Rectangle"
+    let rectangle : LaTeX = rawtext "-Rectangle"
 
     let computerModernRightarrow : TikZProperty = 
-        raw "-Computer Modern Rightarrow"
+        rawtext "-Computer Modern Rightarrow"
 
-    let turnedSquare : TikZProperty = raw "-TurnedSquare"
+    let turnedSquare : TikZProperty = rawtext "-TurnedSquare"
 
-    let diamond : TikZProperty = raw "-Diamond"
+    let diamond : TikZProperty = rawtext "-Diamond"
 
-    let ellipsis : TikZProperty = raw "-Ellipsis"
+    let ellipsis : TikZProperty = rawtext "-Ellipsis"
 
-    let kite : TikZProperty = raw "-Kite"
+    let kite : TikZProperty = rawtext "-Kite"
 
-    let latex : TikZProperty = raw "-Latex"
+    let latex : TikZProperty = rawtext "-Latex"
 
-    let triangle : TikZProperty = raw "-Triangle"
+    let triangle : TikZProperty = rawtext "-Triangle"
 
     
 
-    let buttCap : TikZProperty = raw "-Butt Cap"
+    let buttCap : TikZProperty = rawtext "-Butt Cap"
     
-    let fastRound : TikZProperty = raw "-Fast Round"
+    let fastRound : TikZProperty = rawtext "-Fast Round"
 
-    let fastTriangle : TikZProperty = raw "-Fast Triangle"
+    let fastTriangle : TikZProperty = rawtext "-Fast Triangle"
 
-    let roundCap : TikZProperty = raw "-Round Cap"
+    let roundCap : TikZProperty = rawtext "-Round Cap"
 
-    let triangleCap : TikZProperty = raw "-Triangle Cap"
+    let triangleCap : TikZProperty = rawtext "-Triangle Cap"
