@@ -24,7 +24,7 @@ module Invoke =
     let runLatex (shellWorkingDirectory:string) (finalName:string) : unit =
         let texFile = Path.ChangeExtension(finalName, "tex")
         let args = [ literal <| doubleQuote texFile ]
-        SimpleInvoke.runProcess shellWorkingDirectory "latex" args
+        SimpleInvoke.runProcessSimple (Some shellWorkingDirectory) "latex" args
 
     /// > dvips -o "<FinalName>" "<RootName>.dvi"
     let runDvips (shellWorkingDirectory:string) (finalName:string) : unit =
@@ -33,7 +33,7 @@ module Invoke =
         let args = 
             [ argument "-o" &^ doubleQuote psFile
             ; literal (doubleQuote dviFile) ]
-        SimpleInvoke.runProcess shellWorkingDirectory "dvips" args
+        SimpleInvoke.runProcessSimple (Some shellWorkingDirectory) "dvips" args
 
     /// > dvipdfm -o "<FinalName>" "<RootName>.dvi"
     let runDvipdfm (shellWorkingDirectory:string) (finalName:string) : unit =
@@ -42,7 +42,7 @@ module Invoke =
         let args = 
             [ argument "-o" &^ doubleQuote pdfFile
             ; literal (doubleQuote dviFile) ]
-        SimpleInvoke.runProcess shellWorkingDirectory "dvipdfm" args
+        SimpleInvoke.runProcessSimple (Some shellWorkingDirectory) "dvipdfm" args
 
     /// > dvisvgm --output="<FinalName>" --bbox=none "<RootName>.dvi"
     let runDvisvgm (shellWorkingDirectory:string) (finalName:string) : unit =
@@ -52,7 +52,7 @@ module Invoke =
             [ argument "--output"   &= (doubleQuote svgFile) 
             ; argument "--bbox"     &= "none"
             ; literal (doubleQuote dviFile) ]
-        SimpleInvoke.runProcess shellWorkingDirectory "dvisvgm" args
+        SimpleInvoke.runProcessSimple (Some shellWorkingDirectory) "dvisvgm" args
 
 
 
