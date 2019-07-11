@@ -13,17 +13,32 @@
 #load "..\src\TikZDoc\Base\LaTeX.fs"
 #load "..\src\TikZDoc\Base\TikZBase.fs"
 #load "..\src\TikZDoc\Base\Properties\Misc.fs"
+#load "..\src\TikZDoc\Base\Properties\Colors.fs"
 #load "..\src\TikZDoc\Extensions\Forest\Forest.fs"
 
 open System.IO
 open TikZDoc.Base
+open TikZDoc.Base.Properties
 open TikZDoc.Extensions.Forest
 
 
 let workingDirectory = Path.Combine(__SOURCE_DIRECTORY__, "..", "output")
 
+let fillProp (value : GenLaTeX<'a>) : TikZProperty = 
+    rawtext "fill" ^=^ value
+     
+let directioni (i : int) = latexInt i
 
-let forestDoc () = forestDocument [] (rawtext "[obj]")
+let redNode (label : GenLaTeX<'a>) (kids : ForestTikZ list) : ForestTikZ =
+    let label1 = addNodeArgs label [ fillProp Colors.red]
+    forestNode label1 kids
+
+
+let forestDoc () = 
+    forestDocument ["edges"] 
+        <| vcat [ forTree [growTick <| latexInt 0; folderProp; drawProp]
+                ; redNode (text "tree") []
+                ]
 
 let test01 () = 
     let doc = forestDoc ()

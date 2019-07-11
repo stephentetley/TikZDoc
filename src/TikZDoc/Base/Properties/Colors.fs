@@ -54,7 +54,7 @@ module Colors =
     // Opacity
     
     let opacity (level:double) : TikZProperty = 
-        keyvalue "opacity" (rawtext <| sprintf "%f" level)
+        rawtext "opacity" ^=^ rawtext (sprintf "%f" level)
         
     let transparent : TikZProperty = rawtext "transparent"
     
@@ -106,4 +106,4 @@ module Colors =
                 | BlendLuminosity -> rawtext "luminosity"
                 
     let blendGroup (blendMode:BlendMode) : TikZProperty = 
-        keyvalue "blend mode" blendMode.LaTeX
+        rawtext "blend mode" ^=^ blendMode.LaTeX

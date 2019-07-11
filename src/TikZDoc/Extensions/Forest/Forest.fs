@@ -24,21 +24,34 @@ module Forest =
             let libs = List.map rawtext libraries
             command "useforestlibrary" None (Some libs)
 
-
+    
     let forest (body : ForestTikZ) : LaTeX = 
         beginCmd [] "forest" ^//^ indent body ^//^ endCmd "forest"
 
-    let node (label : GenLaTeX<'a>) (kids : ForestTikZ list) : ForestTikZ = 
+    let forTree (args : GenLaTeX<'a> list) = 
+        rawtext "for tree" ^=^ formatArguments args
+
+
+
+    let folderProp : TikZProperty = rawtext "folder"
+    let drawProp : TikZProperty = rawtext "draw"
+
+    let growTick (direction : GenLaTeX<'a>) : TikZProperty = 
+        rawtext "grow'" ^=^ direction
+
+    let forestNode (label : GenLaTeX<'a>) (kids : ForestTikZ list) : ForestTikZ = 
         match kids with
-        | [] -> braces label
-        | _ -> braces (label ^//^ indent (vcat kids))
+        | [] -> brackets label
+        | _ -> brackets (label ^//^ indent (vcat kids))
 
-
+    let addNodeArgs (label : GenLaTeX<'x>) 
+                    (args : GenLaTeX<'y> list) : GenLaTeX<'a> = 
+        label ^^ character ',' ^+^ text "node options" ^=^ formatArguments args
 
     let forestDocument (forestLibraries : string list) (body : ForestTikZ) : LaTeX = 
         vcat 
             [ usepackage "forest" 
-            // ; useforestlibrary forestLibraries
+            ; useforestlibrary forestLibraries
             ; document [] (forest body)
             ]
 

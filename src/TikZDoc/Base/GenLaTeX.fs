@@ -59,6 +59,9 @@ module GenLaTeX =
     let character (source : char) : GenLaTeX<'a> = 
         Syntax.liftDoc <| Pretty.text (escapeTeX <| source.ToString())
 
+    let latexInt (i : int) : GenLaTeX<'a> = 
+        Syntax.liftDoc <| Pretty.intDoc i
+
     let indent (body : GenLaTeX<'a>) : GenLaTeX<'a> = 
         Syntax.liftOp (Pretty.indent 4) body
 
@@ -85,6 +88,10 @@ module GenLaTeX =
 
     let braces (body : GenLaTeX<'a>) : GenLaTeX<'x> = 
         Syntax.liftOp Pretty.braces body
+
+    let brackets (body : GenLaTeX<'a>) : GenLaTeX<'x> = 
+        Syntax.liftOp Pretty.brackets body
+
 
     let comment (text: string) : GenLaTeX<'a> = 
         let comment1 (s:string) = rawtext ("% " + s)
