@@ -24,15 +24,15 @@ module LaTeX =
 
     /// \usepackage{<name>}
     let usepackage (name:string) : LaTeX = 
-        command "usepackage" [] [rawtext name]
+        command "usepackage" None (Some [rawtext name])
 
     /// \documentclass[<options>]{<name>}
     let documentclass (options:GenLaTeX<'a> list) (name:string) : LaTeX = 
-        command "documentclass" options [rawtext name]
+        command "documentclass" (itemsToOption options) (Some [rawtext name])
 
 
-    let document  (options:GenLaTeX<'a> list) (body:GenLaTeX<'b>) : LaTeX = 
-        environment options "document" body
+    let document (options : GenLaTeX<'a> list) (body:GenLaTeX<'b>) : LaTeX = 
+        environment (itemsToOption options) "document" body
 
 
 

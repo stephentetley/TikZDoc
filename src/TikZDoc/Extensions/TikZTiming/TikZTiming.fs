@@ -56,4 +56,4 @@ module TikZTiming =
 
     let texttiming (settings:LaTeX list) (characters:TimingChar list) : LaTeX = 
         let chars :string = characters |> List.map (fun x -> x.Upper) |> System.String.Concat
-        command "texttiming" settings [rawtext chars]
+        command "texttiming" (itemsToOption settings) (Some [rawtext chars])

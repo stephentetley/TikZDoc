@@ -25,7 +25,7 @@ let output (tex:GenLaTeX<'x>) : unit =
     tex.Render(lineWidth = 80) |> printfn "%s"
 
 let test01 () = 
-    output <| beginCmd [] "document"
+    output <| beginCmd None "document"
 
 let test02 () = 
     output <| 

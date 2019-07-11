@@ -31,6 +31,13 @@ module GenLaTeX =
             |> replace1 "_"     "\\_{}"
             |> replace1 "#"     "\\#"
 
+    /// Change a list into either None if the list is empty or
+    /// Some (list) if it is non-empty.
+    let itemsToOption (items : 'a list) : option<'a list> = 
+        match items with 
+        | [] -> None
+        | _ -> Some items
+
     /// 'General' LaTeX = not specialized to a specific type of LaTeX fragment
     type GenLaTeX<'a> = Syntax.WrappedDoc<'a>
 
@@ -48,8 +55,8 @@ module GenLaTeX =
     let text (source : string) : GenLaTeX<'a> = 
         Syntax.liftDoc <| Pretty.text (escapeTeX source)
 
-    //let indent (body : GenLaTeX<'a>) : GenLaTeX<'a> = 
-    //    LaTeXDocument
+    let indent (body : GenLaTeX<'a>) : GenLaTeX<'a> = 
+        Syntax.liftOp (Pretty.indent 4) body
 
     let ( ^^ ) (doc1:GenLaTeX<'a>) (doc2:GenLaTeX<'b>) : GenLaTeX<'x>   = 
         Syntax.liftCat Pretty.beside doc1 doc2
@@ -102,15 +109,17 @@ module GenLaTeX =
     let commandZero (name:string) : GenLaTeX<'a> = rawtext ("\\" + name)
 
     /// \<name>[<options>]{<arguments>}
-    let command (name:string) (options: GenLaTeX<'a> list) (arguments: GenLaTeX<'b> list) : GenLaTeX<'x> = 
+    let command (name : string) 
+                (options : option<GenLaTeX<'a> list>) 
+                (arguments : option<GenLaTeX<'b> list>) : GenLaTeX<'x> = 
         let opts = 
             match options with
-            | [] -> empty ()
-            | xs -> formatOptions xs
+            | None -> empty ()
+            | Some xs -> formatOptions xs
         let args = 
             match arguments with
-            | [] -> empty ()
-            | xs -> formatArguments xs
+            | None -> empty ()
+            | Some xs -> formatArguments xs
         commandZero name ^^ opts ^^ args
 
     /// \def\<name><body>
@@ -122,17 +131,19 @@ module GenLaTeX =
 
     /// \begin[<options>]{<name>}
     /// _Cmd suffix as begin is a keyword in F#.
-    let beginCmd (options:GenLaTeX<'a> list) (name:string) : GenLaTeX<'x> = 
-        command "begin" options [rawtext name]
+    let beginCmd (options : option<GenLaTeX<'a> list>) (name:string) : GenLaTeX<'x> = 
+        command "begin" options (Some [rawtext name])
     
     /// \end{<name>}
     /// _Cmd suffix as end is a keyword in F#.
     let endCmd (name:string) : GenLaTeX<'a> = 
-        command "end" [] [rawtext name]
+        command "end" None (Some [rawtext name])
 
 
 
-    let environment (options:GenLaTeX<'a> list) (name:string)  (body:GenLaTeX<'b>) : GenLaTeX<'x> =
+    let environment (options: option<GenLaTeX<'a> list>) 
+                    (name:string)  
+                    (body:GenLaTeX<'b>) : GenLaTeX<'x> =
         beginCmd options name ^//^ body ^//^ endCmd name
 
 

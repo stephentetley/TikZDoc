@@ -23,19 +23,20 @@ module TikZBase =
 
 
     let usetikzlibrary (arguments:GenLaTeX<'a> list) : LaTeX = 
-        command "usetikzlibrary" [] arguments
+        command "usetikzlibrary" None (Some arguments)
 
-    let tikzpicture (options:TikZProperty list) (body:TikZ) : LaTeX = 
-        environment options "tikzpicture" body
+    let tikzpicture (options: TikZProperty list) (body:TikZ) : LaTeX = 
+        environment (itemsToOption options) "tikzpicture" body
 
-    let draw (options:TikZProperty list) : TikZ = 
-        command "draw" options []
+    
+    let draw (options : TikZProperty list) : TikZ = 
+        command "draw" (itemsToOption options) None
 
-    let fill (options:GenLaTeX<'a> list) : TikZ = 
-        command "fill" options []
+    let fill (options : TikZProperty list) : TikZ = 
+        command "fill" (itemsToOption options)  None
 
-    let filldraw (options:GenLaTeX<'a> list) : TikZ = 
-        command "filldraw" options []
+    let filldraw (options: TikZProperty list) : TikZ = 
+        command "filldraw" (itemsToOption options)  None
 
 
 
@@ -102,5 +103,5 @@ module TikZBase =
 
     // Other 
 
-    let datavisualization (options:LaTeX list) : LaTeX = 
-        command "datavisualization" options []
+    let datavisualization (options : option<LaTeX list>) : LaTeX = 
+        command "datavisualization" options None

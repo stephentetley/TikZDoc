@@ -14,7 +14,7 @@ module Misc =
 
     
     
-    let huge : TikZProperty = command "Huge" [] []
+    let huge : TikZProperty = command "Huge" None None
 
 
 
