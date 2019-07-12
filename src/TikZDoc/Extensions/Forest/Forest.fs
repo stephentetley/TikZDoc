@@ -26,7 +26,7 @@ module Forest =
 
     
     let forest (body : ForestTikZ) : LaTeX = 
-        beginCmd [] "forest" ^//^ indent body ^//^ endCmd "forest"
+        beginCmd [] "forest" ^!!^ body ^!!^ endCmd "forest"
 
     let forTree (args : GenLaTeX<'a> list) = 
         rawtext "for tree" ^=^ formatArguments args
@@ -42,7 +42,7 @@ module Forest =
     let forestNode (label : GenLaTeX<'a>) (kids : ForestTikZ list) : ForestTikZ = 
         match kids with
         | [] -> brackets label
-        | _ -> brackets (label ^//^ indent (vcat kids))
+        | _ -> hang 4 (brackets (label ^!!^  (vcat kids)))
 
     let addNodeArgs (label : GenLaTeX<'x>) 
                     (args : GenLaTeX<'y> list) : GenLaTeX<'a> = 

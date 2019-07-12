@@ -62,8 +62,11 @@ module GenLaTeX =
     let latexInt (i : int) : GenLaTeX<'a> = 
         Syntax.liftDoc <| Pretty.intDoc i
 
-    let indent (body : GenLaTeX<'a>) : GenLaTeX<'a> = 
-        Syntax.liftOp (Pretty.indent 4) body
+    let indent (i : int) (body : GenLaTeX<'a>) : GenLaTeX<'a> = 
+        Syntax.liftOp (Pretty.indent i) body
+
+    let hang (i : int) (body : GenLaTeX<'a>) : GenLaTeX<'a> = 
+        Syntax.liftOp (Pretty.hang i) body
 
     let ( ^^ ) (doc1:GenLaTeX<'a>) (doc2:GenLaTeX<'b>) : GenLaTeX<'x>   = 
         Syntax.liftCat Pretty.beside doc1 doc2
@@ -71,8 +74,8 @@ module GenLaTeX =
     let ( ^+^ ) (doc1:GenLaTeX<'a>) (doc2:GenLaTeX<'b>) : GenLaTeX<'x>   =
         Syntax.liftCat Pretty.besideSpace doc1 doc2
 
-    let ( ^//^ ) (doc1:GenLaTeX<'a>) (doc2:GenLaTeX<'b>) : GenLaTeX<'x> = 
-        Syntax.liftCat Pretty.(^@@^) doc1 doc2
+    let ( ^!!^ ) (doc1:GenLaTeX<'a>) (doc2:GenLaTeX<'b>) : GenLaTeX<'x> = 
+        Syntax.liftCat Pretty.(^!!^) doc1 doc2
 
     let hcat (docs:GenLaTeX<'a> list) : GenLaTeX<'x> = 
         Syntax.liftCats Pretty.hcat docs
@@ -156,7 +159,7 @@ module GenLaTeX =
     let environment (options: GenLaTeX<'a> list) 
                     (name:string)  
                     (body:GenLaTeX<'b>) : GenLaTeX<'x> =
-        beginCmd options name ^//^ body ^//^ endCmd name
+        beginCmd options name ^!!^ body ^!!^ endCmd name
 
 
 

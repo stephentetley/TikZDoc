@@ -3,7 +3,7 @@
 
 #r "netstandard"
 
-#I @"C:\Users\stephen\.nuget\packages\slformat\1.0.2-alpha-20190616\lib\netstandard2.0"
+#I @"C:\Users\stephen\.nuget\packages\slformat\1.0.2-alpha-20190712\lib\netstandard2.0"
 #r "SLFormat.dll"
 
 #load "..\src\TikZDoc\Internal\Common.fs"
@@ -41,12 +41,16 @@ let redNode (label : GenLaTeX<'a>) (kids : ForestTikZ list) : ForestTikZ =
 let greenNode (label : GenLaTeX<'a>) (kids : ForestTikZ list) : ForestTikZ =
     makeNode (Colors.modify Colors.green 25) label kids
 
+let plainNode (label : GenLaTeX<'a>) (kids : ForestTikZ list) : ForestTikZ =
+    forestNode label kids
 
 let forestDoc () = 
     forestDocument ["edges"] 
         <| vcat [ forTree [growTick <| latexInt 0; folderProp; drawProp]
-                ; redNode (text "red") 
-                        [ greenNode (text "green") [] ]
+                ; plainNode (text "factx-fsharp") 
+                    [ plainNode (text "src") [] 
+                    ; plainNode (text "test") []
+                    ]
                 ]
 
 let test01 () = 
