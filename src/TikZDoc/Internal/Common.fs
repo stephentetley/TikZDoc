@@ -7,6 +7,8 @@ module Common =
 
     open System
 
+    open SLFormat.Pretty
+
     /// Splits on Environment.NewLine
     let toLines (source:string) : string list = 
         source.Split(separator=[| Environment.NewLine |], options=StringSplitOptions.None) |> Array.toList
@@ -16,6 +18,10 @@ module Common =
         String.concat Environment.NewLine source
 
     let doubleQuote (s:string) : string = "\"" + s + "\""
+
+    /// Note - the answer type can be different to input types.
+    let commaSpaceSep (items : Doc list) : Doc = 
+        punctuate (text ", ")  items
 
 
 

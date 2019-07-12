@@ -41,59 +41,83 @@ module GenLaTeX =
         | _ -> Some items
 
     /// 'General' LaTeX = not specialized to a specific type of LaTeX fragment
-    type GenLaTeX<'a> = Syntax.WrappedDoc<'a>
+    type GenLaTeX<'a> = 
+        internal | GenLaTeX of doc : Pretty.Doc
 
-    let castLaTeX (doc:GenLaTeX<'a>) : GenLaTeX<'x> = Syntax.cast doc
+        member internal x.Body 
+            with get() = match x with | GenLaTeX(doc) -> doc
+
+    /// Note - the answer type can be different to input types.
+    let internal liftOp (op:Pretty.Doc -> Pretty.Doc) 
+                        (latex : GenLaTeX<'b>) : GenLaTeX<'x> = 
+            GenLaTeX (op <| latex.Body)
+
+    /// Note - the answer type can be diffrent to input types.
+    let internal liftCat (op:Pretty.Doc -> Pretty.Doc -> Pretty.Doc) 
+                (d1 : GenLaTeX<'a>) 
+                (d2 : GenLaTeX<'b>) : GenLaTeX<'x> = 
+        GenLaTeX (op d1.Body d2.Body)
+
+    /// Note - the answer type can be diffrent to input types.
+    let internal liftCats (op : Pretty.Doc list -> Pretty.Doc) 
+                          (docs : GenLaTeX<'a> list) : GenLaTeX<'x>  = 
+        let ds = List.map (fun (d1 : GenLaTeX<'a>) -> d1.Body) docs
+        GenLaTeX (op ds)
+
+
+    let castLaTeX (doc : GenLaTeX<'a>) : GenLaTeX<'x> = 
+        let d1 = doc.Body in GenLaTeX d1
         
 
-    let emptyLaTeX () : GenLaTeX<'a> = Syntax.emptyDoc ()
+    let emptyLaTeX () : GenLaTeX<'a> = 
+        GenLaTeX <| Pretty.empty
 
 
     /// No string escaping
     let rawtext (source : string) : GenLaTeX<'a> = 
-        Syntax.liftDoc <| Pretty.text source
+        GenLaTeX <| Pretty.text source
 
     let text (source : string) : GenLaTeX<'a> = 
-        Syntax.liftDoc <| Pretty.text (escapeTeX source)
+        GenLaTeX <| Pretty.text (escapeTeX source)
 
     let character (source : char) : GenLaTeX<'a> = 
-        Syntax.liftDoc <| Pretty.text (escapeTeX <| source.ToString())
+        GenLaTeX <| Pretty.text (escapeTeX <| source.ToString())
 
     let latexInt (i : int) : GenLaTeX<'a> = 
-        Syntax.liftDoc <| Pretty.intDoc i
+        GenLaTeX <| Pretty.intDoc i
 
     let indent (i : int) (body : GenLaTeX<'a>) : GenLaTeX<'a> = 
-        Syntax.liftOp (Pretty.indent i) body
+        liftOp (Pretty.indent i) body
 
     let hang (i : int) (body : GenLaTeX<'a>) : GenLaTeX<'a> = 
-        Syntax.liftOp (Pretty.hang i) body
+        liftOp (Pretty.hang i) body
 
     let ( ^^ ) (doc1:GenLaTeX<'a>) (doc2:GenLaTeX<'b>) : GenLaTeX<'x>   = 
-        Syntax.liftCat Pretty.beside doc1 doc2
+        liftCat Pretty.(^^) doc1 doc2
 
     let ( ^+^ ) (doc1:GenLaTeX<'a>) (doc2:GenLaTeX<'b>) : GenLaTeX<'x>   =
-        Syntax.liftCat Pretty.besideSpace doc1 doc2
+        liftCat Pretty.(^+^) doc1 doc2
 
     let ( ^!!^ ) (doc1:GenLaTeX<'a>) (doc2:GenLaTeX<'b>) : GenLaTeX<'x> = 
-        Syntax.liftCat Pretty.(^!!^) doc1 doc2
+        liftCat Pretty.(^!!^) doc1 doc2
 
     let hcat (docs:GenLaTeX<'a> list) : GenLaTeX<'x> = 
-        Syntax.liftCats Pretty.hcat docs
+        liftCats Pretty.hcat docs
 
     let hsep (docs:GenLaTeX<'a> list) : GenLaTeX<'x> = 
-        Syntax.liftCats Pretty.hcatSpace docs
+        liftCats Pretty.hcatSpace docs
 
     let vcat (docs:GenLaTeX<'a> list) : GenLaTeX<'x> = 
-        Syntax.liftCats Pretty.vcat docs
+        liftCats Pretty.vcat docs
 
     let parens (body : GenLaTeX<'a>) : GenLaTeX<'x> = 
-        Syntax.liftOp Pretty.parens body
+        liftOp Pretty.parens body
 
     let braces (body : GenLaTeX<'a>) : GenLaTeX<'x> = 
-        Syntax.liftOp Pretty.braces body
+        liftOp Pretty.braces body
 
     let brackets (body : GenLaTeX<'a>) : GenLaTeX<'x> = 
-        Syntax.liftOp Pretty.brackets body
+        liftOp Pretty.brackets body
 
 
     let comment (text: string) : GenLaTeX<'a> = 
@@ -106,12 +130,12 @@ module GenLaTeX =
     /// arguments (rendered {})
     /// Note - the answer type can be diffrent to input types.
     let formatArguments (items : GenLaTeX<'a> list) : GenLaTeX<'x> = 
-        Syntax.liftOp Pretty.braces <| Syntax.commaSpaceSep items
+        liftOp Pretty.braces <| liftCats Common.commaSpaceSep items
 
     /// optional params (rendered [])
     /// Note - the answer type can be diffrent to input types.
     let formatOptions (items : GenLaTeX<'a> list) : GenLaTeX<'x> = 
-        Syntax.liftOp Pretty.brackets <| Syntax.commaSpaceSep items
+        liftOp Pretty.brackets <| liftCats Common.commaSpaceSep items
     
     
     /// <propertyName>=<propertyValue>

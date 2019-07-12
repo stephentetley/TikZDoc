@@ -8,9 +8,9 @@
 
 #load "..\src\TikZDoc\Internal\Common.fs"
 #load "..\src\TikZDoc\Internal\Invoke.fs"
-#load "..\src\TikZDoc\Internal\Syntax.fs"
 #load "..\src\TikZDoc\Base\GenLaTeX.fs"
 #load "..\src\TikZDoc\Base\LaTeX.fs"
+#load "..\src\TikZDoc\Base\TeXDoc.fs"
 #load "..\src\TikZDoc\Base\TikZBase.fs"
 #load "..\src\TikZDoc\Base\Properties\Misc.fs"
 #load "..\src\TikZDoc\Base\Properties\Colors.fs"
@@ -48,7 +48,10 @@ let forestDoc () =
     forestDocument ["edges"] 
         <| vcat [ forTree [growTick <| latexInt 0; folderProp; drawProp]
                 ; plainNode (text "factx-fsharp") 
-                    [ plainNode (text "src") [] 
+                    [ plainNode (text "src") 
+                        [ plainNode (text "bin") [] 
+                        ; plainNode (text "FactX") [] 
+                        ]
                     ; plainNode (text "test") []
                     ]
                 ]
@@ -56,8 +59,10 @@ let forestDoc () =
 let test01 () = 
     let doc = forestDoc ()
     printfn "%s" workingDirectory
-    doc.Render 180 |> printfn "%s"
-    doc.SaveToSVG(workingDirectory, "forest1-svg.svg")
-    doc.SaveToPS(workingDirectory, "forest1-ps.ps")
+    let svgTeX = makeTeXForSvg doc |> alterLineWidth 180
+    svgTeX.Render () |> printfn "%s"
+    svgTeX.Output(workingDirectory, "forest1-svg.svg")
+    let psTeX = makeTeXForPs doc
+    psTeX.Output(workingDirectory, "forest1-ps.ps")
 
 

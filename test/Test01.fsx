@@ -8,9 +8,9 @@
 
 #load "..\src\TikZDoc\Internal\Common.fs"
 #load "..\src\TikZDoc\Internal\Invoke.fs"
-#load "..\src\TikZDoc\Internal\Syntax.fs"
 #load "..\src\TikZDoc\Base\GenLaTeX.fs"
 #load "..\src\TikZDoc\Base\LaTeX.fs"
+#load "..\src\TikZDoc\Base\TeXDoc.fs"
 #load "..\src\TikZDoc\Base\TikZBase.fs"
 #load "..\src\TikZDoc\Base\Properties\Misc.fs"
 #load "..\src\TikZDoc\Base\Properties\Path.fs"
@@ -21,8 +21,9 @@ open TikZDoc.Base.Properties.Path
 
 let workingDirectory = Path.Combine(__SOURCE_DIRECTORY__, "..", "output")
 
-let output (tex:GenLaTeX<'x>) : unit = 
-    tex.Render(lineWidth = 80) |> printfn "%s"
+let output (latex:GenLaTeX<'x>) : unit = 
+    let tex = alterLineWidth 80 (makeTeXForPdf <| castLaTeX latex)
+    tex.Render() |> printfn "%s"
 
 let test01 () = 
     output <| beginCmd [] "document"
@@ -45,8 +46,8 @@ let doc1 () : LaTeX =
         ]
 
 let test03 () = 
-    let doc = doc1 ()
-    doc.SaveToSVG(workingDirectory, "example1.svg")
+    let tex = doc1 () |> makeTeXForSvg
+    tex.Output(workingDirectory, "example1.svg")
 
 let dummy () = 
     output <| Coord(2.0,3.0).ToLaTeX ()
