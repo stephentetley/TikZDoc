@@ -16,15 +16,22 @@ module Invoke =
     // ************************************************************************
     // Invoking TeX programs
 
-
-    // Missing from SLFormat
-    let (&^) (cmd:CmdOpt) (s:string) : CmdOpt = cmd ^^ character ' ' ^^ literal s
     
     /// > latex "<InputFile.tex>" 
     /// The dvi file is inputfile with extension changed to ".dvi"
     let runLatex (shellWorkingDirectory:string) (texFile:string) : unit =
         let args = [ literal <| doubleQuote texFile ]
         SimpleInvoke.runProcessSimple (Some shellWorkingDirectory) "latex" args
+
+
+
+    /// > lualatex --output-format=dvi "<input.tex>"
+    let runLualatex (shellWorkingDirectory:string) (texFile : string) : unit =
+        let args = 
+            [ argument "--output-format"   &= "dvi"
+            ; literal (doubleQuote texFile) ]
+        SimpleInvoke.runProcessSimple (Some shellWorkingDirectory) "lualatex" args
+
 
     /// > dvips -o "<psFile>" "<dviFile>"
     let runDvips (shellWorkingDirectory:string) 
@@ -53,6 +60,8 @@ module Invoke =
             ; argument "--bbox"     &= "none"
             ; literal (doubleQuote dviFile) ]
         SimpleInvoke.runProcessSimple (Some shellWorkingDirectory) "dvisvgm" args
+
+
 
 
 

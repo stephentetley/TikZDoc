@@ -20,6 +20,10 @@ module TeXDoc =
          | PostScript 
          | PDF 
          | SVG
+
+    type DviProcedure = 
+        | UseLuaLaTeX
+        | UseLaTeX
          
     let internal documentProlog (format : OutputFormat) : Pretty.Doc = 
         match format with 
@@ -29,31 +33,33 @@ module TeXDoc =
         | SVG -> Pretty.text "\\documentclass[dvisvgm]{minimal}"
 
     type TeXDoc = 
-        private | TeXDoc of format : OutputFormat * lineWidth : int * body : LaTeX
-        
-
-        member internal x.Format 
-            with get() = match x with | TeXDoc(fmt, _, _) -> fmt
+        private { Format : OutputFormat
+                  LineWidth : int 
+                  DviPath : DviProcedure
+                  BodyDoc : LaTeX
+                  }
+       
 
         member x.SaveToTeX(outputDirectory:string, texFileName:string) : string = 
-            match x with
-            | TeXDoc(fmt, lw, body) -> 
-                let doc = Pretty.vcat [ documentProlog fmt; body.Body]
-                let texFilePath = Path.Combine(outputDirectory, texFileName)
-                Pretty.writeDoc lw texFilePath doc
-                texFilePath
+            let doc = Pretty.vcat [ documentProlog x.Format; x.BodyDoc.Body]
+            let texFilePath = Path.Combine(outputDirectory, texFileName)
+            Pretty.writeDoc x.LineWidth texFilePath doc
+            texFilePath
 
         member x.Render () : string = 
-            match x with
-            | TeXDoc(fmt, lw, body) -> 
-                let doc = Pretty.vcat [ documentProlog fmt; body.Body]
-                Pretty.render lw doc
+            let doc = Pretty.vcat [ documentProlog x.Format; x.BodyDoc.Body]
+            Pretty.render x.LineWidth doc
 
         member x.Output (outputDirectory : string, fileName : string) = 
             let outputFilePath = Path.Combine(outputDirectory, fileName)
             let texFileName = Path.ChangeExtension(path = fileName, extension = "tex")
             let texFilePath = x.SaveToTeX(outputDirectory, texFileName)
-            Invoke.runLatex outputDirectory texFilePath
+            match x.DviPath with
+            | UseLuaLaTeX -> 
+                Invoke.runLualatex outputDirectory texFilePath
+            | UseLaTeX -> 
+                Invoke.runLatex outputDirectory texFilePath
+            
             let dviFilePath = Path.ChangeExtension(outputFilePath, "dvi")
             match x.Format with
             | PostScript -> 
@@ -63,47 +69,32 @@ module TeXDoc =
             | SVG -> 
                 Invoke.runDvisvgm outputDirectory dviFilePath outputFilePath
 
-    let makeTeXForPdf (body : LaTeX) : TeXDoc = TeXDoc(PDF, 120, body)
-    let makeTeXForPs (body : LaTeX) : TeXDoc = TeXDoc(PostScript, 120, body)
-    let makeTeXForSvg (body : LaTeX) : TeXDoc = TeXDoc(SVG, 120, body)
+    let makeTeXForPdf (body : LaTeX) : TeXDoc = 
+        { Format = PDF
+          LineWidth = 120
+          DviPath = UseLuaLaTeX
+          BodyDoc = body
+        }
+
+    let makeTeXForPs (body : LaTeX) : TeXDoc = 
+        { Format = PostScript
+          LineWidth = 120
+          DviPath = UseLuaLaTeX
+          BodyDoc = body
+        }
+
+    let makeTeXForSvg (body : LaTeX) : TeXDoc = 
+        { Format = SVG
+          LineWidth = 120
+          DviPath = UseLuaLaTeX
+          BodyDoc = body
+        }
 
     let alterLineWidth (lineWidth : int) (doc : TeXDoc) : TeXDoc = 
-        match doc with | TeXDoc(fmt, _, body) -> TeXDoc(fmt, lineWidth, body)
+        { doc with LineWidth = lineWidth } 
+
+    let alterDviGenerator (dviProcedure : DviProcedure) (doc : TeXDoc) : TeXDoc = 
+        { doc with DviPath = dviProcedure }
 
 
-
-
-
-///// Note - this procedure creates a number of auxiliary files that you 
-///// may want to (manually) delete.
-//member x.SaveToPS(outputDirectory:string, psFileName:string) : unit = 
-//    let doc = Pretty.vcat [PostScript.DocumentProlog; x.Body]
-//    let outputPsFile = Path.Combine(outputDirectory, psFileName)
-//    let texFile = Path.ChangeExtension(outputPsFile, "tex")
-//    let dviFile = Path.ChangeExtension(texFile, "dvi")
-//    Pretty.writeDoc 80 texFile doc
-//    Invoke.runLatex outputDirectory texFile
-//    Invoke.runDvips outputDirectory dviFile outputPsFile
-
-///// Note - this procedure creates a number of auxiliary files that you 
-///// may want to (manually) delete.
-//member x.SaveToPDF(outputDirectory:string, pdfFileName:string) : unit = 
-//    let doc = Pretty.vcat [PDF.DocumentProlog; x.Body]
-//    let outputPdfFile = Path.Combine(outputDirectory, pdfFileName)
-//    let texFile = Path.ChangeExtension(outputPdfFile, "tex")
-//    let dviFile = Path.ChangeExtension(texFile, "dvi")
-//    Pretty.writeDoc 80 texFile doc
-//    Invoke.runLatex outputDirectory texFile
-//    Invoke.runDvipdfm outputDirectory dviFile outputPdfFile
-
-///// Note - this procedure creates a number of auxiliary files that you 
-///// may want to (manually) delete.
-//member x.SaveToSVG(outputDirectory:string, svgFileName:string) : unit = 
-//    let doc = Pretty.vcat [SVG.DocumentProlog; x.Body]
-//    let outputSvgFile = Path.Combine(outputDirectory, svgFileName)
-//    let texFile = Path.ChangeExtension(outputSvgFile, "tex")
-//    let dviFile = Path.ChangeExtension(texFile, "dvi")
-//    Pretty.writeDoc 80 texFile doc
-//    Invoke.runLatex outputDirectory texFile
-//    Invoke.runDvisvgm outputDirectory dviFile outputSvgFile
 

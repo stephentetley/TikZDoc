@@ -50,9 +50,19 @@ let forestDoc () =
                 ; plainNode (text "factx-fsharp") 
                     [ plainNode (text "src") 
                         [ plainNode (text "bin") [] 
-                        ; plainNode (text "FactX") [] 
+                        ; plainNode (text "FactX") 
+                            [ plainNode (text "Common.fs") [] 
+                            ; plainNode (text "FactOutput.fs") []
+                            ; plainNode (text "FactWriter.fs") []
+                            ; plainNode (text "Pretty.fs") []
+                            ; plainNode (text "Syntax.fs") []
+                            ] 
+                        ; plainNode (text "FactX.fsProj") [] 
                         ]
-                    ; plainNode (text "test") []
+                    ; plainNode (text "test") 
+                        [ plainNode (text "FactXTest.fsProj") [] 
+                        ; plainNode (text "Test01.fsx") []                         
+                        ]
                     ]
                 ]
 
