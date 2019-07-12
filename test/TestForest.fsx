@@ -70,9 +70,13 @@ let test01 () =
     let doc = forestDoc ()
     printfn "%s" workingDirectory
     let svgTeX = makeTeXForSvg doc |> alterLineWidth 180
-    svgTeX.Render () |> printfn "%s"
-    svgTeX.Output(workingDirectory, "forest1-svg.svg")
+    match outputTeXDoc svgTeX workingDirectory "forest1-svg.svg" with
+    | Error msg -> printfn "%s" msg
+    | Ok i -> printfn "Make SVG: %i" i
     let psTeX = makeTeXForPs doc
-    psTeX.Output(workingDirectory, "forest1-ps.ps")
+    match outputTeXDoc psTeX workingDirectory "forest1-ps.ps" with
+    | Error msg -> printfn "%s" msg
+    | Ok i -> printfn "Make Postscript: %i" i
+    printfn "Written to: %s" workingDirectory
 
 

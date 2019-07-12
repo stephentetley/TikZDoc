@@ -19,47 +19,49 @@ module Invoke =
     
     /// > latex "<InputFile.tex>" 
     /// The dvi file is inputfile with extension changed to ".dvi"
-    let runLatex (shellWorkingDirectory:string) (texFile:string) : unit =
+    let runLatex (shellWorkingDirectory:string) 
+                 (texFile:string) : Result<int, string> =
         let args = [ literal <| doubleQuote texFile ]
-        SimpleInvoke.runProcessSimple (Some shellWorkingDirectory) "latex" args
+        SimpleInvoke.executeProcess (Some shellWorkingDirectory) "latex" args
 
 
 
     /// > lualatex --output-format=dvi "<input.tex>"
-    let runLualatex (shellWorkingDirectory:string) (texFile : string) : unit =
+    let runLualatex (shellWorkingDirectory:string) 
+                    (texFile : string) : Result<int, string> =
         let args = 
             [ argument "--output-format"   &= "dvi"
             ; literal (doubleQuote texFile) ]
-        SimpleInvoke.runProcessSimple (Some shellWorkingDirectory) "lualatex" args
+        SimpleInvoke.executeProcess (Some shellWorkingDirectory) "lualatex" args
 
 
     /// > dvips -o "<psFile>" "<dviFile>"
     let runDvips (shellWorkingDirectory:string) 
                  (dviFile:string) 
-                 (psFile : string) : unit =
+                 (psFile : string) : Result<int, string> =
         let args = 
             [ argument "-o" &^ doubleQuote psFile
             ; literal (doubleQuote dviFile) ]
-        SimpleInvoke.runProcessSimple (Some shellWorkingDirectory) "dvips" args
+        SimpleInvoke.executeProcess (Some shellWorkingDirectory) "dvips" args
 
     /// > dvipdfm -o "<pdfFile>" "<dviFile>"
     let runDvipdfm (shellWorkingDirectory:string) 
                    (dviFile:string) 
-                   (pdfFile : string) : unit =
+                   (pdfFile : string) : Result<int, string> =
         let args = 
             [ argument "-o" &^ doubleQuote pdfFile
             ; literal (doubleQuote dviFile) ]
-        SimpleInvoke.runProcessSimple (Some shellWorkingDirectory) "dvipdfm" args
+        SimpleInvoke.executeProcess (Some shellWorkingDirectory) "dvipdfm" args
 
     /// > dvisvgm --output="<svgFile>" --bbox=none "<dviFile>"
     let runDvisvgm (shellWorkingDirectory:string) 
                    (dviFile:string) 
-                   (svgFile : string) : unit =
+                   (svgFile : string) : Result<int, string> =
         let args = 
             [ argument "--output"   &= (doubleQuote svgFile) 
             ; argument "--bbox"     &= "none"
             ; literal (doubleQuote dviFile) ]
-        SimpleInvoke.runProcessSimple (Some shellWorkingDirectory) "dvisvgm" args
+        SimpleInvoke.executeProcess (Some shellWorkingDirectory) "dvisvgm" args
 
 
 

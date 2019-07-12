@@ -32,6 +32,8 @@ module TeXDoc =
                             ; Pretty.text "\\def\\pgfsysdriver{pgfsys-dvipdfm.def}" ]
         | SVG -> Pretty.text "\\documentclass[dvisvgm]{minimal}"
 
+    
+
     type TeXDoc = 
         private { Format : OutputFormat
                   LineWidth : int 
@@ -49,25 +51,6 @@ module TeXDoc =
         member x.Render () : string = 
             let doc = Pretty.vcat [ documentProlog x.Format; x.BodyDoc.Body]
             Pretty.render x.LineWidth doc
-
-        member x.Output (outputDirectory : string, fileName : string) = 
-            let outputFilePath = Path.Combine(outputDirectory, fileName)
-            let texFileName = Path.ChangeExtension(path = fileName, extension = "tex")
-            let texFilePath = x.SaveToTeX(outputDirectory, texFileName)
-            match x.DviPath with
-            | UseLuaLaTeX -> 
-                Invoke.runLualatex outputDirectory texFilePath
-            | UseLaTeX -> 
-                Invoke.runLatex outputDirectory texFilePath
-            
-            let dviFilePath = Path.ChangeExtension(outputFilePath, "dvi")
-            match x.Format with
-            | PostScript -> 
-                Invoke.runDvips outputDirectory dviFilePath outputFilePath
-            | PDF -> 
-                Invoke.runDvipdfm outputDirectory dviFilePath outputFilePath
-            | SVG -> 
-                Invoke.runDvisvgm outputDirectory dviFilePath outputFilePath
 
     let makeTeXForPdf (body : LaTeX) : TeXDoc = 
         { Format = PDF
@@ -97,4 +80,32 @@ module TeXDoc =
         { doc with DviPath = dviProcedure }
 
 
+    let private makeDviFile (dviProc : DviProcedure)
+                            (outputDirectory : string) 
+                            (texFilePath : string) : Result<int, string> = 
+        match dviProc with
+        | UseLuaLaTeX -> 
+            Invoke.runLualatex outputDirectory texFilePath
+        | UseLaTeX -> 
+            Invoke.runLatex outputDirectory texFilePath
 
+
+
+    let outputTeXDoc (doc : TeXDoc) 
+                     (outputDirectory : string) 
+                     (fileName : string) : Result<int, string> = 
+        let outputFilePath = Path.Combine(outputDirectory, fileName)
+        let texFileName = Path.ChangeExtension(path = fileName, extension = "tex")
+        let texFilePath = doc.SaveToTeX(outputDirectory, texFileName)
+
+        match makeDviFile doc.DviPath outputDirectory texFilePath with
+        | Error msg -> Error msg
+        | Ok _ -> 
+            let dviFilePath = Path.ChangeExtension(outputFilePath, "dvi")
+            match doc.Format with
+            | PostScript -> 
+                Invoke.runDvips outputDirectory dviFilePath outputFilePath
+            | PDF -> 
+                Invoke.runDvipdfm outputDirectory dviFilePath outputFilePath
+            | SVG -> 
+                Invoke.runDvisvgm outputDirectory dviFilePath outputFilePath
