@@ -3,7 +3,7 @@
 
 #r "netstandard"
 
-#I @"C:\Users\stephen\.nuget\packages\slformat\1.0.2-alpha-20190712\lib\netstandard2.0"
+#I @"C:\Users\stephen\.nuget\packages\slformat\1.0.2-alpha-20190721\lib\netstandard2.0"
 #r "SLFormat.dll"
 
 #load "..\src\TikZDoc\Internal\Common.fs"
@@ -47,7 +47,10 @@ let doc1 () : LaTeX =
 
 let test03 () = 
     let tex = doc1 () |> makeTeXForSvg
-    tex.Output(workingDirectory, "example1.svg")
+    match outputTeXDoc tex workingDirectory "example1.svg" with
+    | Error msg -> printfn "%s" msg
+    | Ok i -> printfn "Make SVG: %i" i
+
 
 let dummy () = 
     output <| Coord(2.0,3.0).ToLaTeX ()

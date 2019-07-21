@@ -2,10 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>1.0.0-alpha-20190712</Version>
+    <Version>1.0.0-alpha-20190721</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseExpression></PackageLicenseExpression>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <Description>Low level library to build TikZ (LaTeX) documents with F#</Description>
+    <PackageProjectUrl>https://github.com/stephentetley/tikz-doc</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
@@ -34,7 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="SLFormat" Version="1.0.2-alpha-20190712" />
+    <PackageReference Include="SLFormat" Version="1.0.2-alpha-20190721" />
   </ItemGroup>
 
 </Project>

@@ -11,7 +11,7 @@ module TeXDoc =
 
     open System.IO
   
-    open SLFormat  
+    open SLFormat
 
     open TikZDoc.Internal
     open TikZDoc.Base
@@ -90,7 +90,8 @@ module TeXDoc =
             Invoke.runLatex outputDirectory texFilePath
 
 
-
+    /// TODO this a a bad API
+    /// Name indicates we are making a TeX document.
     let outputTeXDoc (doc : TeXDoc) 
                      (outputDirectory : string) 
                      (fileName : string) : Result<int, string> = 
